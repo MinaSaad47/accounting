@@ -41,8 +41,12 @@
     }
   },
   "number": "number",
+  "settings": "settings",
 
-  "language": "english",
+  "appearance": "appearance",
+
+  "language": "language",
+  "currentLanguage": "english \uD83C\uDDFA\uD83C\uDDF8",
   "accounting": "accounting",
 
   "company": "company",

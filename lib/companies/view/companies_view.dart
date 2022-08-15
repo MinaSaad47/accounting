@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:accounting/common/common.dart';
-import 'package:accounting/companies/cubit/companies_cubit.dart';
+import 'package:accounting/companies/bloc/companies_bloc.dart';
 import 'package:accounting_repository/accounting_repository.dart';
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
@@ -60,13 +60,15 @@ class _BuildSearchCompany extends StatelessWidget {
                 .search(AppLocalizations.of(context)!.company),
             onChanged: (query) {
               if (query.isNotEmpty) {
-                context.read<CompaniesCubit>().getCompanies(query);
+                context
+                    .read<CompaniesBloc>()
+                    .add(CompaniesSearchRequested(query));
               }
             },
           ),
           const SizedBox(height: 20),
           Expanded(
-            child: BlocConsumer<CompaniesCubit, CompaniesState>(
+            child: BlocConsumer<CompaniesBloc, CompaniesState>(
               listener: (context, state) {
                 if (state is CompaniesGetInFailure) {
                   showToast(
@@ -236,134 +238,11 @@ class _BuildAddCompany extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var formKey = GlobalKey<FormState>();
-    var funderName = _InputClass(
-      AppLocalizations.of(context)!.funderName,
-    );
-    var commercialFeature = _InputClass(
-      AppLocalizations.of(context)!.commercialFeature,
-    );
-    var legalEntity = _InputClass(
-      AppLocalizations.of(context)!.legalEntity,
-    );
-    var registerNumber = _InputClass(
-      AppLocalizations.of(context)!.registerNumber,
-      type: TextInputType.number,
-    );
-    var generalTaxMission = _InputClass(
-      AppLocalizations.of(context)!.generalTaxMission,
-    );
-    var activityNature = _InputClass(
-      AppLocalizations.of(context)!.activityNature,
-    );
-    var activityLocation = _InputClass(
-      AppLocalizations.of(context)!.activityLocation,
-    );
-    var accounts = _InputClass(
-      AppLocalizations.of(context)!.accounts,
-    );
-    var userName = _InputClass(
-      AppLocalizations.of(context)!.userName,
-    );
-    var email = _InputClass(
-      AppLocalizations.of(context)!.email,
-      type: TextInputType.emailAddress,
-    );
-
-    var inputs = [
-      funderName,
-      commercialFeature,
-      legalEntity,
-      registerNumber,
-      generalTaxMission,
-      activityNature,
-      activityLocation,
-      accounts,
-      userName,
-      email,
-    ];
-    return Container(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Form(
-            key: formKey,
-            child: Wrap(
-              children: List.generate(
-                inputs.length,
-                (index) => _BuildTextField(
-                  controller: inputs[index].controller,
-                  label: inputs[index].label,
-                  expect:
-                      AppLocalizations.of(context)!.expect(inputs[index].label),
-                  type: inputs[index].type,
-                ),
-              ),
-            ),
-          ),
-          const Spacer(),
-          LayoutBuilder(
-            builder: (context, constraints) => SizedBox(
-              width: constraints.maxWidth / 2,
-              child: MaterialButton(
-                color: Theme.of(context).secondaryHeaderColor,
-                onPressed: () {
-                  var formState = formKey.currentState;
-                  if (formState != null && formState.validate()) {
-                    var companyModel = CompanyModel(
-                      funders: [FunderModel(name: funderName.controller.text)],
-                      commercialFeature: commercialFeature.controller.text,
-                      isWorking: false,
-                      legalEntity: legalEntity.controller.text,
-                      registerNumber: registerNumber.controller.text,
-                      startDate: DateTime.now(),
-                      generalTaxMission: generalTaxMission.controller.text,
-                      activityNature: activityNature.controller.text,
-                      activityLocation: activityLocation.controller.text,
-                      accounts: accounts.controller.text,
-                      naturalId: "dasda",
-                      recordNumber: "dasda",
-                      userName: userName.controller.text,
-                      email: email.controller.text,
-                    );
-                    context
-                        .read<AccountingRepository>()
-                        .createCompany(companyModel)
-                        .then((response) {
-                      log('${response.data}');
-                      showToast(
-                        context,
-                        message: response.message,
-                        level: response.status
-                            ? ToastLevel.success
-                            : ToastLevel.error,
-                      );
-                    });
-                  }
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.save(
-                        AppLocalizations.of(context)!.company,
-                      ),
-                      style: Theme.of(context).textTheme.headline3,
-                    ),
-                    const Icon(Icons.save_alt_outlined)
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+    return const _BuildCompanyForm();
   }
 }
 
-class _BuildEditCompany extends StatefulWidget {
+class _BuildEditCompany extends StatelessWidget {
   final CompanyModel company;
   const _BuildEditCompany({
     Key? key,
@@ -372,139 +251,175 @@ class _BuildEditCompany extends StatefulWidget {
 
   static route(BuildContext context, CompanyModel companyModel) =>
       MaterialPageRoute(
-        builder: (_) => BlocProvider<CompaniesCubit>.value(
-          value: context.read<CompaniesCubit>(),
+        builder: (_) => BlocProvider<CompaniesBloc>.value(
+          value: context.read<CompaniesBloc>(),
           child: _BuildEditCompany(company: companyModel),
         ),
       );
-
-  @override
-  State<_BuildEditCompany> createState() => _BuildEditCompanyState();
-}
-
-class _BuildEditCompanyState extends State<_BuildEditCompany> {
-  var formKey = GlobalKey<FormBuilderState>();
-  late var company = widget.company;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.edit(widget.company.id!)),
+        title: Text(AppLocalizations.of(context)!.edit(company.id!)),
       ),
-      body: FormBuilder(
-        key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Wrap(
-                        children: [
+      body: _BuildCompanyForm(company: company),
+    );
+  }
+}
+
+class _BuildCompanyForm extends StatefulWidget {
+  final CompanyModel? company;
+  const _BuildCompanyForm({Key? key, this.company}) : super(key: key);
+
+  @override
+  State<_BuildCompanyForm> createState() => _BuildCompanyFormState();
+}
+
+class _BuildCompanyFormState extends State<_BuildCompanyForm> {
+  var formKey = GlobalKey<FormBuilderState>();
+  late var company = widget.company;
+  @override
+  Widget build(BuildContext context) {
+    return FormBuilder(
+      key: formKey,
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Wrap(
+                      children: [
+                        if (company == null)
                           _BuildFormBuilderTextField(
                             context,
-                            name:
-                                AppLocalizations.of(context)!.commercialFeature,
-                            value: company.commercialFeature,
+                            name: AppLocalizations.of(context)!.funderName,
                           ),
-                          _BuildFormBuilderTextField(
-                            context,
-                            name: AppLocalizations.of(context)!.legalEntity,
-                            value: company.legalEntity,
-                          ),
-                          _BuildFormBuilderDropdown(
-                            initialValue: company.isWorking
-                                ? AppLocalizations.of(context)!.working
-                                : AppLocalizations.of(context)!.notWorking,
-                            items: [
-                              AppLocalizations.of(context)!.working,
-                              AppLocalizations.of(context)!.notWorking,
-                            ],
-                          ),
+                        _BuildFormBuilderTextField(
+                          context,
+                          name: AppLocalizations.of(context)!.commercialFeature,
+                          value: company?.commercialFeature,
+                        ),
+                        _BuildFormBuilderTextField(
+                          context,
+                          name: AppLocalizations.of(context)!.legalEntity,
+                          value: company?.legalEntity,
+                        ),
+                        _BuildFormBuilderDropdown(
+                          initialValue: company != null && company!.isWorking
+                              ? AppLocalizations.of(context)!.working
+                              : AppLocalizations.of(context)!.notWorking,
+                          items: [
+                            AppLocalizations.of(context)!.working,
+                            AppLocalizations.of(context)!.notWorking,
+                          ],
+                        ),
+                        if (company != null)
                           _BuildFormBuilderTextField(
                             context,
                             name: AppLocalizations.of(context)!.fileNumber,
-                            value: company.fileNumber,
+                            value: company?.fileNumber,
+                            required: false,
                           ),
-                          _BuildFormBuilderTextField(
-                            context,
-                            name: AppLocalizations.of(context)!.registerNumber,
-                            value: company.registerNumber,
-                          ),
-                          _BuildFormBuilderDateTimePicker(
-                            context,
-                            name: AppLocalizations.of(context)!.startDate,
-                            value: company.startDate,
-                          ),
+                        _BuildFormBuilderTextField(
+                          context,
+                          name: AppLocalizations.of(context)!.registerNumber,
+                          value: company?.registerNumber,
+                        ),
+                        _BuildFormBuilderDateTimePicker(
+                          context,
+                          name: AppLocalizations.of(context)!.startDate,
+                          value: company?.startDate,
+                        ),
+                        if (company != null)
                           _BuildFormBuilderDateTimePicker(
                             context,
                             name: AppLocalizations.of(context)!.stopDate,
-                            value: company.stopDate,
+                            value: company?.stopDate,
+                            required: false,
                           ),
+                        _BuildFormBuilderTextField(
+                          context,
+                          name: AppLocalizations.of(context)!.generalTaxMission,
+                          value: company?.generalTaxMission,
+                        ),
+                        if (company != null)
                           _BuildFormBuilderTextField(
                             context,
-                            name:
-                                AppLocalizations.of(context)!.generalTaxMission,
-                            value: company.generalTaxMission,
+                            name: AppLocalizations.of(context)!.valueTaxMission,
+                            value: company?.valueTaxMission,
+                            required: false,
                           ),
-                          _BuildFormBuilderTextField(
-                            context,
-                            name: AppLocalizations.of(context)!.activityNature,
-                            value: company.activityNature,
-                          ),
-                          _BuildFormBuilderTextField(
-                            context,
-                            name:
-                                AppLocalizations.of(context)!.activityLocation,
-                            value: company.activityLocation,
-                          ),
-                          _BuildFormBuilderTextField(
-                            context,
-                            name: AppLocalizations.of(context)!.accounts,
-                            value: company.accounts,
-                          ),
+                        _BuildFormBuilderTextField(
+                          context,
+                          name: AppLocalizations.of(context)!.activityNature,
+                          value: company?.activityNature,
+                        ),
+                        _BuildFormBuilderTextField(
+                          context,
+                          name: AppLocalizations.of(context)!.activityLocation,
+                          value: company?.activityLocation,
+                        ),
+                        _BuildFormBuilderTextField(
+                          context,
+                          name: AppLocalizations.of(context)!.accounts,
+                          value: company?.accounts,
+                        ),
+                        if (company != null) ...[
                           _BuildFormBuilderDateTimePicker(
                             context,
                             name: AppLocalizations.of(context)!.joiningDate,
-                            value: company.joiningDate,
+                            value: company?.joiningDate,
+                            required: false,
                           ),
                           _BuildFormBuilderTextField(
                             context,
                             name: AppLocalizations.of(context)!.naturalId,
                             required: false,
-                            value: company.naturalId,
+                            value: company?.naturalId,
                           ),
                           _BuildFormBuilderTextField(
                             context,
                             name: AppLocalizations.of(context)!.recordSide,
-                            value: company.recordSide?.toString(),
+                            value: company?.recordSide?.toString(),
                             required: false,
                           ),
-                          _BuildFormBuilderTextField(
-                            context,
-                            name: AppLocalizations.of(context)!.recordNumber,
-                            value: company.recordNumber.toString(),
-                          ),
-                          _BuildFormBuilderTextField(
-                            context,
-                            name: AppLocalizations.of(context)!.userName,
-                            value: company.userName,
-                          ),
+                        ],
+                        _BuildFormBuilderTextField(
+                          context,
+                          name: AppLocalizations.of(context)!.recordNumber,
+                          value: company?.recordNumber.toString(),
+                        ),
+                        _BuildFormBuilderTextField(
+                          context,
+                          name: AppLocalizations.of(context)!.userName,
+                          value: company?.userName,
+                        ),
+                        if (company != null) ...[
                           _BuildFormBuilderTextField(
                             context,
                             name: AppLocalizations.of(context)!.passport,
-                            value: company.passport,
+                            value: company?.passport,
                             required: false,
                           ),
                           _BuildFormBuilderTextField(
                             context,
-                            name: AppLocalizations.of(context)!.email,
-                            value: company.email,
+                            name:
+                                AppLocalizations.of(context)!.verificationCode,
+                            value: company?.verificationCode,
+                            required: false,
                           ),
                         ],
-                      ),
+                        _BuildFormBuilderTextField(
+                          context,
+                          name: AppLocalizations.of(context)!.email,
+                          value: company?.email,
+                        ),
+                      ],
+                    ),
+                    if (company != null) ...[
                       const SizedBox(height: 30),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -512,9 +427,9 @@ class _BuildEditCompanyState extends State<_BuildEditCompany> {
                           Expanded(
                             flex: 1,
                             child: _BuildFunders(
-                              funders: company.funders,
+                              funders: company?.funders,
                               onUpdate: (funders) {
-                                company = company.copyWith(funders: funders);
+                                company = company?.copyWith(funders: funders);
                               },
                             ),
                           ),
@@ -522,9 +437,9 @@ class _BuildEditCompanyState extends State<_BuildEditCompany> {
                           Expanded(
                             flex: 1,
                             child: _BuildMoneyCapitals(
-                              moneyCapitals: company.moneyCapitals,
+                              moneyCapitals: company?.moneyCapitals,
                               onUpdate: (moneyCapitals) {
-                                company = company.copyWith(
+                                company = company?.copyWith(
                                   moneyCapitals: moneyCapitals,
                                 );
                               },
@@ -533,99 +448,112 @@ class _BuildEditCompanyState extends State<_BuildEditCompany> {
                         ],
                       ),
                     ],
-                  ),
+                  ],
                 ),
               ),
-              BlocConsumer<CompaniesCubit, CompaniesState>(
-                listener: (context, state) {
-                  if (state is CompaniesSaveInFailure) {
-                    showToast(
-                      context,
-                      message: state.error,
-                      level: ToastLevel.error,
-                    );
-                  } else if (state is CompaniesSaveSuccess) {
-                    showToast(
-                      context,
-                      message: state.message,
-                    );
-                  }
-                },
-                builder: (context, state) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: state is CompaniesSaveInProgress
-                      ? const CircularProgressIndicator()
-                      : ElevatedButton(
-                          onPressed: () {
-                            var formState = formKey.currentState!;
-                            if (formState.validate()) {
-                              formState.save();
-                              company = company.copyWith(
-                                accounts: formState.value[
-                                    AppLocalizations.of(context)!.accounts],
-                                isWorking: formState.value[
-                                        AppLocalizations.of(context)!
-                                            .isWorking] ==
-                                    AppLocalizations.of(context)!.working,
-                                joiningDate: formState.value[
-                                    AppLocalizations.of(context)!.joiningDate],
-                                stopDate: formState.value[
-                                    AppLocalizations.of(context)!.stopDate],
-                                startDate: formState.value[
-                                    AppLocalizations.of(context)!.startDate],
-                                fileNumber: formState.value[
-                                    AppLocalizations.of(context)!.fileNumber],
-                                email: formState
-                                    .value[AppLocalizations.of(context)!.email],
-                                passport: formState.value[
-                                    AppLocalizations.of(context)!.passport],
-                                userName: formState.value[
-                                    AppLocalizations.of(context)!.userName],
-                                recordNumber: formState.value[
-                                    AppLocalizations.of(context)!.recordNumber],
-                                recordSide: formState.value[
-                                    AppLocalizations.of(context)!.recordSide],
-                                valueTaxMission: formState.value[
-                                    AppLocalizations.of(context)!
-                                        .valueTaxMission],
-                                naturalId: formState.value[
-                                    AppLocalizations.of(context)!.naturalId],
-                                activityLocation: formState.value[
-                                    AppLocalizations.of(context)!
-                                        .activityLocation],
-                                activityNature: formState.value[
-                                    AppLocalizations.of(context)!
-                                        .activityNature],
-                                generalTaxMission: formState.value[
-                                    AppLocalizations.of(context)!
-                                        .generalTaxMission],
-                                registerNumber: formState.value[
-                                    AppLocalizations.of(context)!
-                                        .registerNumber],
-                                legalEntity: formState.value[
-                                    AppLocalizations.of(context)!.legalEntity],
-                                commercialFeature: formState.value[
-                                    AppLocalizations.of(context)!
-                                        .commercialFeature],
-                                verificationCode: formState.value[
-                                    AppLocalizations.of(context)!
-                                        .verificationCode],
-                              );
-                              log(company.toString());
+            ),
+            BlocConsumer<CompaniesBloc, CompaniesState>(
+              listener: (context, state) {
+                if (state is CompaniesSaveInFailure) {
+                  showToast(
+                    context,
+                    message: state.error,
+                    level: ToastLevel.error,
+                  );
+                } else if (state is CompaniesSaveSuccess) {
+                  showToast(
+                    context,
+                    message: state.message,
+                  );
+                }
+              },
+              builder: (context, state) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: state is CompaniesSaveInProgress
+                    ? const CircularProgressIndicator()
+                    : ElevatedButton(
+                        onPressed: () {
+                          var formState = formKey.currentState!;
+                          if (formState.validate()) {
+                            formState.save();
+                            var savedCompany = CompanyModel(
+                              id: company?.id,
+                              funders: company?.funders ??
+                                  [
+                                    FunderModel(
+                                      name: formState.value[
+                                          AppLocalizations.of(context)!
+                                              .funderName],
+                                    )
+                                  ],
+                              accounts: formState.value[
+                                  AppLocalizations.of(context)!.accounts],
+                              isWorking: formState.value[
+                                      AppLocalizations.of(context)!
+                                          .isWorking] ==
+                                  AppLocalizations.of(context)!.working,
+                              joiningDate: formState.value[
+                                  AppLocalizations.of(context)!.joiningDate],
+                              stopDate: formState.value[
+                                  AppLocalizations.of(context)!.stopDate],
+                              startDate: formState.value[
+                                  AppLocalizations.of(context)!.startDate],
+                              fileNumber: formState.value[
+                                  AppLocalizations.of(context)!.fileNumber],
+                              email: formState
+                                  .value[AppLocalizations.of(context)!.email],
+                              passport: formState.value[
+                                  AppLocalizations.of(context)!.passport],
+                              userName: formState.value[
+                                  AppLocalizations.of(context)!.userName],
+                              recordNumber: formState.value[
+                                  AppLocalizations.of(context)!.recordNumber],
+                              recordSide: formState.value[
+                                  AppLocalizations.of(context)!.recordSide],
+                              valueTaxMission: formState.value[
+                                  AppLocalizations.of(context)!
+                                      .valueTaxMission],
+                              naturalId: formState.value[
+                                  AppLocalizations.of(context)!.naturalId],
+                              activityLocation: formState.value[
+                                  AppLocalizations.of(context)!
+                                      .activityLocation],
+                              activityNature: formState.value[
+                                  AppLocalizations.of(context)!.activityNature],
+                              generalTaxMission: formState.value[
+                                  AppLocalizations.of(context)!
+                                      .generalTaxMission],
+                              registerNumber: formState.value[
+                                  AppLocalizations.of(context)!.registerNumber],
+                              legalEntity: formState.value[
+                                  AppLocalizations.of(context)!.legalEntity],
+                              commercialFeature: formState.value[
+                                  AppLocalizations.of(context)!
+                                      .commercialFeature],
+                              verificationCode: formState.value[
+                                  AppLocalizations.of(context)!
+                                      .verificationCode],
+                            );
+                            log(savedCompany.toString());
+                            if (company == null) {
                               context
-                                  .read<CompaniesCubit>()
-                                  .saveCompany(company);
+                                  .read<CompaniesBloc>()
+                                  .add(CompaniesCreateRequested(savedCompany));
+                            } else {
+                              context
+                                  .read<CompaniesBloc>()
+                                  .add(CompaniesEditRequested(savedCompany));
                             }
-                          },
-                          child: Text(
-                            AppLocalizations.of(context)!
-                                .save(AppLocalizations.of(context)!.company),
-                          ),
+                          }
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!
+                              .save(AppLocalizations.of(context)!.company),
                         ),
-                ),
-              )
-            ],
-          ),
+                      ),
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -882,7 +810,7 @@ class _BuildFormBuilderDateTimePicker extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: FormBuilderDateTimePicker(
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.joiningDate,
+                labelText: name,
               ),
               style: Theme.of(context).textTheme.headline6,
               initialValue: value,

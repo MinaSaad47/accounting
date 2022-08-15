@@ -1,5 +1,5 @@
+import 'package:accounting/companies/bloc/companies_bloc.dart';
 import 'package:accounting/companies/companies.dart';
-import 'package:accounting/companies/cubit/companies_cubit.dart';
 import 'package:accounting_repository/accounting_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +14,7 @@ class CompaniesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CompaniesCubit(context.read<AccountingRepository>()),
+      create: (context) => CompaniesBloc(context.read<AccountingRepository>()),
       child: const CompaniesView(),
     );
   }

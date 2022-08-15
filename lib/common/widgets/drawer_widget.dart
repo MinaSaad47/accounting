@@ -1,5 +1,6 @@
 import 'package:accounting/common/common.dart';
 import 'package:accounting/companies/companies.dart';
+import 'package:accounting/settings/settings.dart';
 import 'package:flutter/material.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -11,14 +12,33 @@ class DrawerWidget extends StatelessWidget {
       child: Material(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: ListView(
-            shrinkWrap: true,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
             children: [
-              DrawerItem(
-                text: AppLocalizations.of(context)!.companies,
-                icon: Icons.account_balance_outlined,
-                route: CompaniesPage.route(),
+              ListView(
+                shrinkWrap: true,
+                children: [
+                  DrawerItem(
+                    text: AppLocalizations.of(context)!.companies,
+                    icon: Icons.account_balance_outlined,
+                    route: CompaniesPage.route(),
+                  ),
+                ],
               ),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  color: Theme.of(context).primaryColor.withOpacity(0.4),
+                  height: 2,
+                ),
+              ),
+              DrawerItem(
+                text: AppLocalizations.of(context)!.settings,
+                icon: Icons.settings_outlined,
+                route: SettingsPage.route(),
+              ),
+              const SizedBox(height: 40),
             ],
           ),
         ),

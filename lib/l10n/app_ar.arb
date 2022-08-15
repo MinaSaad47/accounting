@@ -6,9 +6,13 @@
   "save": "حفظ {input}",
   "expect": "يجب ادخال {input}",
   "number": "رقم",
+  "settings": "الاعدادات",
   "displayMore": "عرض المزيد",
 
-  "language": "العربية",
+  "appearance": "المضهر",
+
+  "language": "اللغة",
+  "currentLanguage": "العربية \uD83C\uDDEA\uD83C\uDDEC",
   "accounting": "محاسبة",
 
   "company": "شركة",

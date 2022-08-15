@@ -1,4 +1,5 @@
 import 'package:accounting/app/app.dart';
+import 'package:accounting/settings/settings.dart';
 import 'package:accounting_repository/accounting_repository.dart';
 import 'package:cache/cache.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider(
       create: (context) => _accountingRepository,
-      child: const AppView(),
+      child: BlocProvider(
+        create: (context) => SettingsBloc(),
+        child: const AppView(),
+      ),
     );
   }
 }
