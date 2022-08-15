@@ -1,0 +1,42 @@
+{
+
+  "search": "بحث عن {input}",
+  "add": "اضافة {input}",
+  "edit": "تعديل {input}",
+  "save": "حفظ {input}",
+  "expect": "يجب ادخال {input}",
+  "number": "رقم",
+  "displayMore": "عرض المزيد",
+
+  "language": "العربية",
+  "accounting": "محاسبة",
+
+  "company": "شركة",
+  "companies": "شركات",
+  "commercialFeature": "السمة التجارية",
+  "isWorking": "عامل ؟",
+  "working": "عامل",
+  "notWorking": "غير عامل",
+  "legalEntity": "الكيان القنوني",
+  "fileNumber": "رقم الملف",
+  "registerNumber": "رقم السجل",
+  "startDate":  "تاريخ النشاط",
+  "stopDate": "تاريخ التوقف",
+  "generalTaxMission": "مأمورية الضرائب العامة",
+  "valueTaxMission": "مأمورية الضرائب القيمة",
+  "activityNature": "طبيعة النشاط",
+  "activityLocation": "عنوان النشاط",
+  "accounts": "الحسابات",
+  "joiningDate": "تاريخ الالتحاق",
+  "naturalId": "الرقم القومي",
+  "moneyCapital": "رأس المال",
+  "recordSide": "جهة السجل",
+  "recordNumber": "رقم السجل",
+  "userName": "اسم المستخدم",
+  "passport": "الباسبورد",
+  "verificationCode": "كود التأكيد",
+  "email": "الايميل",
+
+  "funderName": "اسم الممول",
+  "funders": "الممولون"
+}

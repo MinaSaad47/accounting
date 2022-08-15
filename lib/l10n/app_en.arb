@@ -1,0 +1,76 @@
+{
+  "add": "add {input}",
+  "@add": {
+    "placeholders": {
+      "input": {
+        "type": "String"
+      }
+    }
+  },
+  "displayMore": "display more",
+  "search": "search about {input}",
+  "@search": {
+    "placeholders": {
+      "input": {
+        "type": "String"
+      }
+    }
+  },
+  "save": "save {input}",
+  "@save": {
+    "placeholders": {
+      "input": {
+        "type": "String"
+      }
+    }
+  },
+  "edit": "edit {input}",
+  "@edit": {
+    "placeholders": {
+      "input": {
+        "type": "String"
+      }
+    }
+  },
+  "expect": "must provide {input}",
+  "@expect": {
+    "placeholders": {
+      "input": {
+        "type": "String"
+      }
+    }
+  },
+  "number": "number",
+
+  "language": "english",
+  "accounting": "accounting",
+
+  "company": "company",
+  "companies": "companies",
+  "commercialFeature": "commercial feature",
+  "isWorking": "working ?",
+  "working": "working",
+  "notWorking": "not working",
+  "legalEntity": "legal entity",
+  "fileNumber": "file number",
+  "registerNumber": "register number",
+  "startDate":  "start date",
+  "stopDate": "stop date",
+  "generalTaxMission": "general tax mission",
+  "valueTaxMission": "value tax mission",
+  "activityNature": "activity nature",
+  "activityLocation": "activity location",
+  "accounts": "accounts",
+  "joiningDate": "joining date",
+  "naturalId": "natural id",
+  "moneyCapital": "money capital",
+  "recordSide": "record side",
+  "recordNumber": "record number",
+  "userName": "user name",
+  "passport": "passport",
+  "verificationCode": "verification code",
+  "email": "email",
+
+  "funderName": "funder name",
+  "funders": "funders"
+}
