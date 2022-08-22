@@ -9,6 +9,9 @@
   "settings": "الاعدادات",
   "displayMore": "عرض المزيد",
 
+  "login": "تسجيل الدخول",
+  "logout": "تسجيل الخروج",
+
   "appearance": "المضهر",
 
   "language": "اللغة",
@@ -42,5 +45,14 @@
   "email": "الايميل",
 
   "funderName": "اسم الممول",
-  "funders": "الممولون"
+  "funders": "الممولون",
+
+  "password": "رقم المرور",
+
+  "employee": "موظف",
+  "employees": "موظفون",
+
+  "user": "مستخدم",
+  "admin": "مسؤول",
+  "permissions": "صلاحيات"
 }

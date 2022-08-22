@@ -1,5 +1,6 @@
 import 'package:accounting/common/common.dart';
 import 'package:accounting/companies/companies.dart';
+import 'package:accounting/employees/view/employess_page.dart';
 import 'package:accounting/settings/settings.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,11 @@ class DrawerWidget extends StatelessWidget {
                     text: AppLocalizations.of(context)!.companies,
                     icon: Icons.account_balance_outlined,
                     route: CompaniesPage.route(),
+                  ),
+                  DrawerItem(
+                    text: AppLocalizations.of(context)!.employees,
+                    icon: Icons.people_outline,
+                    route: EmployessPage.route(),
                   ),
                 ],
               ),

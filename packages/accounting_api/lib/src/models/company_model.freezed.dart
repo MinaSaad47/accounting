@@ -21,7 +21,7 @@ CompanyModel _$CompanyModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CompanyModel {
   @JsonKey(name: "id")
-  String? get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: "funders")
   List<FunderModel> get funders => throw _privateConstructorUsedError;
   @JsonKey(name: "commercial_feature")
@@ -34,8 +34,10 @@ mixin _$CompanyModel {
   String? get fileNumber => throw _privateConstructorUsedError;
   @JsonKey(name: "register_number")
   String get registerNumber => throw _privateConstructorUsedError;
+  @DatetimeJsonConverter()
   @JsonKey(name: "start_date")
   DateTime get startDate => throw _privateConstructorUsedError;
+  @DatetimeJsonConverter()
   @JsonKey(name: "stop_date")
   DateTime? get stopDate => throw _privateConstructorUsedError;
   @JsonKey(name: "general_tax_mission")
@@ -48,6 +50,7 @@ mixin _$CompanyModel {
   String get activityLocation => throw _privateConstructorUsedError;
   @JsonKey(name: "accounts")
   String get accounts => throw _privateConstructorUsedError;
+  @DatetimeJsonConverter()
   @JsonKey(name: "joining_date")
   DateTime? get joiningDate => throw _privateConstructorUsedError;
   @JsonKey(name: "natural_id")
@@ -80,29 +83,55 @@ abstract class $CompanyModelCopyWith<$Res> {
           CompanyModel value, $Res Function(CompanyModel) then) =
       _$CompanyModelCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: "id") String? id,
-      @JsonKey(name: "funders") List<FunderModel> funders,
-      @JsonKey(name: "commercial_feature") String commercialFeature,
-      @JsonKey(name: "is_working") bool isWorking,
-      @JsonKey(name: "legal_entity") String legalEntity,
-      @JsonKey(name: "file_number") String? fileNumber,
-      @JsonKey(name: "register_number") String registerNumber,
-      @JsonKey(name: "start_date") DateTime startDate,
-      @JsonKey(name: "stop_date") DateTime? stopDate,
-      @JsonKey(name: "general_tax_mission") String generalTaxMission,
-      @JsonKey(name: "value_tax_mission") String? valueTaxMission,
-      @JsonKey(name: "activity_nature") String activityNature,
-      @JsonKey(name: "activity_location") String activityLocation,
-      @JsonKey(name: "accounts") String accounts,
-      @JsonKey(name: "joining_date") DateTime? joiningDate,
-      @JsonKey(name: "natural_id") String? naturalId,
-      @JsonKey(name: "money_capitals") List<MoneyCapitalModel>? moneyCapitals,
-      @JsonKey(name: "record_side") String? recordSide,
-      @JsonKey(name: "record_number") String recordNumber,
-      @JsonKey(name: "user_name") String userName,
-      @JsonKey(name: "passport") String? passport,
-      @JsonKey(name: "verification_code") String? verificationCode,
-      @JsonKey(name: "email") String email});
+      {@JsonKey(name: "id")
+          int? id,
+      @JsonKey(name: "funders")
+          List<FunderModel> funders,
+      @JsonKey(name: "commercial_feature")
+          String commercialFeature,
+      @JsonKey(name: "is_working")
+          bool isWorking,
+      @JsonKey(name: "legal_entity")
+          String legalEntity,
+      @JsonKey(name: "file_number")
+          String? fileNumber,
+      @JsonKey(name: "register_number")
+          String registerNumber,
+      @DatetimeJsonConverter()
+      @JsonKey(name: "start_date")
+          DateTime startDate,
+      @DatetimeJsonConverter()
+      @JsonKey(name: "stop_date")
+          DateTime? stopDate,
+      @JsonKey(name: "general_tax_mission")
+          String generalTaxMission,
+      @JsonKey(name: "value_tax_mission")
+          String? valueTaxMission,
+      @JsonKey(name: "activity_nature")
+          String activityNature,
+      @JsonKey(name: "activity_location")
+          String activityLocation,
+      @JsonKey(name: "accounts")
+          String accounts,
+      @DatetimeJsonConverter()
+      @JsonKey(name: "joining_date")
+          DateTime? joiningDate,
+      @JsonKey(name: "natural_id")
+          String? naturalId,
+      @JsonKey(name: "money_capitals")
+          List<MoneyCapitalModel>? moneyCapitals,
+      @JsonKey(name: "record_side")
+          String? recordSide,
+      @JsonKey(name: "record_number")
+          String recordNumber,
+      @JsonKey(name: "user_name")
+          String userName,
+      @JsonKey(name: "passport")
+          String? passport,
+      @JsonKey(name: "verification_code")
+          String? verificationCode,
+      @JsonKey(name: "email")
+          String email});
 }
 
 /// @nodoc
@@ -143,7 +172,7 @@ class _$CompanyModelCopyWithImpl<$Res> implements $CompanyModelCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       funders: funders == freezed
           ? _value.funders
           : funders // ignore: cast_nullable_to_non_nullable
@@ -244,29 +273,55 @@ abstract class _$$_CompanyModelCopyWith<$Res>
       __$$_CompanyModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: "id") String? id,
-      @JsonKey(name: "funders") List<FunderModel> funders,
-      @JsonKey(name: "commercial_feature") String commercialFeature,
-      @JsonKey(name: "is_working") bool isWorking,
-      @JsonKey(name: "legal_entity") String legalEntity,
-      @JsonKey(name: "file_number") String? fileNumber,
-      @JsonKey(name: "register_number") String registerNumber,
-      @JsonKey(name: "start_date") DateTime startDate,
-      @JsonKey(name: "stop_date") DateTime? stopDate,
-      @JsonKey(name: "general_tax_mission") String generalTaxMission,
-      @JsonKey(name: "value_tax_mission") String? valueTaxMission,
-      @JsonKey(name: "activity_nature") String activityNature,
-      @JsonKey(name: "activity_location") String activityLocation,
-      @JsonKey(name: "accounts") String accounts,
-      @JsonKey(name: "joining_date") DateTime? joiningDate,
-      @JsonKey(name: "natural_id") String? naturalId,
-      @JsonKey(name: "money_capitals") List<MoneyCapitalModel>? moneyCapitals,
-      @JsonKey(name: "record_side") String? recordSide,
-      @JsonKey(name: "record_number") String recordNumber,
-      @JsonKey(name: "user_name") String userName,
-      @JsonKey(name: "passport") String? passport,
-      @JsonKey(name: "verification_code") String? verificationCode,
-      @JsonKey(name: "email") String email});
+      {@JsonKey(name: "id")
+          int? id,
+      @JsonKey(name: "funders")
+          List<FunderModel> funders,
+      @JsonKey(name: "commercial_feature")
+          String commercialFeature,
+      @JsonKey(name: "is_working")
+          bool isWorking,
+      @JsonKey(name: "legal_entity")
+          String legalEntity,
+      @JsonKey(name: "file_number")
+          String? fileNumber,
+      @JsonKey(name: "register_number")
+          String registerNumber,
+      @DatetimeJsonConverter()
+      @JsonKey(name: "start_date")
+          DateTime startDate,
+      @DatetimeJsonConverter()
+      @JsonKey(name: "stop_date")
+          DateTime? stopDate,
+      @JsonKey(name: "general_tax_mission")
+          String generalTaxMission,
+      @JsonKey(name: "value_tax_mission")
+          String? valueTaxMission,
+      @JsonKey(name: "activity_nature")
+          String activityNature,
+      @JsonKey(name: "activity_location")
+          String activityLocation,
+      @JsonKey(name: "accounts")
+          String accounts,
+      @DatetimeJsonConverter()
+      @JsonKey(name: "joining_date")
+          DateTime? joiningDate,
+      @JsonKey(name: "natural_id")
+          String? naturalId,
+      @JsonKey(name: "money_capitals")
+          List<MoneyCapitalModel>? moneyCapitals,
+      @JsonKey(name: "record_side")
+          String? recordSide,
+      @JsonKey(name: "record_number")
+          String recordNumber,
+      @JsonKey(name: "user_name")
+          String userName,
+      @JsonKey(name: "passport")
+          String? passport,
+      @JsonKey(name: "verification_code")
+          String? verificationCode,
+      @JsonKey(name: "email")
+          String email});
 }
 
 /// @nodoc
@@ -310,7 +365,7 @@ class __$$_CompanyModelCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       funders: funders == freezed
           ? _value._funders
           : funders // ignore: cast_nullable_to_non_nullable
@@ -421,8 +476,10 @@ class _$_CompanyModel implements _CompanyModel {
           this.fileNumber,
       @JsonKey(name: "register_number")
           required this.registerNumber,
+      @DatetimeJsonConverter()
       @JsonKey(name: "start_date")
           required this.startDate,
+      @DatetimeJsonConverter()
       @JsonKey(name: "stop_date")
           this.stopDate,
       @JsonKey(name: "general_tax_mission")
@@ -435,6 +492,7 @@ class _$_CompanyModel implements _CompanyModel {
           required this.activityLocation,
       @JsonKey(name: "accounts")
           required this.accounts,
+      @DatetimeJsonConverter()
       @JsonKey(name: "joining_date")
           this.joiningDate,
       @JsonKey(name: "natural_id")
@@ -461,7 +519,7 @@ class _$_CompanyModel implements _CompanyModel {
 
   @override
   @JsonKey(name: "id")
-  final String? id;
+  final int? id;
   final List<FunderModel> _funders;
   @override
   @JsonKey(name: "funders")
@@ -486,9 +544,11 @@ class _$_CompanyModel implements _CompanyModel {
   @JsonKey(name: "register_number")
   final String registerNumber;
   @override
+  @DatetimeJsonConverter()
   @JsonKey(name: "start_date")
   final DateTime startDate;
   @override
+  @DatetimeJsonConverter()
   @JsonKey(name: "stop_date")
   final DateTime? stopDate;
   @override
@@ -507,6 +567,7 @@ class _$_CompanyModel implements _CompanyModel {
   @JsonKey(name: "accounts")
   final String accounts;
   @override
+  @DatetimeJsonConverter()
   @JsonKey(name: "joining_date")
   final DateTime? joiningDate;
   @override
@@ -634,7 +695,7 @@ class _$_CompanyModel implements _CompanyModel {
 abstract class _CompanyModel implements CompanyModel {
   const factory _CompanyModel(
       {@JsonKey(name: "id")
-          final String? id,
+          final int? id,
       @JsonKey(name: "funders")
           required final List<FunderModel> funders,
       @JsonKey(name: "commercial_feature")
@@ -647,8 +708,10 @@ abstract class _CompanyModel implements CompanyModel {
           final String? fileNumber,
       @JsonKey(name: "register_number")
           required final String registerNumber,
+      @DatetimeJsonConverter()
       @JsonKey(name: "start_date")
           required final DateTime startDate,
+      @DatetimeJsonConverter()
       @JsonKey(name: "stop_date")
           final DateTime? stopDate,
       @JsonKey(name: "general_tax_mission")
@@ -661,6 +724,7 @@ abstract class _CompanyModel implements CompanyModel {
           required final String activityLocation,
       @JsonKey(name: "accounts")
           required final String accounts,
+      @DatetimeJsonConverter()
       @JsonKey(name: "joining_date")
           final DateTime? joiningDate,
       @JsonKey(name: "natural_id")
@@ -685,7 +749,7 @@ abstract class _CompanyModel implements CompanyModel {
 
   @override
   @JsonKey(name: "id")
-  String? get id;
+  int? get id;
   @override
   @JsonKey(name: "funders")
   List<FunderModel> get funders;
@@ -705,9 +769,11 @@ abstract class _CompanyModel implements CompanyModel {
   @JsonKey(name: "register_number")
   String get registerNumber;
   @override
+  @DatetimeJsonConverter()
   @JsonKey(name: "start_date")
   DateTime get startDate;
   @override
+  @DatetimeJsonConverter()
   @JsonKey(name: "stop_date")
   DateTime? get stopDate;
   @override
@@ -726,6 +792,7 @@ abstract class _CompanyModel implements CompanyModel {
   @JsonKey(name: "accounts")
   String get accounts;
   @override
+  @DatetimeJsonConverter()
   @JsonKey(name: "joining_date")
   DateTime? get joiningDate;
   @override

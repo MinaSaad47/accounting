@@ -6,9 +6,11 @@ part 'money_capital_model.g.dart';
 @freezed
 class MoneyCapitalModel with _$MoneyCapitalModel {
   const factory MoneyCapitalModel({
-    String? id,
+    int? id,
     required num value,
     required DateTime time,
+    @JsonKey(name: 'user_name') String? userName,
+    @JsonKey(name: 'company_name') String? companyName,
   }) = _MoneyCapitalModel;
 
   factory MoneyCapitalModel.fromJson(Map<String, Object> json) =>

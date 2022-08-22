@@ -8,7 +8,7 @@ part of 'funder_model.dart';
 
 _$_FunderModel _$$_FunderModelFromJson(Map<String, dynamic> json) =>
     _$_FunderModel(
-      id: json['id'] as String?,
+      id: json['id'] as int?,
       name: json['name'] as String,
     );
 

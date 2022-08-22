@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:accounting/common/common.dart';
 import 'package:accounting/companies/bloc/companies_bloc.dart';
 import 'package:accounting_repository/accounting_repository.dart';
@@ -81,8 +79,34 @@ class _BuildSearchCompany extends StatelessWidget {
               builder: (context, state) {
                 if (state is CompaniesGetSuccess) {
                   return ListView.separated(
-                    itemBuilder: (context, index) =>
-                        _CompanyListItem(company: state.companies[index]),
+                    itemBuilder: (context, index) {
+                      var company = state.companies[index];
+                      return ListItemWidget(
+                        title: company.id.toString(),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .push(_BuildEditCompany.route(context, company));
+                        },
+                        labels: [
+                          TextLabelWidget(
+                            icon: Icons.featured_play_list_outlined,
+                            title: AppLocalizations.of(context)!.registerNumber,
+                            content: company.registerNumber,
+                          ),
+                          TextLabelWidget(
+                            icon: Icons.person,
+                            title: AppLocalizations.of(context)!.funderName,
+                            content: company.funders[0].name,
+                          ),
+                          TextLabelWidget(
+                            icon: Icons.featured_play_list_outlined,
+                            title:
+                                AppLocalizations.of(context)!.commercialFeature,
+                            content: company.commercialFeature,
+                          )
+                        ],
+                      );
+                    },
                     separatorBuilder: (context, index) => Container(
                       margin: const EdgeInsets.all(10),
                       height: 2,
@@ -97,134 +121,6 @@ class _BuildSearchCompany extends StatelessWidget {
               },
             ),
           )
-        ],
-      ),
-    );
-  }
-}
-
-class _CompanyListItem extends StatelessWidget {
-  final CompanyModel company;
-  const _CompanyListItem({Key? key, required this.company}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Theme.of(context).primaryColor, width: 2),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Center(
-            child: Text(
-              company.id!,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(color: Theme.of(context).primaryColor),
-            ),
-          ),
-          Row(
-            children: [
-              const Spacer(),
-              MaterialButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(_BuildEditCompany.route(context, company));
-                },
-                child: Row(
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.displayMore,
-                      style: TextStyle(color: Theme.of(context).primaryColor),
-                    ),
-                    const SizedBox(width: 5),
-                    Icon(
-                      Icons.info_outline,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-          _BuildTextLabel(
-            icon: Icons.featured_play_list_outlined,
-            title: AppLocalizations.of(context)!.registerNumber,
-            content: company.registerNumber,
-          ),
-          const SizedBox(height: 10),
-          _BuildTextLabel(
-            icon: Icons.person,
-            title: AppLocalizations.of(context)!.funderName,
-            content: company.funders[0].name,
-          ),
-          const SizedBox(height: 10),
-          _BuildTextLabel(
-            icon: Icons.featured_play_list_outlined,
-            title: AppLocalizations.of(context)!.commercialFeature,
-            content: company.commercialFeature,
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class _BuildTextLabel extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String content;
-  const _BuildTextLabel({
-    Key? key,
-    required this.icon,
-    required this.title,
-    required this.content,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            color: Theme.of(context).appBarTheme.backgroundColor,
-            child: Row(
-              children: [
-                const SizedBox(width: 5),
-                Icon(
-                  icon,
-                  color: Theme.of(context).appBarTheme.iconTheme?.color,
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: Theme.of(context).appBarTheme.foregroundColor,
-                      ),
-                ),
-                const SizedBox(width: 5),
-              ],
-            ),
-          ),
-          const SizedBox(width: 5),
-          Expanded(
-            child: Text(
-              content,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Theme.of(context).primaryColor,
-                  ),
-            ),
-          ),
         ],
       ),
     );
@@ -260,7 +156,7 @@ class _BuildEditCompany extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.edit(company.id!)),
+        title: Text(AppLocalizations.of(context)!.edit(company.id!.toString())),
       ),
       body: _BuildCompanyForm(company: company),
     );
@@ -307,7 +203,8 @@ class _BuildCompanyFormState extends State<_BuildCompanyForm> {
                           name: AppLocalizations.of(context)!.legalEntity,
                           value: company?.legalEntity,
                         ),
-                        _BuildFormBuilderDropdown(
+                        FormBuilderDropdownWidget(
+                          name: AppLocalizations.of(context)!.isWorking,
                           initialValue: company != null && company!.isWorking
                               ? AppLocalizations.of(context)!.working
                               : AppLocalizations.of(context)!.notWorking,
@@ -534,7 +431,7 @@ class _BuildCompanyFormState extends State<_BuildCompanyForm> {
                                   AppLocalizations.of(context)!
                                       .verificationCode],
                             );
-                            log(savedCompany.toString());
+                            log.d(savedCompany.toString());
                             if (company == null) {
                               context
                                   .read<CompaniesBloc>()
@@ -744,46 +641,6 @@ class _BuildFundersState extends State<_BuildFunders> {
   }
 }
 
-class _BuildFormBuilderDropdown extends StatelessWidget {
-  final String initialValue;
-  final List<String> items;
-  const _BuildFormBuilderDropdown({
-    Key? key,
-    required this.initialValue,
-    required this.items,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        double width = double.infinity;
-        if (constraints.maxWidth > 600) {
-          width = constraints.maxWidth / 2;
-        }
-        return ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: width),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: FormBuilderDropdown(
-              name: AppLocalizations.of(context)!.isWorking,
-              initialValue: initialValue,
-              style: Theme.of(context).textTheme.headline4,
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.isWorking,
-              ),
-              items: items
-                  .map((e) => DropdownMenuItem(
-                      value: e, child: FittedBox(child: Text(e))))
-                  .toList(),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
 class _BuildFormBuilderDateTimePicker extends StatelessWidget {
   final String name;
   final DateTime? value;
@@ -870,56 +727,6 @@ class _BuildFormBuilderTextField extends StatelessWidget {
                 if (!required) return null;
                 return validator != null ? validator!(text) : null;
               },
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _InputClass {
-  final String label;
-  final TextEditingController controller;
-  final TextInputType type;
-
-  _InputClass(this.label, {this.type = TextInputType.text, String? text})
-      : controller = TextEditingController()..text = text ?? '';
-}
-
-class _BuildTextField extends StatelessWidget {
-  const _BuildTextField({
-    Key? key,
-    required this.controller,
-    required this.label,
-    required this.expect,
-    this.type = TextInputType.text,
-  }) : super(key: key);
-
-  final TextEditingController controller;
-  final String label;
-  final String expect;
-  final TextInputType type;
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        double width = double.infinity;
-        if (constraints.maxWidth > 600) {
-          width = constraints.maxWidth / 2;
-        }
-        return ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: width,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFieldWidget(
-              controller: controller,
-              label: label,
-              expect: expect,
-              type: type,
             ),
           ),
         );

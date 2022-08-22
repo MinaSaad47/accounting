@@ -20,9 +20,13 @@ MoneyCapitalModel _$MoneyCapitalModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MoneyCapitalModel {
-  String? get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   num get value => throw _privateConstructorUsedError;
   DateTime get time => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_name')
+  String? get userName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_name')
+  String? get companyName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +39,12 @@ abstract class $MoneyCapitalModelCopyWith<$Res> {
   factory $MoneyCapitalModelCopyWith(
           MoneyCapitalModel value, $Res Function(MoneyCapitalModel) then) =
       _$MoneyCapitalModelCopyWithImpl<$Res>;
-  $Res call({String? id, num value, DateTime time});
+  $Res call(
+      {int? id,
+      num value,
+      DateTime time,
+      @JsonKey(name: 'user_name') String? userName,
+      @JsonKey(name: 'company_name') String? companyName});
 }
 
 /// @nodoc
@@ -52,12 +61,14 @@ class _$MoneyCapitalModelCopyWithImpl<$Res>
     Object? id = freezed,
     Object? value = freezed,
     Object? time = freezed,
+    Object? userName = freezed,
+    Object? companyName = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       value: value == freezed
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -66,6 +77,14 @@ class _$MoneyCapitalModelCopyWithImpl<$Res>
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      userName: userName == freezed
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      companyName: companyName == freezed
+          ? _value.companyName
+          : companyName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -77,7 +96,12 @@ abstract class _$$_MoneyCapitalModelCopyWith<$Res>
           $Res Function(_$_MoneyCapitalModel) then) =
       __$$_MoneyCapitalModelCopyWithImpl<$Res>;
   @override
-  $Res call({String? id, num value, DateTime time});
+  $Res call(
+      {int? id,
+      num value,
+      DateTime time,
+      @JsonKey(name: 'user_name') String? userName,
+      @JsonKey(name: 'company_name') String? companyName});
 }
 
 /// @nodoc
@@ -96,12 +120,14 @@ class __$$_MoneyCapitalModelCopyWithImpl<$Res>
     Object? id = freezed,
     Object? value = freezed,
     Object? time = freezed,
+    Object? userName = freezed,
+    Object? companyName = freezed,
   }) {
     return _then(_$_MoneyCapitalModel(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       value: value == freezed
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -110,6 +136,14 @@ class __$$_MoneyCapitalModelCopyWithImpl<$Res>
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      userName: userName == freezed
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      companyName: companyName == freezed
+          ? _value.companyName
+          : companyName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -118,21 +152,31 @@ class __$$_MoneyCapitalModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_MoneyCapitalModel implements _MoneyCapitalModel {
   const _$_MoneyCapitalModel(
-      {this.id, required this.value, required this.time});
+      {this.id,
+      required this.value,
+      required this.time,
+      @JsonKey(name: 'user_name') this.userName,
+      @JsonKey(name: 'company_name') this.companyName});
 
   factory _$_MoneyCapitalModel.fromJson(Map<String, dynamic> json) =>
       _$$_MoneyCapitalModelFromJson(json);
 
   @override
-  final String? id;
+  final int? id;
   @override
   final num value;
   @override
   final DateTime time;
+  @override
+  @JsonKey(name: 'user_name')
+  final String? userName;
+  @override
+  @JsonKey(name: 'company_name')
+  final String? companyName;
 
   @override
   String toString() {
-    return 'MoneyCapitalModel(id: $id, value: $value, time: $time)';
+    return 'MoneyCapitalModel(id: $id, value: $value, time: $time, userName: $userName, companyName: $companyName)';
   }
 
   @override
@@ -142,7 +186,10 @@ class _$_MoneyCapitalModel implements _MoneyCapitalModel {
             other is _$_MoneyCapitalModel &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.value, value) &&
-            const DeepCollectionEquality().equals(other.time, time));
+            const DeepCollectionEquality().equals(other.time, time) &&
+            const DeepCollectionEquality().equals(other.userName, userName) &&
+            const DeepCollectionEquality()
+                .equals(other.companyName, companyName));
   }
 
   @JsonKey(ignore: true)
@@ -151,7 +198,9 @@ class _$_MoneyCapitalModel implements _MoneyCapitalModel {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(value),
-      const DeepCollectionEquality().hash(time));
+      const DeepCollectionEquality().hash(time),
+      const DeepCollectionEquality().hash(userName),
+      const DeepCollectionEquality().hash(companyName));
 
   @JsonKey(ignore: true)
   @override
@@ -169,19 +218,28 @@ class _$_MoneyCapitalModel implements _MoneyCapitalModel {
 
 abstract class _MoneyCapitalModel implements MoneyCapitalModel {
   const factory _MoneyCapitalModel(
-      {final String? id,
-      required final num value,
-      required final DateTime time}) = _$_MoneyCapitalModel;
+          {final int? id,
+          required final num value,
+          required final DateTime time,
+          @JsonKey(name: 'user_name') final String? userName,
+          @JsonKey(name: 'company_name') final String? companyName}) =
+      _$_MoneyCapitalModel;
 
   factory _MoneyCapitalModel.fromJson(Map<String, dynamic> json) =
       _$_MoneyCapitalModel.fromJson;
 
   @override
-  String? get id;
+  int? get id;
   @override
   num get value;
   @override
   DateTime get time;
+  @override
+  @JsonKey(name: 'user_name')
+  String? get userName;
+  @override
+  @JsonKey(name: 'company_name')
+  String? get companyName;
   @override
   @JsonKey(ignore: true)
   _$$_MoneyCapitalModelCopyWith<_$_MoneyCapitalModel> get copyWith =>

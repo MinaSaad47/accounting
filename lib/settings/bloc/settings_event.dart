@@ -5,11 +5,11 @@ abstract class SettingsEvent extends Equatable {
 }
 
 class SettingsLanguageChanged extends SettingsEvent {
-  final Locale local;
+  final Locale locale;
 
-  const SettingsLanguageChanged(this.local);
+  const SettingsLanguageChanged(this.locale);
   @override
-  List<Object?> get props => [local];
+  List<Object?> get props => [locale];
 }
 
 class SettingsThemeChanged extends SettingsEvent {

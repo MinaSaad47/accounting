@@ -14,8 +14,10 @@ class SettingsView extends StatelessWidget {
       appBar: AppBarWidget(
         title: AppLocalizations.of(context)!.settings,
       ),
+      drawer: const DrawerWidget(),
       body: SettingsList(
         platform: DevicePlatform.device,
+        contentPadding: const EdgeInsets.all(50),
         sections: [
           SettingsSection(
             title: Text(AppLocalizations.of(context)!.language),
@@ -48,6 +50,13 @@ class SettingsView extends StatelessWidget {
             title: Text(AppLocalizations.of(context)!.appearance),
             tiles: [
               SettingsTile.switchTile(
+                trailing: Icon(
+                  context.select((SettingsBloc bloc) => bloc.state.themeMode) ==
+                          ThemeMode.light
+                      ? Icons.dark_mode_outlined
+                      : Icons.light_mode_outlined,
+                ),
+                description: Text(AppLocalizations.of(context)!.appearance),
                 initialValue: context
                         .select((SettingsBloc bloc) => bloc.state.themeMode) ==
                     ThemeMode.light,

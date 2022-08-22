@@ -35,6 +35,7 @@ dependencies:
 
   flex_color_scheme: ^5.1.0
   settings_ui: ^2.0.2
+  logger: ^1.1.0
 
   equatable: ^2.0.3
 

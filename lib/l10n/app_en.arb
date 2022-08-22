@@ -43,6 +43,9 @@
   "number": "number",
   "settings": "settings",
 
+  "login": "login",
+  "logout": "logout",
+
   "appearance": "appearance",
 
   "language": "language",
@@ -76,5 +79,15 @@
   "email": "email",
 
   "funderName": "funder name",
-  "funders": "funders"
+  "funders": "funders",
+
+  "password": "password",
+  
+  
+  "employee": "employee",
+  "employees": "employees",
+  
+  "user": "user",
+  "admin": "admin",
+  "permissions": "permissions"
 }

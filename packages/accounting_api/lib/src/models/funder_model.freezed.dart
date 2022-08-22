@@ -20,7 +20,7 @@ FunderModel _$FunderModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$FunderModel {
-  String? get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -34,7 +34,7 @@ abstract class $FunderModelCopyWith<$Res> {
   factory $FunderModelCopyWith(
           FunderModel value, $Res Function(FunderModel) then) =
       _$FunderModelCopyWithImpl<$Res>;
-  $Res call({String? id, String name});
+  $Res call({int? id, String name});
 }
 
 /// @nodoc
@@ -54,7 +54,7 @@ class _$FunderModelCopyWithImpl<$Res> implements $FunderModelCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -70,7 +70,7 @@ abstract class _$$_FunderModelCopyWith<$Res>
           _$_FunderModel value, $Res Function(_$_FunderModel) then) =
       __$$_FunderModelCopyWithImpl<$Res>;
   @override
-  $Res call({String? id, String name});
+  $Res call({int? id, String name});
 }
 
 /// @nodoc
@@ -92,7 +92,7 @@ class __$$_FunderModelCopyWithImpl<$Res> extends _$FunderModelCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -110,7 +110,7 @@ class _$_FunderModel implements _FunderModel {
       _$$_FunderModelFromJson(json);
 
   @override
-  final String? id;
+  final int? id;
   @override
   final String name;
 
@@ -149,14 +149,14 @@ class _$_FunderModel implements _FunderModel {
 }
 
 abstract class _FunderModel implements FunderModel {
-  const factory _FunderModel({final String? id, required final String name}) =
+  const factory _FunderModel({final int? id, required final String name}) =
       _$_FunderModel;
 
   factory _FunderModel.fromJson(Map<String, dynamic> json) =
       _$_FunderModel.fromJson;
 
   @override
-  String? get id;
+  int? get id;
   @override
   String get name;
   @override

@@ -12,6 +12,8 @@ dependencies:
     sdk: flutter
   accounting_api:
     path: ../accounting_api
+  cache:
+    path: ../cache
 
 dev_dependencies:
   flutter_test:

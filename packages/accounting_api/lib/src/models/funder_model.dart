@@ -6,7 +6,7 @@ part 'funder_model.g.dart';
 @freezed
 class FunderModel with _$FunderModel {
   const factory FunderModel({
-    String? id,
+    int? id,
     required String name,
   }) = _FunderModel;
 

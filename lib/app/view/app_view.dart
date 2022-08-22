@@ -1,5 +1,6 @@
 import 'package:accounting/app/view/app_layout.dart';
 import 'package:accounting/common/common.dart';
+import 'package:accounting/login/view/login_page.dart';
 import 'package:accounting/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,9 +15,11 @@ class AppView extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
-          initialRoute: '/',
+          initialRoute:
+              context.read<CachedRepository>().token != null ? '/' : '/login',
           routes: {
             '/': (context) => const AppLayout(),
+            '/login': (context) => const LoginPage(),
           },
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
@@ -27,6 +30,5 @@ class AppView extends StatelessWidget {
         );
       },
     );
-    ;
   }
 }
