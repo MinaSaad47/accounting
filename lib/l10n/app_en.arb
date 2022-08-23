@@ -32,6 +32,7 @@
       }
     }
   },
+  "delete": "delete",
   "expect": "must provide {input}",
   "@expect": {
     "placeholders": {

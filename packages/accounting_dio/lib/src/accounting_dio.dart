@@ -113,4 +113,17 @@ class AccountingDio extends AccountingApi {
     return ApiResponse<UserModel>.fromJson(
         response.data, (p0) => UserModel.fromJson(p0 as dynamic));
   }
+
+  @override
+  Future<ApiResponse<MoneyCapitalModel>> createMoneyCapital({
+    required int companyId,
+    required MoneyCapitalModel moneyCapitalModel,
+  }) async {
+    var response = await _dio.post(
+      '/company/$companyId/money_capitals',
+      data: moneyCapitalModel.toJson(),
+    );
+    return ApiResponse<MoneyCapitalModel>.fromJson(
+        response.data, (p0) => MoneyCapitalModel.fromJson(p0 as dynamic));
+  }
 }

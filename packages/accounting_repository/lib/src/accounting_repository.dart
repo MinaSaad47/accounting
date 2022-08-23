@@ -42,4 +42,13 @@ class AccountingRepository {
         userId: userId,
         companyId: companyId,
       );
+
+  Future<ApiResponse<MoneyCapitalModel>> createMoneyCapital({
+    required int companyId,
+    required MoneyCapitalModel moneyCapitalModel,
+  }) async =>
+      await _accountingApi.createMoneyCapital(
+        companyId: companyId,
+        moneyCapitalModel: moneyCapitalModel,
+      );
 }

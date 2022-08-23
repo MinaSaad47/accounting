@@ -22,10 +22,11 @@ MoneyCapitalModel _$MoneyCapitalModelFromJson(Map<String, dynamic> json) {
 mixin _$MoneyCapitalModel {
   int? get id => throw _privateConstructorUsedError;
   num get value => throw _privateConstructorUsedError;
-  DateTime get time => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_name')
+  @DatetimeJsonConverter()
+  DateTime? get time => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user')
   String? get userName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'company_name')
+  @JsonKey(name: 'company')
   String? get companyName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,9 +43,9 @@ abstract class $MoneyCapitalModelCopyWith<$Res> {
   $Res call(
       {int? id,
       num value,
-      DateTime time,
-      @JsonKey(name: 'user_name') String? userName,
-      @JsonKey(name: 'company_name') String? companyName});
+      @DatetimeJsonConverter() DateTime? time,
+      @JsonKey(name: 'user') String? userName,
+      @JsonKey(name: 'company') String? companyName});
 }
 
 /// @nodoc
@@ -76,7 +77,7 @@ class _$MoneyCapitalModelCopyWithImpl<$Res>
       time: time == freezed
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       userName: userName == freezed
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -99,9 +100,9 @@ abstract class _$$_MoneyCapitalModelCopyWith<$Res>
   $Res call(
       {int? id,
       num value,
-      DateTime time,
-      @JsonKey(name: 'user_name') String? userName,
-      @JsonKey(name: 'company_name') String? companyName});
+      @DatetimeJsonConverter() DateTime? time,
+      @JsonKey(name: 'user') String? userName,
+      @JsonKey(name: 'company') String? companyName});
 }
 
 /// @nodoc
@@ -135,7 +136,7 @@ class __$$_MoneyCapitalModelCopyWithImpl<$Res>
       time: time == freezed
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       userName: userName == freezed
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -154,9 +155,9 @@ class _$_MoneyCapitalModel implements _MoneyCapitalModel {
   const _$_MoneyCapitalModel(
       {this.id,
       required this.value,
-      required this.time,
-      @JsonKey(name: 'user_name') this.userName,
-      @JsonKey(name: 'company_name') this.companyName});
+      @DatetimeJsonConverter() this.time,
+      @JsonKey(name: 'user') this.userName,
+      @JsonKey(name: 'company') this.companyName});
 
   factory _$_MoneyCapitalModel.fromJson(Map<String, dynamic> json) =>
       _$$_MoneyCapitalModelFromJson(json);
@@ -166,12 +167,13 @@ class _$_MoneyCapitalModel implements _MoneyCapitalModel {
   @override
   final num value;
   @override
-  final DateTime time;
+  @DatetimeJsonConverter()
+  final DateTime? time;
   @override
-  @JsonKey(name: 'user_name')
+  @JsonKey(name: 'user')
   final String? userName;
   @override
-  @JsonKey(name: 'company_name')
+  @JsonKey(name: 'company')
   final String? companyName;
 
   @override
@@ -220,9 +222,9 @@ abstract class _MoneyCapitalModel implements MoneyCapitalModel {
   const factory _MoneyCapitalModel(
           {final int? id,
           required final num value,
-          required final DateTime time,
-          @JsonKey(name: 'user_name') final String? userName,
-          @JsonKey(name: 'company_name') final String? companyName}) =
+          @DatetimeJsonConverter() final DateTime? time,
+          @JsonKey(name: 'user') final String? userName,
+          @JsonKey(name: 'company') final String? companyName}) =
       _$_MoneyCapitalModel;
 
   factory _MoneyCapitalModel.fromJson(Map<String, dynamic> json) =
@@ -233,12 +235,13 @@ abstract class _MoneyCapitalModel implements MoneyCapitalModel {
   @override
   num get value;
   @override
-  DateTime get time;
+  @DatetimeJsonConverter()
+  DateTime? get time;
   @override
-  @JsonKey(name: 'user_name')
+  @JsonKey(name: 'user')
   String? get userName;
   @override
-  @JsonKey(name: 'company_name')
+  @JsonKey(name: 'company')
   String? get companyName;
   @override
   @JsonKey(ignore: true)

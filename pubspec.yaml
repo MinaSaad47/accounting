@@ -47,6 +47,7 @@ dependencies:
   flutter_form_builder: ^7.5.0
   form_builder_validators: ^8.3.0
   adaptive_dialog: ^1.8.0
+  flutter_speed_dial: ^6.0.0
   cache:
     path: packages/cache
   cache_sharedpref:

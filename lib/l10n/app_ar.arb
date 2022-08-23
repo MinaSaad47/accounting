@@ -5,6 +5,7 @@
   "edit": "تعديل {input}",
   "save": "حفظ {input}",
   "expect": "يجب ادخال {input}",
+  "delete": "حذف",
   "number": "رقم",
   "settings": "الاعدادات",
   "displayMore": "عرض المزيد",

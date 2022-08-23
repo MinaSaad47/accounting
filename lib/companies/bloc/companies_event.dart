@@ -28,3 +28,12 @@ class CompaniesEditRequested extends CompaniesEvent {
   @override
   List<Object?> get props => [company];
 }
+
+class MoneyCapitalCreateRequested extends CompaniesEvent {
+  final MoneyCapitalModel moneyCapital;
+  final CompanyModel company;
+
+  MoneyCapitalCreateRequested(this.moneyCapital, this.company);
+  @override
+  List<Object?> get props => [moneyCapital, company];
+}

@@ -13,4 +13,8 @@ abstract class AccountingApi {
   });
 
   Future<ApiResponse<UserModel>> createUser(UserModel user);
+  Future<ApiResponse<MoneyCapitalModel>> createMoneyCapital({
+    required int companyId,
+    required MoneyCapitalModel moneyCapitalModel,
+  });
 }
