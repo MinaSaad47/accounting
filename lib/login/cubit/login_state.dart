@@ -1,33 +1,48 @@
 part of 'login_cubit.dart';
 
-abstract class LoginState extends Equatable {
-  const LoginState();
+enum LoginStatus {
+  initial,
+  loading,
+  success,
+  failure,
 }
 
-class LoginInitial extends LoginState {
-  @override
-  List<Object> get props => [];
+enum LoginAction {
+  none,
+  login,
+  get,
 }
 
-class LoginSuccess extends LoginState {
-  final String token, message;
+class LoginState extends Equatable {
+  final UserModel? user;
+  final String token;
+  final String message;
 
-  const LoginSuccess(this.token, this.message);
+  final LoginStatus status;
+  final LoginAction action;
+
+  const LoginState(
+      {this.user,
+      this.token = '',
+      this.message = '',
+      this.action = LoginAction.none,
+      this.status = LoginStatus.initial});
+
+  LoginState copyWith({
+    UserModel? user,
+    String? token,
+    String? message,
+    LoginAction? action,
+    LoginStatus? status,
+  }) =>
+      LoginState(
+        user: user ?? this.user,
+        token: token ?? this.token,
+        message: message ?? this.message,
+        action: action ?? this.action,
+        status: status ?? this.status,
+      );
 
   @override
-  List<Object?> get props => [token, message];
-}
-
-class LoginFailure extends LoginState {
-  final String error;
-
-  const LoginFailure(this.error);
-
-  @override
-  List<Object?> get props => [error];
-}
-
-class LoginInProgress extends LoginState {
-  @override
-  List<Object?> get props => [];
+  List<Object?> get props => [user, token, message, action, status];
 }

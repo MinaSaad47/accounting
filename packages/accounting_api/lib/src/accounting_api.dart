@@ -17,4 +17,10 @@ abstract class AccountingApi {
     required int companyId,
     required MoneyCapitalModel moneyCapitalModel,
   });
+
+  Future<ApiResponse<void>> deleteMoneyCapital({
+    required int id,
+  });
+
+  Future<ApiResponse<UserModel>> getCurrentUser();
 }

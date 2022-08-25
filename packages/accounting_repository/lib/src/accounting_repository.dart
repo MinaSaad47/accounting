@@ -51,4 +51,10 @@ class AccountingRepository {
         companyId: companyId,
         moneyCapitalModel: moneyCapitalModel,
       );
+
+  Future<ApiResponse<void>> deleteMoneyCapital({required int id}) async =>
+      await _accountingApi.deleteMoneyCapital(id: id);
+
+  Future<ApiResponse<UserModel>> getCurrentUser() async =>
+      await _accountingApi.getCurrentUser();
 }

@@ -17,7 +17,9 @@ class FormBuilderDropdownWidget extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         double width = double.infinity;
-        if (constraints.maxWidth > 600) {
+        if (constraints.maxWidth > 1200) {
+          width = constraints.maxWidth / 3;
+        } else if (constraints.maxWidth > 600) {
           width = constraints.maxWidth / 2;
         }
         return ConstrainedBox(

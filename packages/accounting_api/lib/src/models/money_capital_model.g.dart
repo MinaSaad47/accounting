@@ -10,6 +10,7 @@ _$_MoneyCapitalModel _$$_MoneyCapitalModelFromJson(Map<String, dynamic> json) =>
     _$_MoneyCapitalModel(
       id: json['id'] as int?,
       value: json['value'] as num,
+      description: json['description'] as String,
       time: _$JsonConverterFromJson<String, DateTime>(
           json['time'], const DatetimeJsonConverter().fromJson),
       userName: json['user'] as String?,
@@ -21,6 +22,7 @@ Map<String, dynamic> _$$_MoneyCapitalModelToJson(
     <String, dynamic>{
       'id': instance.id,
       'value': instance.value,
+      'description': instance.description,
       'time': _$JsonConverterToJson<String, DateTime>(
           instance.time, const DatetimeJsonConverter().toJson),
       'user': instance.userName,

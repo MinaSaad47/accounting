@@ -1,52 +1,44 @@
 part of 'employees_cubit.dart';
 
-abstract class EmployeesState extends Equatable {
-  const EmployeesState();
-
-  @override
-  List<Object> get props => [];
+enum EmployeeStatus {
+  initial,
+  loading,
+  success,
+  failure,
 }
 
-class EmployeesInitial extends EmployeesState {}
+enum EmployeeAction {
+  none,
+  get,
+  create,
+}
 
-class EmployeesGetInProgress extends EmployeesState {}
-
-class EmployeesGetSuccess extends EmployeesState {
+class EmployeesState extends Equatable {
+  final List<UserModel> list;
   final String message;
-  final List<UserModel> users;
+  final EmployeeAction action;
+  final EmployeeStatus status;
 
-  const EmployeesGetSuccess(this.message, this.users);
+  const EmployeesState({
+    this.list = const [],
+    this.message = '',
+    this.action = EmployeeAction.none,
+    this.status = EmployeeStatus.initial,
+  });
 
-  @override
-  List<Object> get props => [message, users];
-}
-
-class EmployeesGetFailure extends EmployeesState {
-  final String error;
-
-  const EmployeesGetFailure(this.error);
-
-  @override
-  List<Object> get props => [error];
-}
-
-class EmployeeCreateInProgress extends EmployeesState {}
-
-class EmployeeCreateSuccess extends EmployeesState {
-  final UserModel userModel;
-  final String message;
-
-  const EmployeeCreateSuccess(this.userModel, this.message);
+  EmployeesState copyWith({
+    EmployeeAction? action,
+    EmployeeStatus? status,
+    List<UserModel>? list,
+    String? message,
+  }) =>
+      EmployeesState(
+        action: action ?? this.action,
+        list: list ?? this.list,
+        status: status ?? this.status,
+        message: message ?? this.message,
+      );
 
   @override
-  List<Object> get props => [userModel, message];
-}
-
-class EmployeeCreateFailure extends EmployeesState {
-  final String error;
-
-  const EmployeeCreateFailure(this.error);
-
-  @override
-  List<Object> get props => [error];
+  List<Object> get props => [action, message, list, status];
 }

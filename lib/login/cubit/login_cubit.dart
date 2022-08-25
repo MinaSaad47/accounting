@@ -11,17 +11,50 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit({
     required this.accountingRepository,
     required this.cachedRepository,
-  }) : super(LoginInitial());
+  }) : super(const LoginState());
 
   Future loginUser(UserModel user) async {
-    emit(LoginInProgress());
+    emit(state.copyWith(
+      action: LoginAction.login,
+      status: LoginStatus.loading,
+    ));
     var response = await accountingRepository.loginUser(user);
     if (response.status) {
       log.d('Token: ${response.data}');
       cachedRepository.token = response.data;
-      emit(LoginSuccess(response.data as String, response.message));
+      emit(state.copyWith(
+          action: LoginAction.login,
+          status: LoginStatus.success,
+          message: response.message,
+          token: response.data));
     } else {
-      emit(LoginFailure(response.message));
+      emit(state.copyWith(
+        action: LoginAction.login,
+        status: LoginStatus.failure,
+        message: response.message,
+      ));
+    }
+  }
+
+  Future getCurrentUser() async {
+    emit(state.copyWith(
+      action: LoginAction.get,
+      status: LoginStatus.loading,
+    ));
+    var response = await accountingRepository.getCurrentUser();
+    if (response.status) {
+      emit(state.copyWith(
+        action: LoginAction.get,
+        status: LoginStatus.success,
+        user: response.data,
+        message: response.message,
+      ));
+    } else {
+      emit(state.copyWith(
+        action: LoginAction.get,
+        status: LoginStatus.failure,
+        message: response.message,
+      ));
     }
   }
 }

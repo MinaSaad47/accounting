@@ -1,8 +1,11 @@
 import 'package:accounting/common/common.dart';
 import 'package:accounting/companies/companies.dart';
 import 'package:accounting/employees/view/employess_page.dart';
+import 'package:accounting/login/cubit/login_cubit.dart';
 import 'package:accounting/settings/settings.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({Key? key}) : super(key: key);
@@ -16,6 +19,50 @@ class DrawerWidget extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
+              BlocBuilder<LoginCubit, LoginState>(
+                builder: (context, state) {
+                  return Row(
+                    children: [
+                      AvatarGlow(
+                        glowColor: Theme.of(context).primaryColor,
+                        endRadius: 60,
+                        child: Material(
+                          elevation: 8,
+                          shape: const CircleBorder(),
+                          child: CircleAvatar(
+                            radius: 40,
+                            child: Icon(
+                              state.user!.isAdmin
+                                  ? Icons.admin_panel_settings_outlined
+                                  : Icons.person_outline,
+                              size: 40,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(Icons.person_outline),
+                              const SizedBox(width: 5),
+                              Text(state.user!.name),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              const Icon(Icons.currency_exchange_outlined),
+                              const SizedBox(width: 5),
+                              Text('${state.user!.value}'),
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  );
+                },
+              ),
               ListView(
                 shrinkWrap: true,
                 children: [

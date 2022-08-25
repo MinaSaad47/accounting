@@ -9,6 +9,7 @@ class MoneyCapitalModel with _$MoneyCapitalModel {
   const factory MoneyCapitalModel({
     int? id,
     required num value,
+    required String description,
     @DatetimeJsonConverter() DateTime? time,
     @JsonKey(name: 'user') String? userName,
     @JsonKey(name: 'company') String? companyName,

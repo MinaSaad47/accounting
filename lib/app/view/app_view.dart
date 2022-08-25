@@ -15,8 +15,7 @@ class AppView extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
-          initialRoute:
-              context.read<CachedRepository>().token != null ? '/' : '/login',
+          initialRoute: '/login',
           routes: {
             '/': (context) => const AppLayout(),
             '/login': (context) => const LoginPage(),

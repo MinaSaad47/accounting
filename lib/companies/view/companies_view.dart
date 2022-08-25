@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:accounting/common/common.dart';
-import 'package:accounting/companies/bloc/companies_bloc.dart';
+import 'package:accounting/companies/bloc/money_capital_bloc.dart';
+import 'package:accounting/companies/companies.dart';
+import 'package:accounting/login/cubit/login_cubit.dart';
 import 'package:accounting_repository/accounting_repository.dart';
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:intl/intl.dart';
 
 class CompaniesView extends StatelessWidget {
   const CompaniesView({Key? key}) : super(key: key);
@@ -83,31 +86,7 @@ class _BuildSearchCompany extends StatelessWidget {
                   return ListView.separated(
                     itemBuilder: (context, index) {
                       var company = state.companies[index];
-                      return ListItemWidget(
-                        title: company.id.toString(),
-                        onPressed: () {
-                          Navigator.of(context)
-                              .push(_BuildCompanyInfo.route(context, company));
-                        },
-                        labels: [
-                          TextLabelWidget(
-                            icon: Icons.featured_play_list_outlined,
-                            title: AppLocalizations.of(context)!.registerNumber,
-                            content: company.registerNumber,
-                          ),
-                          TextLabelWidget(
-                            icon: Icons.person,
-                            title: AppLocalizations.of(context)!.funderName,
-                            content: company.funders[0].name,
-                          ),
-                          TextLabelWidget(
-                            icon: Icons.featured_play_list_outlined,
-                            title:
-                                AppLocalizations.of(context)!.commercialFeature,
-                            content: company.commercialFeature,
-                          )
-                        ],
-                      );
+                      return _BuildCompanyItem(company: company);
                     },
                     separatorBuilder: (context, index) => Container(
                       margin: const EdgeInsets.all(10),
@@ -149,8 +128,17 @@ class _BuildCompanyInfo extends StatefulWidget {
 
   static route(BuildContext context, CompanyModel companyModel) =>
       MaterialPageRoute(
-        builder: (_) => BlocProvider<CompaniesBloc>.value(
-          value: context.read<CompaniesBloc>(),
+        builder: (_) => MultiBlocProvider(
+          providers: [
+            BlocProvider<CompaniesBloc>.value(
+              value: context.read<CompaniesBloc>(),
+            ),
+            BlocProvider(
+              create: (context) => MoneyCapitalBloc(
+                context.read<AccountingRepository>(),
+              )..add(MoneyCapitalGetRequested(companyId: companyModel.id)),
+            ),
+          ],
           child: _BuildCompanyInfo(company: companyModel),
         ),
       );
@@ -168,84 +156,83 @@ class _BuildCompanyInfoState extends State<_BuildCompanyInfo> {
         title: Text(
             AppLocalizations.of(context)!.edit(widget.company.id!.toString())),
       ),
-      floatingActionButton: BlocConsumer<CompaniesBloc, CompaniesState>(
-        listener: (context, state) {
-          if (state is MoneyCapitalCreateSuccess) {
-            showToast(context, message: state.message);
-          } else if (state is MoneyCapitalCreateFailure) {
-            showToast(context, message: state.error, level: ToastLevel.error);
-          }
-        },
-        builder: (context, state) {
-          if (state is MoneyCapitalCreateInProgress) {
-            return const CircularProgressIndicator();
-          } else {
-            return SpeedDial(
-              overlayOpacity: 0,
-              animatedIcon: AnimatedIcons.add_event,
-              children: [
-                SpeedDialChild(
-                  onTap: () {
-                    showTextInputDialog(
-                      context: context,
-                      textFields: [
-                        DialogTextField(
-                          hintText: AppLocalizations.of(context)!.funderName,
-                          validator: FormBuilderValidators.required(
-                            errorText: AppLocalizations.of(context)!.expect(
-                                AppLocalizations.of(context)!.funderName),
+      floatingActionButton: SpeedDial(
+        overlayOpacity: 0,
+        animatedIcon: AnimatedIcons.add_event,
+        children: [
+          SpeedDialChild(
+            onTap: () {
+              showTextInputDialog(
+                context: context,
+                textFields: [
+                  DialogTextField(
+                    hintText: AppLocalizations.of(context)!.funderName,
+                    validator: FormBuilderValidators.required(
+                      errorText: AppLocalizations.of(context)!
+                          .expect(AppLocalizations.of(context)!.funderName),
+                    ),
+                  )
+                ],
+              );
+            },
+            child: const Icon(Icons.person_outline),
+            label: AppLocalizations.of(context)!
+                .add(AppLocalizations.of(context)!.funders),
+          ),
+          SpeedDialChild(
+            onTap: () {
+              showTextInputDialog(
+                context: context,
+                title: AppLocalizations.of(context)!.moneyCapital,
+                textFields: [
+                  DialogTextField(
+                    hintText: AppLocalizations.of(context)!.moneyCapital,
+                    keyboardType: TextInputType.number,
+                    validator: FormBuilderValidators.compose(
+                      [
+                        FormBuilderValidators.required(
+                          errorText: AppLocalizations.of(context)!.expect(
+                            AppLocalizations.of(context)!.moneyCapital,
                           ),
-                        )
-                      ],
-                    );
-                  },
-                  child: const Icon(Icons.person_outline),
-                  label: AppLocalizations.of(context)!
-                      .add(AppLocalizations.of(context)!.funders),
-                ),
-                SpeedDialChild(
-                  onTap: () {
-                    showTextInputDialog(
-                      context: context,
-                      textFields: [
-                        DialogTextField(
-                          hintText: AppLocalizations.of(context)!.moneyCapital,
-                          validator: FormBuilderValidators.compose(
-                            [
-                              FormBuilderValidators.required(
-                                errorText: AppLocalizations.of(context)!.expect(
-                                    AppLocalizations.of(context)!.funderName),
-                              ),
-                              FormBuilderValidators.numeric(
-                                errorText: AppLocalizations.of(context)!.expect(
-                                    AppLocalizations.of(context)!.number),
-                              ),
-                            ],
+                        ),
+                        FormBuilderValidators.numeric(
+                          errorText: AppLocalizations.of(context)!.expect(
+                            AppLocalizations.of(context)!.number,
                           ),
-                        )
+                        ),
                       ],
-                    ).then(
-                      (inputs) {
-                        var moneyCapital = MoneyCapitalModel(
-                          value: num.parse(inputs![0]),
-                        );
-                        context.read<CompaniesBloc>().add(
-                              MoneyCapitalCreateRequested(
-                                moneyCapital,
-                                widget.company,
-                              ),
-                            );
-                      },
-                    );
-                  },
-                  child: const Icon(Icons.currency_exchange_outlined),
-                  label: AppLocalizations.of(context)!
-                      .add(AppLocalizations.of(context)!.moneyCapital),
-                ),
-              ],
-            );
-          }
-        },
+                    ),
+                  ),
+                  DialogTextField(
+                    autocorrect: true,
+                    maxLines: 4,
+                    hintText: AppLocalizations.of(context)!.description,
+                    validator: FormBuilderValidators.required(
+                      errorText: AppLocalizations.of(context)!
+                          .expect(AppLocalizations.of(context)!.description),
+                    ),
+                  )
+                ],
+              ).then(
+                (inputs) {
+                  var moneyCapital = MoneyCapitalModel(
+                    value: num.parse(inputs![0]),
+                    description: inputs[1],
+                  );
+                  context.read<MoneyCapitalBloc>().add(
+                        MoneyCapitalCreateRequested(
+                          moneyCapital,
+                          widget.company,
+                        ),
+                      );
+                },
+              );
+            },
+            child: const Icon(Icons.currency_exchange_outlined),
+            label: AppLocalizations.of(context)!
+                .add(AppLocalizations.of(context)!.moneyCapital),
+          ),
+        ],
       ),
       floatingActionButtonLocation:
           context.read<CachedRepository>().locale?.languageCode == 'ar'
@@ -253,46 +240,55 @@ class _BuildCompanyInfoState extends State<_BuildCompanyInfo> {
               : FloatingActionButtonLocation.endFloat,
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          child: ExpansionPanelList(
-            expandedHeaderPadding: const EdgeInsets.all(20),
-            children: [
-              ExpansionPanel(
-                isExpanded: _isOpen[0],
-                headerBuilder: (context, isExpanded) => ListTile(
-                  leading: const Icon(Icons.edit_outlined),
-                  title: Text(
-                    AppLocalizations.of(context)!
-                        .edit(AppLocalizations.of(context)!.company),
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ),
-                body: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: _BuildCompanyEditForm(company: widget.company),
+        child: Column(
+          children: [
+            _BuildCompanyItem(company: widget.company),
+            const SizedBox(height: 30),
+            Expanded(
+              child: SingleChildScrollView(
+                child: ExpansionPanelList(
+                  expandedHeaderPadding: const EdgeInsets.all(20),
+                  children: [
+                    ExpansionPanel(
+                      isExpanded: _isOpen[0],
+                      headerBuilder: (context, isExpanded) => ListTile(
+                        leading: const Icon(Icons.edit_outlined),
+                        title: Text(
+                          AppLocalizations.of(context)!
+                              .edit(AppLocalizations.of(context)!.company),
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ),
+                      body: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: _BuildCompanyEditForm(company: widget.company),
+                      ),
+                    ),
+                    ExpansionPanel(
+                      isExpanded: _isOpen[1],
+                      headerBuilder: (context, isExpanded) => ListTile(
+                        leading: const Icon(Icons.currency_exchange_outlined),
+                        title: Text(
+                          AppLocalizations.of(context)!.moneyCapital,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ),
+                      body: _BuildMoneyCapitals(
+                        key: Key(Random.secure().nextDouble().toString()),
+                        companyId: widget.company.id!,
+                      ),
+                    ),
+                  ],
+                  expansionCallback: (index, isOpen) {
+                    setState(() {
+                      _isOpen.fillRange(0, _isOpen.length, false);
+                      _isOpen[index] = !isOpen;
+                    });
+                  },
                 ),
               ),
-              ExpansionPanel(
-                isExpanded: _isOpen[1],
-                headerBuilder: (context, isExpanded) => ListTile(
-                  leading: const Icon(Icons.currency_exchange_outlined),
-                  title: Text(
-                    AppLocalizations.of(context)!.moneyCapital,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ),
-                body: _BuildMoneyCapitals(
-                  moneyCapitals: widget.company.moneyCapitals,
-                ),
-              ),
-            ],
-            expansionCallback: (index, isOpen) {
-              setState(() {
-                _isOpen.fillRange(0, _isOpen.length, false);
-                _isOpen[index] = !isOpen;
-              });
-            },
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -315,6 +311,7 @@ class _BuildCompanyEditFormState extends State<_BuildCompanyEditForm> {
     return FormBuilder(
       key: formKey,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           SingleChildScrollView(
             child: Column(
@@ -564,10 +561,10 @@ class _BuildCompanyEditFormState extends State<_BuildCompanyEditForm> {
 }
 
 class _BuildMoneyCapitals extends StatefulWidget {
-  final List<MoneyCapitalModel>? moneyCapitals;
+  final int companyId;
   const _BuildMoneyCapitals({
     Key? key,
-    this.moneyCapitals,
+    required this.companyId,
   }) : super(key: key);
 
   @override
@@ -577,82 +574,49 @@ class _BuildMoneyCapitals extends StatefulWidget {
 class _BuildMoneyCapitalsState extends State<_BuildMoneyCapitals> {
   @override
   Widget build(BuildContext context) {
-    var moneyCapitals = [
-      MoneyCapitalModel(value: 20, time: DateTime.now()),
-      MoneyCapitalModel(value: 30, time: DateTime.now()),
-      MoneyCapitalModel(value: 33.13, time: DateTime.now()),
-      MoneyCapitalModel(value: 1110.23, time: DateTime.now()),
-    ];
-    log.d('$moneyCapitals');
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: ListView.separated(
-        shrinkWrap: true,
-        itemBuilder: (context, index) => Row(
-          children: [
-            Expanded(
-              child: ListTile(
-                leading: const CircleAvatar(
-                  child: Icon(Icons.currency_exchange_rounded),
+    return BlocConsumer<MoneyCapitalBloc, MoneyCapitalState>(
+      listener: (context, state) {
+        if (state.status == MoneyCapitalStatus.failure) {
+          showToast(context, message: state.message, level: ToastLevel.error);
+        }
+        if (state.action != MoneyCapitalAction.get &&
+            state.status == MoneyCapitalStatus.success) {
+          context
+              .read<MoneyCapitalBloc>()
+              .add(MoneyCapitalGetRequested(companyId: widget.companyId));
+          context.read<LoginCubit>().getCurrentUser();
+        }
+      },
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              if (state.status == MoneyCapitalStatus.loading)
+                const LinearProgressIndicator(),
+              ListView.separated(
+                shrinkWrap: true,
+                itemBuilder: (context, index) => MoneyCapitalItemWidget(
+                  moneyCapital: state.list[index],
+                  onDelete: () {
+                    context.read<MoneyCapitalBloc>().add(
+                          MoneyCapitalDeleteRequested(
+                            state.list[index].id!,
+                          ),
+                        );
+                  },
                 ),
-                title: Text('${moneyCapitals[index].value}'),
-              ),
-            ),
-            Expanded(
-              child: ListTile(
-                leading: const CircleAvatar(
-                  child: Icon(Icons.person_outline),
+                separatorBuilder: (context, index) => Container(
+                  margin: const EdgeInsets.all(20),
+                  height: 2,
+                  color: Theme.of(context).primaryColor.withOpacity(0.3),
                 ),
-                title: Text('${moneyCapitals[index].userName}'),
+                itemCount: state.list.length,
               ),
-            ),
-            Expanded(
-              child: ListTile(
-                leading: const CircleAvatar(
-                  child: Icon(Icons.date_range_outlined),
-                ),
-                title: Text(
-                  DateFormat.MEd().format(moneyCapitals[index].time!),
-                ),
-              ),
-            ),
-            const Spacer(),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Theme.of(context).colorScheme.secondary,
-              ),
-              onPressed: () {},
-              child: Row(
-                children: [
-                  const Icon(Icons.edit_outlined),
-                  const SizedBox(width: 4),
-                  Text(AppLocalizations.of(context)!.edit('')),
-                ],
-              ),
-            ),
-            const SizedBox(width: 5),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Theme.of(context).colorScheme.error,
-              ),
-              onPressed: () {},
-              child: Row(
-                children: [
-                  const Icon(Icons.delete_outline),
-                  const SizedBox(width: 4),
-                  Text(AppLocalizations.of(context)!.delete),
-                ],
-              ),
-            ),
-          ],
-        ),
-        separatorBuilder: (context, index) => Container(
-          margin: const EdgeInsets.all(20),
-          height: 2,
-          color: Theme.of(context).primaryColor.withOpacity(0.3),
-        ),
-        itemCount: moneyCapitals.length,
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -737,6 +701,38 @@ class _BuildFundersState extends State<_BuildFunders> {
               .toList(),
         ],
       ),
+    );
+  }
+}
+
+class _BuildCompanyItem extends StatelessWidget {
+  final CompanyModel company;
+  const _BuildCompanyItem({Key? key, required this.company}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListItemWidget(
+      title: company.id.toString(),
+      onPressed: () {
+        Navigator.of(context).push(_BuildCompanyInfo.route(context, company));
+      },
+      labels: [
+        TextLabelWidget(
+          icon: Icons.featured_play_list_outlined,
+          title: AppLocalizations.of(context)!.registerNumber,
+          content: company.registerNumber,
+        ),
+        TextLabelWidget(
+          icon: Icons.person,
+          title: AppLocalizations.of(context)!.funderName,
+          content: company.funders[0].name,
+        ),
+        TextLabelWidget(
+          icon: Icons.featured_play_list_outlined,
+          title: AppLocalizations.of(context)!.commercialFeature,
+          content: company.commercialFeature,
+        )
+      ],
     );
   }
 }

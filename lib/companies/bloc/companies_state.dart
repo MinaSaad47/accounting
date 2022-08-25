@@ -55,27 +55,3 @@ class CompaniesSaveFailure extends CompaniesState {
   @override
   List<Object?> get props => [error];
 }
-
-class MoneyCapitalCreateInProgress extends CompaniesState {
-  @override
-  List<Object?> get props => [];
-}
-
-class MoneyCapitalCreateSuccess extends CompaniesState {
-  final String message;
-  final MoneyCapitalModel moneyCapital;
-
-  MoneyCapitalCreateSuccess(this.moneyCapital, this.message);
-
-  @override
-  List<Object?> get props => [message, moneyCapital];
-}
-
-class MoneyCapitalCreateFailure extends CompaniesState {
-  final String error;
-
-  MoneyCapitalCreateFailure(this.error);
-
-  @override
-  List<Object?> get props => [error];
-}

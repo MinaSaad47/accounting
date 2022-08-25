@@ -48,6 +48,8 @@
   "funderName": "اسم الممول",
   "funders": "الممولون",
 
+  "description": "وصف",
+
   "password": "رقم المرور",
 
   "employee": "موظف",

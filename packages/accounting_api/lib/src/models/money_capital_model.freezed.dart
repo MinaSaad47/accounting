@@ -22,6 +22,7 @@ MoneyCapitalModel _$MoneyCapitalModelFromJson(Map<String, dynamic> json) {
 mixin _$MoneyCapitalModel {
   int? get id => throw _privateConstructorUsedError;
   num get value => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
   @DatetimeJsonConverter()
   DateTime? get time => throw _privateConstructorUsedError;
   @JsonKey(name: 'user')
@@ -43,6 +44,7 @@ abstract class $MoneyCapitalModelCopyWith<$Res> {
   $Res call(
       {int? id,
       num value,
+      String description,
       @DatetimeJsonConverter() DateTime? time,
       @JsonKey(name: 'user') String? userName,
       @JsonKey(name: 'company') String? companyName});
@@ -61,6 +63,7 @@ class _$MoneyCapitalModelCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? value = freezed,
+    Object? description = freezed,
     Object? time = freezed,
     Object? userName = freezed,
     Object? companyName = freezed,
@@ -74,6 +77,10 @@ class _$MoneyCapitalModelCopyWithImpl<$Res>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as num,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
       time: time == freezed
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
@@ -100,6 +107,7 @@ abstract class _$$_MoneyCapitalModelCopyWith<$Res>
   $Res call(
       {int? id,
       num value,
+      String description,
       @DatetimeJsonConverter() DateTime? time,
       @JsonKey(name: 'user') String? userName,
       @JsonKey(name: 'company') String? companyName});
@@ -120,6 +128,7 @@ class __$$_MoneyCapitalModelCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? value = freezed,
+    Object? description = freezed,
     Object? time = freezed,
     Object? userName = freezed,
     Object? companyName = freezed,
@@ -133,6 +142,10 @@ class __$$_MoneyCapitalModelCopyWithImpl<$Res>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as num,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
       time: time == freezed
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
@@ -155,6 +168,7 @@ class _$_MoneyCapitalModel implements _MoneyCapitalModel {
   const _$_MoneyCapitalModel(
       {this.id,
       required this.value,
+      required this.description,
       @DatetimeJsonConverter() this.time,
       @JsonKey(name: 'user') this.userName,
       @JsonKey(name: 'company') this.companyName});
@@ -167,6 +181,8 @@ class _$_MoneyCapitalModel implements _MoneyCapitalModel {
   @override
   final num value;
   @override
+  final String description;
+  @override
   @DatetimeJsonConverter()
   final DateTime? time;
   @override
@@ -178,7 +194,7 @@ class _$_MoneyCapitalModel implements _MoneyCapitalModel {
 
   @override
   String toString() {
-    return 'MoneyCapitalModel(id: $id, value: $value, time: $time, userName: $userName, companyName: $companyName)';
+    return 'MoneyCapitalModel(id: $id, value: $value, description: $description, time: $time, userName: $userName, companyName: $companyName)';
   }
 
   @override
@@ -188,6 +204,8 @@ class _$_MoneyCapitalModel implements _MoneyCapitalModel {
             other is _$_MoneyCapitalModel &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.value, value) &&
+            const DeepCollectionEquality()
+                .equals(other.description, description) &&
             const DeepCollectionEquality().equals(other.time, time) &&
             const DeepCollectionEquality().equals(other.userName, userName) &&
             const DeepCollectionEquality()
@@ -200,6 +218,7 @@ class _$_MoneyCapitalModel implements _MoneyCapitalModel {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(value),
+      const DeepCollectionEquality().hash(description),
       const DeepCollectionEquality().hash(time),
       const DeepCollectionEquality().hash(userName),
       const DeepCollectionEquality().hash(companyName));
@@ -222,6 +241,7 @@ abstract class _MoneyCapitalModel implements MoneyCapitalModel {
   const factory _MoneyCapitalModel(
           {final int? id,
           required final num value,
+          required final String description,
           @DatetimeJsonConverter() final DateTime? time,
           @JsonKey(name: 'user') final String? userName,
           @JsonKey(name: 'company') final String? companyName}) =
@@ -234,6 +254,8 @@ abstract class _MoneyCapitalModel implements MoneyCapitalModel {
   int? get id;
   @override
   num get value;
+  @override
+  String get description;
   @override
   @DatetimeJsonConverter()
   DateTime? get time;

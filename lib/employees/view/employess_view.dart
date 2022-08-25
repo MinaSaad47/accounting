@@ -1,4 +1,6 @@
 import 'package:accounting/common/common.dart';
+import 'package:accounting/companies/companies.dart';
+import 'package:accounting/employees/cubit/money_capital_cubit.dart';
 import 'package:accounting/employees/empolyees.dart';
 import 'package:accounting_repository/accounting_repository.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +18,6 @@ class EmployessView extends StatelessWidget {
         appBar: AppBarWidget(
           title: AppLocalizations.of(context)!.employees,
           tabBar: TabBar(
-            onTap: (index) => {
-              if (index == 0) {context.read<EmployeesCubit>().getEmployees()}
-            },
             tabs: [
               Tab(
                 child: Text(AppLocalizations.of(context)!.employees),
@@ -53,16 +52,19 @@ class _BuildListEmployees extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<EmployeesCubit, EmployeesState>(
       listener: (context, state) {
-        if (state is EmployeesGetFailure) {
+        if (state.action == EmployeeAction.get &&
+            state.status == EmployeeStatus.failure) {
           showToast(
             context,
-            message: state.error,
+            message: state.message,
             level: ToastLevel.error,
           );
         }
       },
       builder: (context, state) {
-        if (state is EmployeesGetSuccess) {
+        if (state.status == EmployeeStatus.loading) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
           return Padding(
             padding: const EdgeInsets.all(20.0),
             child: ListView.separated(
@@ -72,31 +74,25 @@ class _BuildListEmployees extends StatelessWidget {
                     TextLabelWidget(
                       icon: Icons.person_outline,
                       title: AppLocalizations.of(context)!.userName,
-                      content: state.users[index].name,
+                      content: state.list[index].name,
                     ),
                     TextLabelWidget(
                       icon: Icons.money_outlined,
                       title: AppLocalizations.of(context)!.moneyCapital,
-                      content: '${state.users[index].value}',
+                      content: '${state.list[index].value}',
                     )
                   ],
-                  title: '1',
+                  title: '${state.list[index].id}',
                   onPressed: () {
                     Navigator.of(context)
-                        .push(_BuildEmpolyeeInfo.route(state.users[index]));
+                        .push(_BuildEmpolyeeInfo.route(state.list[index]));
                   },
                 );
               },
               separatorBuilder: (context, index) => const SizedBox(height: 20),
-              itemCount: state.users.length,
+              itemCount: state.list.length,
             ),
           );
-        } else if (state is EmployeesGetInProgress) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else {
-          return Container();
         }
       },
     );
@@ -109,7 +105,12 @@ class _BuildEmpolyeeInfo extends StatelessWidget {
       : super(key: key);
 
   static route(UserModel userModel) => MaterialPageRoute(
-        builder: (context) => _BuildEmpolyeeInfo(userModel: userModel),
+        builder: (context) => BlocProvider(
+          create: (context) => MoneyCapitalCubit(
+            context.read<AccountingRepository>(),
+          )..getMoneyCapital(employeeId: userModel.id!),
+          child: _BuildEmpolyeeInfo(userModel: userModel),
+        ),
       );
 
   @override
@@ -141,18 +142,72 @@ class _BuildEmpolyeeInfo extends StatelessWidget {
               style: Theme.of(context).textTheme.headline2,
             ),
             Expanded(
-              child: ListView.separated(
-                itemBuilder: (context, index) => const SizedBox(
-                  height: 50,
+              child: SingleChildScrollView(
+                child: BlocBuilder<MoneyCapitalCubit, MoneyCapitalState>(
+                  builder: (context, state) {
+                    return _BuildEmployeeMoneyCapitals(
+                      companies: state.companies,
+                      moneyCapitals: state.moneyCapitals,
+                    );
+                  },
                 ),
-                separatorBuilder: (context, index) => Container(
-                  height: 2,
-                  color: Theme.of(context).primaryColor.withOpacity(0.4),
-                ),
-                itemCount: 5,
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _BuildEmployeeMoneyCapitals extends StatefulWidget {
+  final List<String> companies;
+  final List<List<MoneyCapitalModel>> moneyCapitals;
+  const _BuildEmployeeMoneyCapitals({
+    Key? key,
+    required this.companies,
+    required this.moneyCapitals,
+  }) : super(key: key);
+
+  @override
+  State<_BuildEmployeeMoneyCapitals> createState() =>
+      _BuildEmployeeMoneyCapitalsState();
+}
+
+class _BuildEmployeeMoneyCapitalsState
+    extends State<_BuildEmployeeMoneyCapitals> {
+  late List<bool> _isOpend = List.filled(widget.companies.length, false);
+
+  @override
+  Widget build(BuildContext context) {
+    return ExpansionPanelList(
+      expansionCallback: (index, isExpanded) {
+        setState(() {
+          _isOpend = List.filled(widget.companies.length, false);
+          _isOpend[index] = !isExpanded;
+        });
+      },
+      children: List.generate(
+        widget.companies.length,
+        (index) => ExpansionPanel(
+          isExpanded: _isOpend[index],
+          headerBuilder: (context, isExpanded) => ListTile(
+            leading: const Icon(Icons.business_outlined),
+            title: Text(widget.companies[index]),
+          ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
+            child: ListView.separated(
+              shrinkWrap: true,
+              itemBuilder: (context, innerIndex) => MoneyCapitalItemWidget(
+                moneyCapital: widget.moneyCapitals[index][innerIndex],
+              ),
+              separatorBuilder: (context, _) => const SizedBox(
+                height: 10,
+              ),
+              itemCount: widget.moneyCapitals[index].length,
+            ),
+          ),
         ),
       ),
     );
@@ -199,18 +254,21 @@ class _BuildAddEmployeeState extends State<_BuildAddEmployee> {
             const Spacer(),
             BlocConsumer<EmployeesCubit, EmployeesState>(
               listener: (context, state) {
-                if (state is EmployeeCreateSuccess) {
+                if (state.action == EmployeeAction.create &&
+                    state.status == EmployeeStatus.success) {
                   showToast(context, message: state.message);
-                } else if (state is EmployeeCreateFailure) {
+                  context.read<EmployeesCubit>().getEmployees();
+                } else if (state.action == EmployeeAction.create &&
+                    state.status == EmployeeStatus.failure) {
                   showToast(
                     context,
-                    message: state.error,
+                    message: state.message,
                     level: ToastLevel.error,
                   );
                 }
               },
               builder: (context, state) {
-                if (state is EmployeeCreateInProgress) {
+                if (state.status == EmployeeStatus.loading) {
                   return const CircularProgressIndicator();
                 } else {
                   return ElevatedButton(

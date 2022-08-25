@@ -22,7 +22,6 @@ class CompaniesBloc extends Bloc<CompaniesEvent, CompaniesState> {
       transformer: debounce(_duration),
     );
     on<CompaniesCreateRequested>(_onCreateRequested);
-    on<MoneyCapitalCreateRequested>(_onMoneyCapitalCreateRequested);
   }
 
   Future _onCreateRequested(
@@ -64,19 +63,4 @@ class CompaniesBloc extends Bloc<CompaniesEvent, CompaniesState> {
     }
   }
 
-  Future _onMoneyCapitalCreateRequested(
-    MoneyCapitalCreateRequested event,
-    Emitter<CompaniesState> emit,
-  ) async {
-    emit(MoneyCapitalCreateInProgress());
-    var response = await _accountingRepository.createMoneyCapital(
-      companyId: event.company.id!,
-      moneyCapitalModel: event.moneyCapital,
-    );
-    if (response.status) {
-      emit(MoneyCapitalCreateSuccess(response.data!, response.message));
-    } else {
-      emit(MoneyCapitalCreateFailure(response.message));
-    }
-  }
 }

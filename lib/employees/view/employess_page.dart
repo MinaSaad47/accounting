@@ -15,7 +15,7 @@ class EmployessPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => EmployeesCubit(
         context.read<AccountingRepository>(),
-      ),
+      )..getEmployees(),
       child: const EmployessView(),
     );
   }

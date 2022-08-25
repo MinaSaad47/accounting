@@ -7,26 +7,50 @@ part 'employees_state.dart';
 
 class EmployeesCubit extends Cubit<EmployeesState> {
   final AccountingRepository _accountingRepository;
-  EmployeesCubit(this._accountingRepository) : super(EmployeesInitial());
+  EmployeesCubit(this._accountingRepository) : super(const EmployeesState());
 
   Future getEmployees() async {
-    emit(EmployeesGetInProgress());
+    emit(state.copyWith(
+      action: EmployeeAction.get,
+      status: EmployeeStatus.loading,
+    ));
     var response = await _accountingRepository.getUsers();
     if (response.status) {
-      emit(EmployeesGetSuccess(response.message, response.data!));
+      emit(state.copyWith(
+        action: EmployeeAction.get,
+        status: EmployeeStatus.success,
+        list: response.data,
+        message: response.message,
+      ));
     } else {
       log.e(response.message);
-      emit(EmployeesGetFailure(response.message));
+      emit(state.copyWith(
+        action: EmployeeAction.get,
+        status: EmployeeStatus.failure,
+        message: response.message,
+      ));
     }
   }
 
   Future createEmployee(UserModel employee) async {
+    emit(state.copyWith(
+      action: EmployeeAction.create,
+      status: EmployeeStatus.loading,
+    ));
     var response = await _accountingRepository.createUser(employee);
     if (response.status) {
-      emit(EmployeeCreateSuccess(response.data!, response.message));
+      emit(state.copyWith(
+        action: EmployeeAction.create,
+        status: EmployeeStatus.success,
+        message: response.message,
+      ));
     } else {
       log.e(response.message);
-      emit(EmployeeCreateFailure(response.message));
+      emit(state.copyWith(
+        action: EmployeeAction.create,
+        status: EmployeeStatus.failure,
+        message: response.message,
+      ));
     }
   }
 }
