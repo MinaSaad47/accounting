@@ -13,7 +13,7 @@ Future main() async {
   var cachedRepository = await CachedRepository.instance(CacheSharedPref());
   var accountingRepository = AccountingRepository(
     AccountingDio(
-      baseUrl: 'http://localhost:8000/api/',
+      baseUrl: 'http://192.168.47.47:4747/api/',
       token: cachedRepository.token,
     ),
   );

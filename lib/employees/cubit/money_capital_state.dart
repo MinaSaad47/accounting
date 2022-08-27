@@ -33,6 +33,7 @@ class MoneyCapitalState extends Equatable {
     MoneyCapitalStatus? status,
     MoneyCapitalAction? action,
     String? message,
+    UserModel? user,
   }) =>
       MoneyCapitalState(
         moneyCapitals: moneyCapitals ?? this.moneyCapitals,

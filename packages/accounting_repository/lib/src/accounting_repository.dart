@@ -57,4 +57,16 @@ class AccountingRepository {
 
   Future<ApiResponse<UserModel>> getCurrentUser() async =>
       await _accountingApi.getCurrentUser();
+
+  Future<ApiResponse<UserModel>> payUser({
+    required int id,
+    required double value,
+  }) async =>
+      _accountingApi.payUser(id: id, value: value);
+
+  Future<ApiResponse<void>> deleteCompany({required int id}) async =>
+      await _accountingApi.deleteCompany(id: id);
+
+  Future<ApiResponse<void>> deleteUser({required int id}) async =>
+      await _accountingApi.deleteUser(id: id);
 }

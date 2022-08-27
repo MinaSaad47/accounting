@@ -53,4 +53,48 @@ class EmployeesCubit extends Cubit<EmployeesState> {
       ));
     }
   }
+
+  Future payEmployee({required int id, required double value}) async {
+    emit(state.copyWith(
+      action: EmployeeAction.pay,
+      status: EmployeeStatus.loading,
+    ));
+    var response = await _accountingRepository.payUser(id: id, value: value);
+    if (response.status) {
+      emit(state.copyWith(
+        action: EmployeeAction.pay,
+        status: EmployeeStatus.success,
+        message: response.message,
+      ));
+    } else {
+      log.e(response.message);
+      emit(state.copyWith(
+        action: EmployeeAction.pay,
+        status: EmployeeStatus.failure,
+        message: response.message,
+      ));
+    }
+  }
+
+  Future deleteEmployee({required int id}) async {
+    emit(state.copyWith(
+      action: EmployeeAction.delete,
+      status: EmployeeStatus.loading,
+    ));
+    var response = await _accountingRepository.deleteUser(id: id);
+    if (response.status) {
+      emit(state.copyWith(
+        action: EmployeeAction.delete,
+        status: EmployeeStatus.success,
+        message: response.message,
+      ));
+    } else {
+      log.e(response.message);
+      emit(state.copyWith(
+        action: EmployeeAction.delete,
+        status: EmployeeStatus.failure,
+        message: response.message,
+      ));
+    }
+  }
 }

@@ -2,7 +2,7 @@ import 'package:accounting/common/common.dart';
 import 'package:flutter/material.dart';
 
 class ListItemWidget extends StatelessWidget {
-  final List<TextLabelWidget> labels;
+  final List<Widget> labels;
   final String title;
   final Function()? onPressed;
   const ListItemWidget({

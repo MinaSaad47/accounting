@@ -22,6 +22,7 @@ class CompaniesBloc extends Bloc<CompaniesEvent, CompaniesState> {
       transformer: debounce(_duration),
     );
     on<CompaniesCreateRequested>(_onCreateRequested);
+    on<CompaniesDeleteRequested>(_onDeleteRequested);
   }
 
   Future _onCreateRequested(
@@ -63,4 +64,16 @@ class CompaniesBloc extends Bloc<CompaniesEvent, CompaniesState> {
     }
   }
 
+  Future _onDeleteRequested(
+    CompaniesDeleteRequested event,
+    Emitter<CompaniesState> emit,
+  ) async {
+    emit(CompaniesDeleteInProgress());
+    var response = await _accountingRepository.deleteCompany(id: event.id);
+    if (response.status) {
+      emit(CompaniesDeleteSuccess(response.message));
+    } else {
+      emit(CompaniesDeleteFailure(response.message));
+    }
+  }
 }

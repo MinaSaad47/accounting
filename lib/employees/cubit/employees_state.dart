@@ -11,6 +11,8 @@ enum EmployeeAction {
   none,
   get,
   create,
+  pay,
+  delete,
 }
 
 class EmployeesState extends Equatable {

@@ -55,3 +55,24 @@ class CompaniesSaveFailure extends CompaniesState {
   @override
   List<Object?> get props => [error];
 }
+
+class CompaniesDeleteInProgress extends CompaniesState {
+  @override
+  List<Object?> get props => [];
+}
+
+class CompaniesDeleteSuccess extends CompaniesState {
+  final String message;
+
+  CompaniesDeleteSuccess(this.message);
+  @override
+  List<Object?> get props => [message];
+}
+
+class CompaniesDeleteFailure extends CompaniesState {
+  final String error;
+
+  CompaniesDeleteFailure(this.error);
+  @override
+  List<Object?> get props => [error];
+}

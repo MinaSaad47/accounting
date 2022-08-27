@@ -23,4 +23,11 @@ abstract class AccountingApi {
   });
 
   Future<ApiResponse<UserModel>> getCurrentUser();
+  Future<ApiResponse<UserModel>> payUser({
+    required int id,
+    required double value,
+  });
+
+  Future<ApiResponse<void>> deleteCompany({required int id});
+  Future<ApiResponse<void>> deleteUser({required int id});
 }

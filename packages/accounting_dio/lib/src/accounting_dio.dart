@@ -139,4 +139,26 @@ class AccountingDio extends AccountingApi {
     return ApiResponse<UserModel>.fromJson(
         response.data, (p0) => UserModel.fromJson(p0 as dynamic));
   }
+
+  @override
+  Future<ApiResponse<UserModel>> payUser({
+    required int id,
+    required double value,
+  }) async {
+    var response = await _dio.patch('users/$id', data: {'value': value});
+    return ApiResponse<UserModel>.fromJson(
+        response.data, (p0) => UserModel.fromJson(p0 as dynamic));
+  }
+
+  @override
+  Future<ApiResponse<void>> deleteCompany({required int id}) async {
+    var response = await _dio.delete('company/$id');
+    return ApiResponse<void>.fromJson(response.data, (p0) => dynamic);
+  }
+
+  @override
+  Future<ApiResponse<void>> deleteUser({required int id}) async {
+    var response = await _dio.delete('users/$id');
+    return ApiResponse<void>.fromJson(response.data, (p0) => dynamic);
+  }
 }

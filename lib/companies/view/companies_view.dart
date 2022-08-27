@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:accounting/common/common.dart';
 import 'package:accounting/companies/bloc/money_capital_bloc.dart';
 import 'package:accounting/companies/companies.dart';
@@ -17,8 +15,9 @@ class CompaniesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var user = context.read<LoginCubit>().state.user!;
     return DefaultTabController(
-      length: 2,
+      length: user.isAdmin ? 2 : 1,
       child: Scaffold(
         appBar: AppBarWidget(
           title: AppLocalizations.of(context)!.companies,
@@ -28,20 +27,21 @@ class CompaniesView extends StatelessWidget {
                 child: Text(AppLocalizations.of(context)!
                     .search(AppLocalizations.of(context)!.company)),
               ),
-              Tab(
-                child: Text(
-                  AppLocalizations.of(context)!
-                      .add(AppLocalizations.of(context)!.company),
+              if (user.isAdmin)
+                Tab(
+                  child: Text(
+                    AppLocalizations.of(context)!
+                        .add(AppLocalizations.of(context)!.company),
+                  ),
                 ),
-              ),
             ],
           ),
         ),
         drawer: const DrawerWidget(),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            _BuildSearchCompany(),
-            _BuildAddCompany(),
+            const _BuildSearchCompany(),
+            if (user.isAdmin) const _BuildAddCompany(),
           ],
         ),
       ),
@@ -134,9 +134,15 @@ class _BuildCompanyInfo extends StatefulWidget {
               value: context.read<CompaniesBloc>(),
             ),
             BlocProvider(
-              create: (context) => MoneyCapitalBloc(
-                context.read<AccountingRepository>(),
-              )..add(MoneyCapitalGetRequested(companyId: companyModel.id)),
+              create: (context) {
+                var user = context.read<LoginCubit>().state.user!;
+                return MoneyCapitalBloc(
+                  context.read<AccountingRepository>(),
+                )..add(MoneyCapitalGetRequested(
+                    companyId: companyModel.id,
+                    empolyeeId: !user.isAdmin ? user.id : null,
+                  ));
+              },
             ),
           ],
           child: _BuildCompanyInfo(company: companyModel),
@@ -155,6 +161,22 @@ class _BuildCompanyInfoState extends State<_BuildCompanyInfo> {
       appBar: AppBar(
         title: Text(
             AppLocalizations.of(context)!.edit(widget.company.id!.toString())),
+        actions: [
+          if (context.read<LoginCubit>().state.user!.isAdmin)
+            IconButton(
+              color: Colors.red.shade900,
+              tooltip: AppLocalizations.of(context)!.delete,
+              iconSize: 40,
+              onPressed: () {
+                context
+                    .read<CompaniesBloc>()
+                    .add(CompaniesDeleteRequested(widget.company.id!));
+              },
+              icon: const Icon(
+                Icons.delete_outline,
+              ),
+            )
+        ],
       ),
       floatingActionButton: SpeedDial(
         overlayOpacity: 0,
@@ -242,6 +264,26 @@ class _BuildCompanyInfoState extends State<_BuildCompanyInfo> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
+            BlocConsumer<CompaniesBloc, CompaniesState>(
+              builder: (context, state) => state is CompaniesDeleteInProgress
+                  ? const Padding(
+                      padding: EdgeInsets.only(bottom: 20.0),
+                      child: LinearProgressIndicator(),
+                    )
+                  : Container(),
+              listener: (context, state) {
+                if (state is CompaniesDeleteSuccess) {
+                  showToast(context, message: state.message);
+                  Navigator.of(context).pop();
+                } else if (state is CompaniesDeleteFailure) {
+                  showToast(
+                    context,
+                    message: state.error,
+                    level: ToastLevel.error,
+                  );
+                }
+              },
+            ),
             _BuildCompanyItem(company: widget.company),
             const SizedBox(height: 30),
             Expanded(
@@ -272,11 +314,25 @@ class _BuildCompanyInfoState extends State<_BuildCompanyInfo> {
                           AppLocalizations.of(context)!.moneyCapital,
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.attach_money_outlined),
+                            const SizedBox(width: 5),
+                            BlocBuilder<MoneyCapitalBloc, MoneyCapitalState>(
+                              builder: (context, state) {
+                                return Text(
+                                  state.list
+                                      .map((e) => e.value)
+                                      .fold(0.0, (p, c) => (p as double) + c)
+                                      .toString(),
+                                );
+                              },
+                            )
+                          ],
+                        ),
                       ),
-                      body: _BuildMoneyCapitals(
-                        key: Key(Random.secure().nextDouble().toString()),
-                        companyId: widget.company.id!,
-                      ),
+                      body: _BuildMoneyCapitals(companyId: widget.company.id!),
                     ),
                   ],
                   expansionCallback: (index, isOpen) {
@@ -578,12 +634,13 @@ class _BuildMoneyCapitalsState extends State<_BuildMoneyCapitals> {
       listener: (context, state) {
         if (state.status == MoneyCapitalStatus.failure) {
           showToast(context, message: state.message, level: ToastLevel.error);
-        }
-        if (state.action != MoneyCapitalAction.get &&
+        } else if (state.action != MoneyCapitalAction.get &&
             state.status == MoneyCapitalStatus.success) {
-          context
-              .read<MoneyCapitalBloc>()
-              .add(MoneyCapitalGetRequested(companyId: widget.companyId));
+          var user = context.read<LoginCubit>().state.user!;
+          context.read<MoneyCapitalBloc>().add(MoneyCapitalGetRequested(
+                companyId: widget.companyId,
+                empolyeeId: !user.isAdmin ? user.id : null,
+              ));
           context.read<LoginCubit>().getCurrentUser();
         }
       },

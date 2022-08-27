@@ -28,3 +28,12 @@ class CompaniesEditRequested extends CompaniesEvent {
   @override
   List<Object?> get props => [company];
 }
+
+class CompaniesDeleteRequested extends CompaniesEvent {
+  final int id;
+
+  CompaniesDeleteRequested(this.id);
+
+  @override
+  List<Object?> get props => [id];
+}
