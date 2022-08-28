@@ -16,7 +16,7 @@ class SettingsView extends StatelessWidget {
       ),
       drawer: const DrawerWidget(),
       body: SettingsList(
-        platform: DevicePlatform.device,
+        platform: DevicePlatform.android,
         contentPadding: const EdgeInsets.all(50),
         sections: [
           SettingsSection(
