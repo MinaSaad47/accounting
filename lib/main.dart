@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:accounting/app/app.dart';
 import 'package:accounting/common/common.dart';
 import 'package:accounting_dio/accounting_dio.dart';
@@ -11,12 +13,25 @@ Future main() async {
   Bloc.observer = AppBlocObserver();
 
   var cachedRepository = await CachedRepository.instance(CacheSharedPref());
-  var accountingRepository = AccountingRepository(
-    AccountingDio(
-      baseUrl: 'http://192.168.47.47:4747/api/',
-      token: cachedRepository.token,
-    ),
-  );
+
+  AccountingRepository accountingRepository;
+
+  if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
+    var envIP = Platform.environment['SAMEH_SERVER'];
+    accountingRepository = AccountingRepository(
+      AccountingDio(
+        baseUrl: 'http://${envIP ?? '192.168.1.47:4747'}/api/',
+        token: cachedRepository.token,
+      ),
+    );
+  } else {
+    accountingRepository = AccountingRepository(
+      AccountingDio(
+        baseUrl: 'http://192.168.47.47:4747/api/',
+        token: cachedRepository.token,
+      ),
+    );
+  }
 
   runApp(
     MultiRepositoryProvider(

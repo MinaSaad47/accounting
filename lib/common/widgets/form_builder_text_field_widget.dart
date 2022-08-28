@@ -7,6 +7,7 @@ class FormBuilderTextFieldWidget extends StatelessWidget {
   final String name;
   final String? value;
   final bool required;
+  final bool isPassword;
   final String? Function(String?)? validator;
   FormBuilderTextFieldWidget(
     BuildContext context, {
@@ -14,6 +15,7 @@ class FormBuilderTextFieldWidget extends StatelessWidget {
     required this.name,
     this.value,
     this.required = true,
+    this.isPassword = false,
     String? Function(String?)? validator,
   })  : validator = validator ??
             FormBuilderValidators.required(
@@ -38,6 +40,7 @@ class FormBuilderTextFieldWidget extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: FormBuilderTextField(
+              obscureText: isPassword,
               initialValue: value,
               name: name,
               decoration: InputDecoration(

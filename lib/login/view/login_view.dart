@@ -59,6 +59,7 @@ class _LoginViewState extends State<LoginView> {
                         FormBuilderTextFieldWidget(
                           context,
                           name: AppLocalizations.of(context)!.password,
+                          isPassword: true,
                         ),
                       ],
                     ),

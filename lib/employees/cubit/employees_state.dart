@@ -18,6 +18,7 @@ enum EmployeeAction {
 class EmployeesState extends Equatable {
   final List<UserModel> list;
   final String message;
+  final UserModel? user;
   final EmployeeAction action;
   final EmployeeStatus status;
 
@@ -26,6 +27,7 @@ class EmployeesState extends Equatable {
     this.message = '',
     this.action = EmployeeAction.none,
     this.status = EmployeeStatus.initial,
+    this.user,
   });
 
   EmployeesState copyWith({
@@ -33,12 +35,14 @@ class EmployeesState extends Equatable {
     EmployeeStatus? status,
     List<UserModel>? list,
     String? message,
+    UserModel? user,
   }) =>
       EmployeesState(
         action: action ?? this.action,
         list: list ?? this.list,
         status: status ?? this.status,
         message: message ?? this.message,
+        user: user ?? this.user,
       );
 
   @override

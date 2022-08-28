@@ -513,103 +513,108 @@ class _BuildCompanyEditFormState extends State<_BuildCompanyEditForm> {
               ],
             ),
           ),
-          BlocConsumer<CompaniesBloc, CompaniesState>(
-            listener: (context, state) {
-              if (state is CompaniesSaveFailure) {
-                showToast(
-                  context,
-                  message: state.error,
-                  level: ToastLevel.error,
-                );
-              } else if (state is CompaniesSaveSuccess) {
-                showToast(
-                  context,
-                  message: state.message,
-                );
-              }
-            },
-            builder: (context, state) => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: state is CompaniesSaveInProgress
-                  ? const CircularProgressIndicator()
-                  : ElevatedButton(
-                      onPressed: () {
-                        var formState = formKey.currentState!;
-                        if (formState.validate()) {
-                          formState.save();
-                          var savedCompany = CompanyModel(
-                            id: company?.id,
-                            funders: company?.funders ??
-                                [
-                                  FunderModel(
-                                    name: formState.value[
-                                        AppLocalizations.of(context)!
-                                            .funderName],
-                                  )
-                                ],
-                            accounts: formState
-                                .value[AppLocalizations.of(context)!.accounts],
-                            isWorking: formState.value[
-                                    AppLocalizations.of(context)!.isWorking] ==
-                                AppLocalizations.of(context)!.working,
-                            joiningDate: formState.value[
-                                AppLocalizations.of(context)!.joiningDate],
-                            stopDate: formState
-                                .value[AppLocalizations.of(context)!.stopDate],
-                            startDate: formState
-                                .value[AppLocalizations.of(context)!.startDate],
-                            fileNumber: formState.value[
-                                AppLocalizations.of(context)!.fileNumber],
-                            email: formState
-                                .value[AppLocalizations.of(context)!.email],
-                            passport: formState
-                                .value[AppLocalizations.of(context)!.passport],
-                            userName: formState
-                                .value[AppLocalizations.of(context)!.userName],
-                            recordNumber: formState.value[
-                                AppLocalizations.of(context)!.recordNumber],
-                            recordSide: formState.value[
-                                AppLocalizations.of(context)!.recordSide],
-                            valueTaxMission: formState.value[
-                                AppLocalizations.of(context)!.valueTaxMission],
-                            naturalId: formState
-                                .value[AppLocalizations.of(context)!.naturalId],
-                            activityLocation: formState.value[
-                                AppLocalizations.of(context)!.activityLocation],
-                            activityNature: formState.value[
-                                AppLocalizations.of(context)!.activityNature],
-                            generalTaxMission: formState.value[
-                                AppLocalizations.of(context)!
-                                    .generalTaxMission],
-                            registerNumber: formState.value[
-                                AppLocalizations.of(context)!.registerNumber],
-                            legalEntity: formState.value[
-                                AppLocalizations.of(context)!.legalEntity],
-                            commercialFeature: formState.value[
-                                AppLocalizations.of(context)!
-                                    .commercialFeature],
-                            verificationCode: formState.value[
-                                AppLocalizations.of(context)!.verificationCode],
-                          );
-                          log.d(savedCompany.toString());
-                          if (company == null) {
-                            context
-                                .read<CompaniesBloc>()
-                                .add(CompaniesCreateRequested(savedCompany));
-                          } else {
-                            context
-                                .read<CompaniesBloc>()
-                                .add(CompaniesEditRequested(savedCompany));
+          if (context.read<LoginCubit>().state.user!.isAdmin)
+            BlocConsumer<CompaniesBloc, CompaniesState>(
+              listener: (context, state) {
+                if (state is CompaniesSaveFailure) {
+                  showToast(
+                    context,
+                    message: state.error,
+                    level: ToastLevel.error,
+                  );
+                } else if (state is CompaniesSaveSuccess) {
+                  showToast(
+                    context,
+                    message: state.message,
+                  );
+                }
+              },
+              builder: (context, state) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: state is CompaniesSaveInProgress
+                    ? const CircularProgressIndicator()
+                    : ElevatedButton(
+                        onPressed: () {
+                          var formState = formKey.currentState!;
+                          if (formState.validate()) {
+                            formState.save();
+                            var savedCompany = CompanyModel(
+                              id: company?.id,
+                              funders: company?.funders ??
+                                  [
+                                    FunderModel(
+                                      name: formState.value[
+                                          AppLocalizations.of(context)!
+                                              .funderName],
+                                    )
+                                  ],
+                              accounts: formState.value[
+                                  AppLocalizations.of(context)!.accounts],
+                              isWorking: formState.value[
+                                      AppLocalizations.of(context)!
+                                          .isWorking] ==
+                                  AppLocalizations.of(context)!.working,
+                              joiningDate: formState.value[
+                                  AppLocalizations.of(context)!.joiningDate],
+                              stopDate: formState.value[
+                                  AppLocalizations.of(context)!.stopDate],
+                              startDate: formState.value[
+                                  AppLocalizations.of(context)!.startDate],
+                              fileNumber: formState.value[
+                                  AppLocalizations.of(context)!.fileNumber],
+                              email: formState
+                                  .value[AppLocalizations.of(context)!.email],
+                              passport: formState.value[
+                                  AppLocalizations.of(context)!.passport],
+                              userName: formState.value[
+                                  AppLocalizations.of(context)!.userName],
+                              recordNumber: formState.value[
+                                  AppLocalizations.of(context)!.recordNumber],
+                              recordSide: formState.value[
+                                  AppLocalizations.of(context)!.recordSide],
+                              valueTaxMission: formState.value[
+                                  AppLocalizations.of(context)!
+                                      .valueTaxMission],
+                              naturalId: formState.value[
+                                  AppLocalizations.of(context)!.naturalId],
+                              activityLocation: formState.value[
+                                  AppLocalizations.of(context)!
+                                      .activityLocation],
+                              activityNature: formState.value[
+                                  AppLocalizations.of(context)!.activityNature],
+                              generalTaxMission: formState.value[
+                                  AppLocalizations.of(context)!
+                                      .generalTaxMission],
+                              registerNumber: formState.value[
+                                  AppLocalizations.of(context)!.registerNumber],
+                              legalEntity: formState.value[
+                                  AppLocalizations.of(context)!.legalEntity],
+                              commercialFeature: formState.value[
+                                  AppLocalizations.of(context)!
+                                      .commercialFeature],
+                              verificationCode: formState.value[
+                                  AppLocalizations.of(context)!
+                                      .verificationCode],
+                            );
+                            log.d(savedCompany.toString());
+                            if (company == null) {
+                              context
+                                  .read<CompaniesBloc>()
+                                  .add(CompaniesCreateRequested(savedCompany));
+                            } else {
+                              context
+                                  .read<CompaniesBloc>()
+                                  .add(CompaniesEditRequested(savedCompany));
+                            }
                           }
-                        }
-                      },
-                      child: Text(
-                        AppLocalizations.of(context)!
-                            .save(AppLocalizations.of(context)!.company),
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!
+                              .save(AppLocalizations.of(context)!.company),
+                        ),
                       ),
-                    ),
-            ),
-          )
+              ),
+            )
         ],
       ),
     );

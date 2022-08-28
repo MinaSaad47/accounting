@@ -135,6 +135,10 @@ class _BuildEmpolyeeInfo extends StatelessWidget {
           if (state.status == EmployeeStatus.success) {
             showToast(context, message: state.message);
             context.read<EmployeesCubit>().getEmployees();
+            var loginCubit = context.read<LoginCubit>();
+            if (state.user!.id == loginCubit.state.user!.id) {
+              loginCubit.getCurrentUser();
+            }
           } else if (state.status == EmployeeStatus.failure) {
             showToast(
               context,
