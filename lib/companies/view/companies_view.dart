@@ -136,7 +136,7 @@ class _BuildCompanyInfo extends StatefulWidget {
             BlocProvider(
               create: (context) {
                 var user = context.read<LoginCubit>().state.user!;
-                return MoneyCapitalBloc(
+                return ExpenseBloc(
                   context.read<AccountingRepository>(),
                 )..add(ExpenseGetRequested(
                     companyId: companyModel.id,
@@ -241,7 +241,7 @@ class _BuildCompanyInfoState extends State<_BuildCompanyInfo> {
                     value: num.parse(inputs![0]),
                     description: inputs[1],
                   );
-                  context.read<MoneyCapitalBloc>().add(
+                  context.read<ExpenseBloc>().add(
                         MoneyCapitalCreateRequested(
                           moneyCapital,
                           widget.company,
@@ -260,91 +260,91 @@ class _BuildCompanyInfoState extends State<_BuildCompanyInfo> {
           context.read<CachedRepository>().locale?.languageCode == 'ar'
               ? FloatingActionButtonLocation.startFloat
               : FloatingActionButtonLocation.endFloat,
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            BlocConsumer<CompaniesBloc, CompaniesState>(
-              builder: (context, state) => state is CompaniesDeleteInProgress
-                  ? const Padding(
-                      padding: EdgeInsets.only(bottom: 20.0),
-                      child: LinearProgressIndicator(),
-                    )
-                  : Container(),
-              listener: (context, state) {
-                if (state is CompaniesDeleteSuccess) {
-                  showToast(context, message: state.message);
-                  Navigator.of(context).pop();
-                } else if (state is CompaniesDeleteFailure) {
-                  showToast(
-                    context,
-                    message: state.error,
-                    level: ToastLevel.error,
-                  );
-                }
-              },
-            ),
-            _BuildCompanyItem(company: widget.company),
-            const SizedBox(height: 30),
-            Expanded(
-              child: SingleChildScrollView(
-                child: ExpansionPanelList(
-                  expandedHeaderPadding: const EdgeInsets.all(20),
-                  children: [
-                    ExpansionPanel(
-                      isExpanded: _isOpen[0],
-                      headerBuilder: (context, isExpanded) => ListTile(
-                        leading: const Icon(Icons.edit_outlined),
-                        title: Text(
-                          AppLocalizations.of(context)!
-                              .edit(AppLocalizations.of(context)!.company),
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                      ),
-                      body: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: _BuildCompanyEditForm(company: widget.company),
-                      ),
-                    ),
-                    ExpansionPanel(
-                      isExpanded: _isOpen[1],
-                      headerBuilder: (context, isExpanded) => ListTile(
-                        leading: const Icon(Icons.currency_exchange_outlined),
-                        title: Text(
-                          AppLocalizations.of(context)!.expenses,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(Icons.attach_money_outlined),
-                            const SizedBox(width: 5),
-                            BlocBuilder<MoneyCapitalBloc, ExpenseState>(
-                              builder: (context, state) {
-                                return Text(
-                                  state.list
-                                      .map((e) => e.value)
-                                      .fold(0.0, (p, c) => (p as double) + c)
-                                      .toString(),
-                                );
-                              },
-                            )
-                          ],
-                        ),
-                      ),
-                      body: _BuildMoneyCapitals(companyId: widget.company.id!),
-                    ),
-                  ],
-                  expansionCallback: (index, isOpen) {
-                    setState(() {
-                      _isOpen.fillRange(0, _isOpen.length, false);
-                      _isOpen[index] = !isOpen;
-                    });
-                  },
-                ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              BlocConsumer<CompaniesBloc, CompaniesState>(
+                builder: (context, state) => state is CompaniesDeleteInProgress
+                    ? const Padding(
+                        padding: EdgeInsets.only(bottom: 20.0),
+                        child: LinearProgressIndicator(),
+                      )
+                    : Container(),
+                listener: (context, state) {
+                  if (state is CompaniesDeleteSuccess) {
+                    showToast(context, message: state.message);
+                    Navigator.of(context).pop();
+                  } else if (state is CompaniesDeleteFailure) {
+                    showToast(
+                      context,
+                      message: state.error,
+                      level: ToastLevel.error,
+                    );
+                  }
+                },
               ),
-            ),
-          ],
+              _BuildCompanyItem(company: widget.company),
+              const SizedBox(height: 30),
+              ExpansionPanelList(
+                expandedHeaderPadding: const EdgeInsets.all(20),
+                children: [
+                  ExpansionPanel(
+                    isExpanded: _isOpen[0],
+                    headerBuilder: (context, isExpanded) => ListTile(
+                      leading: const Icon(Icons.edit_outlined),
+                      title: Text(
+                        AppLocalizations.of(context)!
+                            .edit(AppLocalizations.of(context)!.company),
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ),
+                    body: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: _BuildCompanyEditForm(
+                        company: widget.company,
+                      ),
+                    ),
+                  ),
+                  ExpansionPanel(
+                    isExpanded: _isOpen[1],
+                    headerBuilder: (context, isExpanded) => ListTile(
+                      leading: const Icon(Icons.currency_exchange_outlined),
+                      title: Text(
+                        AppLocalizations.of(context)!.expenses,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.attach_money_outlined),
+                          const SizedBox(width: 5),
+                          BlocBuilder<ExpenseBloc, ExpenseState>(
+                            builder: (context, state) {
+                              return Text(
+                                state.list
+                                    .map((e) => e.value)
+                                    .fold(0.0, (p, c) => (p as double) + c)
+                                    .toString(),
+                              );
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                    body: _BuildExpanses(companyId: widget.company.id!),
+                  ),
+                ],
+                expansionCallback: (index, isOpen) {
+                  setState(() {
+                    _isOpen.fillRange(0, _isOpen.length, false);
+                    _isOpen[index] = !isOpen;
+                  });
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -364,285 +364,288 @@ class _BuildCompanyEditFormState extends State<_BuildCompanyEditForm> {
   late var company = widget.company;
   @override
   Widget build(BuildContext context) {
-    return FormBuilder(
-      key: formKey,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                Wrap(
-                  children: [
-                    if (company == null)
-                      FormBuilderTextFieldWidget(
-                        context,
-                        name: AppLocalizations.of(context)!.funderName,
-                      ),
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: FormBuilder(
+        key: formKey,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Wrap(
+                children: [
+                  if (company == null)
                     FormBuilderTextFieldWidget(
                       context,
-                      name: AppLocalizations.of(context)!.commercialFeature,
-                      value: company?.commercialFeature,
+                      name: AppLocalizations.of(context)!.funderName,
                     ),
+                  FormBuilderTextFieldWidget(
+                    context,
+                    name: AppLocalizations.of(context)!.commercialFeature,
+                    value: company?.commercialFeature,
+                  ),
+                  FormBuilderTextFieldWidget(
+                    context,
+                    name: AppLocalizations.of(context)!.legalEntity,
+                    value: company?.legalEntity,
+                  ),
+                  FormBuilderDropdownWidget(
+                    name: AppLocalizations.of(context)!.isWorking,
+                    initialValue: company != null && company!.isWorking
+                        ? AppLocalizations.of(context)!.working
+                        : AppLocalizations.of(context)!.notWorking,
+                    items: [
+                      AppLocalizations.of(context)!.working,
+                      AppLocalizations.of(context)!.notWorking,
+                    ],
+                  ),
+                  if (company != null)
                     FormBuilderTextFieldWidget(
                       context,
-                      name: AppLocalizations.of(context)!.legalEntity,
-                      value: company?.legalEntity,
+                      name: AppLocalizations.of(context)!.fileNumber,
+                      value: company?.fileNumber,
+                      required: false,
                     ),
-                    FormBuilderDropdownWidget(
-                      name: AppLocalizations.of(context)!.isWorking,
-                      initialValue: company != null && company!.isWorking
-                          ? AppLocalizations.of(context)!.working
-                          : AppLocalizations.of(context)!.notWorking,
-                      items: [
-                        AppLocalizations.of(context)!.working,
-                        AppLocalizations.of(context)!.notWorking,
-                      ],
-                    ),
-                    if (company != null)
-                      FormBuilderTextFieldWidget(
-                        context,
-                        name: AppLocalizations.of(context)!.fileNumber,
-                        value: company?.fileNumber,
-                        required: false,
-                      ),
-                    FormBuilderTextFieldWidget(
-                      context,
-                      name: AppLocalizations.of(context)!.registerNumber,
-                      value: company?.registerNumber,
-                    ),
+                  FormBuilderTextFieldWidget(
+                    context,
+                    name: AppLocalizations.of(context)!.registerNumber,
+                    value: company?.registerNumber,
+                  ),
+                  FormBuilderDateTimePickerWidget(
+                    context,
+                    name: AppLocalizations.of(context)!.startDate,
+                    value: company?.startDate,
+                  ),
+                  if (company != null)
                     FormBuilderDateTimePickerWidget(
                       context,
-                      name: AppLocalizations.of(context)!.startDate,
-                      value: company?.startDate,
+                      name: AppLocalizations.of(context)!.stopDate,
+                      value: company?.stopDate,
+                      required: false,
                     ),
-                    if (company != null)
-                      FormBuilderDateTimePickerWidget(
-                        context,
-                        name: AppLocalizations.of(context)!.stopDate,
-                        value: company?.stopDate,
-                        required: false,
-                      ),
+                  FormBuilderTextFieldWidget(
+                    context,
+                    name: AppLocalizations.of(context)!.generalTaxMission,
+                    value: company?.generalTaxMission,
+                  ),
+                  if (company != null)
                     FormBuilderTextFieldWidget(
                       context,
-                      name: AppLocalizations.of(context)!.generalTaxMission,
-                      value: company?.generalTaxMission,
+                      name: AppLocalizations.of(context)!.valueTaxMission,
+                      value: company?.valueTaxMission,
+                      required: false,
                     ),
-                    if (company != null)
-                      FormBuilderTextFieldWidget(
-                        context,
-                        name: AppLocalizations.of(context)!.valueTaxMission,
-                        value: company?.valueTaxMission,
-                        required: false,
-                      ),
-                    FormBuilderTextFieldWidget(
+                  FormBuilderTextFieldWidget(
+                    context,
+                    name: AppLocalizations.of(context)!.activityNature,
+                    value: company?.activityNature,
+                  ),
+                  FormBuilderTextFieldWidget(
+                    context,
+                    name: AppLocalizations.of(context)!.activityLocation,
+                    value: company?.activityLocation,
+                  ),
+                  FormBuilderTextFieldWidget(
+                    context,
+                    name: AppLocalizations.of(context)!.accounts,
+                    value: company?.accounts,
+                  ),
+                  if (company != null) ...[
+                    FormBuilderDateTimePickerWidget(
                       context,
-                      name: AppLocalizations.of(context)!.activityNature,
-                      value: company?.activityNature,
-                    ),
-                    FormBuilderTextFieldWidget(
-                      context,
-                      name: AppLocalizations.of(context)!.activityLocation,
-                      value: company?.activityLocation,
-                    ),
-                    FormBuilderTextFieldWidget(
-                      context,
-                      name: AppLocalizations.of(context)!.accounts,
-                      value: company?.accounts,
-                    ),
-                    if (company != null) ...[
-                      FormBuilderDateTimePickerWidget(
-                        context,
-                        name: AppLocalizations.of(context)!.joiningDate,
-                        value: company?.joiningDate,
-                        required: false,
-                      ),
-                      FormBuilderTextFieldWidget(
-                        context,
-                        name: AppLocalizations.of(context)!.naturalId,
-                        required: false,
-                        value: company?.naturalId,
-                      ),
-                      FormBuilderTextFieldWidget(
-                        context,
-                        name: AppLocalizations.of(context)!.recordSide,
-                        value: company?.recordSide?.toString(),
-                        required: false,
-                      ),
-                    ],
-                    FormBuilderTextFieldWidget(
-                      context,
-                      name: AppLocalizations.of(context)!.recordNumber,
-                      value: company?.recordNumber.toString(),
+                      name: AppLocalizations.of(context)!.joiningDate,
+                      value: company?.joiningDate,
+                      required: false,
                     ),
                     FormBuilderTextFieldWidget(
                       context,
-                      name: AppLocalizations.of(context)!.userName,
-                      value: company?.userName,
+                      name: AppLocalizations.of(context)!.naturalId,
+                      required: false,
+                      value: company?.naturalId,
                     ),
-                    if (company != null) ...[
-                      FormBuilderTextFieldWidget(
-                        context,
-                        name: AppLocalizations.of(context)!.passport,
-                        value: company?.passport,
-                        required: false,
-                      ),
-                      FormBuilderTextFieldWidget(
-                        context,
-                        name: AppLocalizations.of(context)!.verificationCode,
-                        value: company?.verificationCode,
-                        required: false,
-                      ),
-                    ],
                     FormBuilderTextFieldWidget(
                       context,
-                      name: AppLocalizations.of(context)!.email,
-                      value: company?.email,
+                      name: AppLocalizations.of(context)!.recordSide,
+                      value: company?.recordSide?.toString(),
+                      required: false,
                     ),
                   ],
-                ),
-                if (company != null) ...[
-                  const SizedBox(height: 30),
-                  _BuildFunders(
-                    funders: company?.funders,
-                    onUpdate: (funders) {
-                      company = company?.copyWith(funders: funders);
-                    },
+                  FormBuilderTextFieldWidget(
+                    context,
+                    name: AppLocalizations.of(context)!.recordNumber,
+                    value: company?.recordNumber.toString(),
+                  ),
+                  FormBuilderTextFieldWidget(
+                    context,
+                    name: AppLocalizations.of(context)!.userName,
+                    value: company?.userName,
+                  ),
+                  if (company != null) ...[
+                    FormBuilderTextFieldWidget(
+                      context,
+                      name: AppLocalizations.of(context)!.passport,
+                      value: company?.passport,
+                      required: false,
+                    ),
+                    FormBuilderTextFieldWidget(
+                      context,
+                      name: AppLocalizations.of(context)!.verificationCode,
+                      value: company?.verificationCode,
+                      required: false,
+                    ),
+                  ],
+                  FormBuilderTextFieldWidget(
+                    context,
+                    name: AppLocalizations.of(context)!.email,
+                    value: company?.email,
                   ),
                 ],
-              ],
-            ),
-          ),
-          if (context.read<LoginCubit>().state.user!.isAdmin)
-            BlocConsumer<CompaniesBloc, CompaniesState>(
-              listener: (context, state) {
-                if (state is CompaniesSaveFailure) {
-                  showToast(
-                    context,
-                    message: state.error,
-                    level: ToastLevel.error,
-                  );
-                } else if (state is CompaniesSaveSuccess) {
-                  showToast(
-                    context,
-                    message: state.message,
-                  );
-                }
-              },
-              builder: (context, state) => Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: state is CompaniesSaveInProgress
-                    ? const CircularProgressIndicator()
-                    : ElevatedButton(
-                        onPressed: () {
-                          var formState = formKey.currentState!;
-                          if (formState.validate()) {
-                            formState.save();
-                            var savedCompany = CompanyModel(
-                              id: company?.id,
-                              funders: company?.funders ??
-                                  [
-                                    FunderModel(
-                                      name: formState.value[
-                                          AppLocalizations.of(context)!
-                                              .funderName],
-                                    )
-                                  ],
-                              accounts: formState.value[
-                                  AppLocalizations.of(context)!.accounts],
-                              isWorking: formState.value[
-                                      AppLocalizations.of(context)!
-                                          .isWorking] ==
-                                  AppLocalizations.of(context)!.working,
-                              joiningDate: formState.value[
-                                  AppLocalizations.of(context)!.joiningDate],
-                              stopDate: formState.value[
-                                  AppLocalizations.of(context)!.stopDate],
-                              startDate: formState.value[
-                                  AppLocalizations.of(context)!.startDate],
-                              fileNumber: formState.value[
-                                  AppLocalizations.of(context)!.fileNumber],
-                              email: formState
-                                  .value[AppLocalizations.of(context)!.email],
-                              passport: formState.value[
-                                  AppLocalizations.of(context)!.passport],
-                              userName: formState.value[
-                                  AppLocalizations.of(context)!.userName],
-                              recordNumber: formState.value[
-                                  AppLocalizations.of(context)!.recordNumber],
-                              recordSide: formState.value[
-                                  AppLocalizations.of(context)!.recordSide],
-                              valueTaxMission: formState.value[
-                                  AppLocalizations.of(context)!
-                                      .valueTaxMission],
-                              naturalId: formState.value[
-                                  AppLocalizations.of(context)!.naturalId],
-                              activityLocation: formState.value[
-                                  AppLocalizations.of(context)!
-                                      .activityLocation],
-                              activityNature: formState.value[
-                                  AppLocalizations.of(context)!.activityNature],
-                              generalTaxMission: formState.value[
-                                  AppLocalizations.of(context)!
-                                      .generalTaxMission],
-                              registerNumber: formState.value[
-                                  AppLocalizations.of(context)!.registerNumber],
-                              legalEntity: formState.value[
-                                  AppLocalizations.of(context)!.legalEntity],
-                              commercialFeature: formState.value[
-                                  AppLocalizations.of(context)!
-                                      .commercialFeature],
-                              verificationCode: formState.value[
-                                  AppLocalizations.of(context)!
-                                      .verificationCode],
-                            );
-                            log.d(savedCompany.toString());
-                            if (company == null) {
-                              context
-                                  .read<CompaniesBloc>()
-                                  .add(CompaniesCreateRequested(savedCompany));
-                            } else {
-                              context
-                                  .read<CompaniesBloc>()
-                                  .add(CompaniesEditRequested(savedCompany));
-                            }
-                          }
-                        },
-                        child: Text(
-                          AppLocalizations.of(context)!
-                              .save(AppLocalizations.of(context)!.company),
-                        ),
-                      ),
               ),
-            )
-        ],
+              if (company != null) ...[
+                const SizedBox(height: 30),
+                _BuildFunders(
+                  funders: company?.funders,
+                  onUpdate: (funders) {
+                    company = company?.copyWith(funders: funders);
+                  },
+                ),
+              ],
+              if (context.read<LoginCubit>().state.user!.isAdmin)
+                BlocConsumer<CompaniesBloc, CompaniesState>(
+                  listener: (context, state) {
+                    if (state is CompaniesSaveFailure) {
+                      showToast(
+                        context,
+                        message: state.error,
+                        level: ToastLevel.error,
+                      );
+                    } else if (state is CompaniesSaveSuccess) {
+                      showToast(
+                        context,
+                        message: state.message,
+                      );
+                    }
+                  },
+                  builder: (context, state) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: state is CompaniesSaveInProgress
+                        ? const CircularProgressIndicator()
+                        : _BuildSaveCompanyButton(
+                            formKey: formKey,
+                            company: company,
+                          ),
+                  ),
+                )
+            ],
+          ),
+        ),
       ),
     );
   }
 }
 
-class _BuildMoneyCapitals extends StatefulWidget {
+class _BuildSaveCompanyButton extends StatelessWidget {
+  final GlobalKey<FormBuilderState> formKey;
+  final CompanyModel? company;
+  const _BuildSaveCompanyButton({
+    Key? key,
+    required this.formKey,
+    this.company,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        var formState = formKey.currentState!;
+        if (formState.validate()) {
+          formState.save();
+          var savedCompany = CompanyModel(
+            id: company?.id,
+            funders: company?.funders ??
+                [
+                  FunderModel(
+                    name: formState
+                        .value[AppLocalizations.of(context)!.funderName],
+                  )
+                ],
+            accounts: formState.value[AppLocalizations.of(context)!.accounts],
+            isWorking:
+                formState.value[AppLocalizations.of(context)!.isWorking] ==
+                    AppLocalizations.of(context)!.working,
+            joiningDate:
+                formState.value[AppLocalizations.of(context)!.joiningDate],
+            stopDate: formState.value[AppLocalizations.of(context)!.stopDate],
+            startDate: formState.value[AppLocalizations.of(context)!.startDate],
+            fileNumber:
+                formState.value[AppLocalizations.of(context)!.fileNumber],
+            email: formState.value[AppLocalizations.of(context)!.email],
+            passport: formState.value[AppLocalizations.of(context)!.passport],
+            userName: formState.value[AppLocalizations.of(context)!.userName],
+            recordNumber:
+                formState.value[AppLocalizations.of(context)!.recordNumber],
+            recordSide:
+                formState.value[AppLocalizations.of(context)!.recordSide],
+            valueTaxMission:
+                formState.value[AppLocalizations.of(context)!.valueTaxMission],
+            naturalId: formState.value[AppLocalizations.of(context)!.naturalId],
+            activityLocation:
+                formState.value[AppLocalizations.of(context)!.activityLocation],
+            activityNature:
+                formState.value[AppLocalizations.of(context)!.activityNature],
+            generalTaxMission: formState
+                .value[AppLocalizations.of(context)!.generalTaxMission],
+            registerNumber:
+                formState.value[AppLocalizations.of(context)!.registerNumber],
+            legalEntity:
+                formState.value[AppLocalizations.of(context)!.legalEntity],
+            commercialFeature: formState
+                .value[AppLocalizations.of(context)!.commercialFeature],
+            verificationCode:
+                formState.value[AppLocalizations.of(context)!.verificationCode],
+          );
+          log.d(savedCompany.toString());
+          if (company == null) {
+            context
+                .read<CompaniesBloc>()
+                .add(CompaniesCreateRequested(savedCompany));
+          } else {
+            context
+                .read<CompaniesBloc>()
+                .add(CompaniesEditRequested(savedCompany));
+          }
+        }
+      },
+      child: Text(
+        AppLocalizations.of(context)!
+            .save(AppLocalizations.of(context)!.company),
+      ),
+    );
+  }
+}
+
+class _BuildExpanses extends StatefulWidget {
   final int companyId;
-  const _BuildMoneyCapitals({
+  const _BuildExpanses({
     Key? key,
     required this.companyId,
   }) : super(key: key);
 
   @override
-  State<_BuildMoneyCapitals> createState() => _BuildMoneyCapitalsState();
+  State<_BuildExpanses> createState() => _BuildExpansesState();
 }
 
-class _BuildMoneyCapitalsState extends State<_BuildMoneyCapitals> {
+class _BuildExpansesState extends State<_BuildExpanses> {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MoneyCapitalBloc, ExpenseState>(
+    return BlocConsumer<ExpenseBloc, ExpenseState>(
       listener: (context, state) {
         if (state.status == ExpenseStatus.failure) {
           showToast(context, message: state.message, level: ToastLevel.error);
         } else if (state.action != ExpenseAction.get &&
             state.status == ExpenseStatus.success) {
           var user = context.read<LoginCubit>().state.user!;
-          context.read<MoneyCapitalBloc>().add(ExpenseGetRequested(
+          context.read<ExpenseBloc>().add(ExpenseGetRequested(
                 companyId: widget.companyId,
                 empolyeeId: !user.isAdmin ? user.id : null,
               ));
@@ -657,11 +660,12 @@ class _BuildMoneyCapitalsState extends State<_BuildMoneyCapitals> {
               if (state.status == ExpenseStatus.loading)
                 const LinearProgressIndicator(),
               ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemBuilder: (context, index) => MoneyCapitalItemWidget(
-                  moneyCapital: state.list[index],
+                itemBuilder: (context, index) => ExpenseWidget(
+                  expense: state.list[index],
                   onDelete: () {
-                    context.read<MoneyCapitalBloc>().add(
+                    context.read<ExpenseBloc>().add(
                           ExpenseDeleteRequested(
                             state.list[index].id!,
                           ),

@@ -1,7 +1,10 @@
 import 'package:accounting/common/common.dart';
 import 'package:accounting_repository/accounting_repository.dart';
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+import 'package:accounting_api/accounting_api.dart';
+part 'login_cubit.freezed.dart';
 
 part 'login_state.dart';
 
@@ -26,7 +29,7 @@ class LoginCubit extends Cubit<LoginState> {
           action: LoginAction.login,
           status: LoginStatus.success,
           message: response.message,
-          token: response.data));
+          token: response.data!));
     } else {
       emit(state.copyWith(
         action: LoginAction.login,

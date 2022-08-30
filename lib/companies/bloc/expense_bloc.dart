@@ -5,8 +5,8 @@ import 'package:equatable/equatable.dart';
 part 'expense_event.dart';
 part 'expense_state.dart';
 
-class MoneyCapitalBloc extends Bloc<MoneyCapitalEvent, ExpenseState> {
-  MoneyCapitalBloc(this._accountingRepository) : super(const ExpenseState()) {
+class ExpenseBloc extends Bloc<MoneyCapitalEvent, ExpenseState> {
+  ExpenseBloc(this._accountingRepository) : super(const ExpenseState()) {
     on<MoneyCapitalCreateRequested>(_onExpenseCreateRequested);
     on<ExpenseGetRequested>(_onExpenseGetRequested);
     on<ExpenseDeleteRequested>(_onExpenseDeleteRequested);

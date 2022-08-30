@@ -357,8 +357,8 @@ class _BuildEmployeeMoneyCapitalsState
             padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
             child: ListView.separated(
               shrinkWrap: true,
-              itemBuilder: (context, innerIndex) => MoneyCapitalItemWidget(
-                moneyCapital: widget.expenses[index][innerIndex],
+              itemBuilder: (context, innerIndex) => ExpenseWidget(
+                expense: widget.expenses[index][innerIndex],
               ),
               separatorBuilder: (context, _) => const SizedBox(
                 height: 10,

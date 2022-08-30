@@ -34,7 +34,7 @@ class TextLabelWidget extends StatelessWidget {
                 const SizedBox(width: 5),
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         color: Theme.of(context).appBarTheme.foregroundColor,
                       ),
                 ),
@@ -46,7 +46,7 @@ class TextLabelWidget extends StatelessWidget {
           Expanded(
             child: Text(
               content,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
                     color: Theme.of(context).primaryColor,
                   ),
             ),

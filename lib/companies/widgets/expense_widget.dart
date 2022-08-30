@@ -3,13 +3,13 @@ import 'package:accounting_repository/accounting_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class MoneyCapitalItemWidget extends StatelessWidget {
-  final ExpenseModel moneyCapital;
+class ExpenseWidget extends StatelessWidget {
+  final ExpenseModel expense;
   final Function()? onDelete;
   final Function()? onEdit;
-  const MoneyCapitalItemWidget({
+  const ExpenseWidget({
     Key? key,
-    required this.moneyCapital,
+    required this.expense,
     this.onDelete,
     this.onEdit,
   }) : super(key: key);
@@ -25,9 +25,14 @@ class MoneyCapitalItemWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const CircleAvatar(
-                    child: Icon(Icons.currency_exchange_outlined)),
+                  minRadius: 15,
+                  child: Icon(Icons.currency_exchange_outlined),
+                ),
                 const SizedBox(width: 5),
-                Text('${moneyCapital.value}'),
+                Text(
+                  '${expense.value}',
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
               ],
             ),
           ),
@@ -35,9 +40,15 @@ class MoneyCapitalItemWidget extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const CircleAvatar(child: Icon(Icons.person_outline)),
+                const CircleAvatar(
+                  minRadius: 15,
+                  child: Icon(Icons.person_outline),
+                ),
                 const SizedBox(width: 5),
-                Text('${moneyCapital.userName}'),
+                Text(
+                  '${expense.userName}',
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
               ],
             ),
           ),
@@ -45,9 +56,15 @@ class MoneyCapitalItemWidget extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const CircleAvatar(child: Icon(Icons.date_range_outlined)),
+                const CircleAvatar(
+                  minRadius: 15,
+                  child: Icon(Icons.date_range_outlined),
+                ),
                 const SizedBox(width: 5),
-                Text(DateFormat.MEd().format(moneyCapital.time!)),
+                Text(
+                  DateFormat.MEd().format(expense.time!),
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
               ],
             ),
           ),
@@ -61,7 +78,10 @@ class MoneyCapitalItemWidget extends StatelessWidget {
                 children: [
                   const Icon(Icons.edit_outlined),
                   const SizedBox(width: 4),
-                  Text(AppLocalizations.of(context)!.edit('')),
+                  Text(
+                    AppLocalizations.of(context)!.edit(''),
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
                 ],
               ),
             ),
@@ -75,8 +95,10 @@ class MoneyCapitalItemWidget extends StatelessWidget {
               child: Row(
                 children: [
                   const Icon(Icons.delete_outline),
-                  const SizedBox(width: 4),
-                  Text(AppLocalizations.of(context)!.delete),
+                  const SizedBox(width: 2),
+                  Text(
+                    AppLocalizations.of(context)!.delete,
+                  ),
                 ],
               ),
             ),
@@ -89,8 +111,8 @@ class MoneyCapitalItemWidget extends StatelessWidget {
           child: ListTile(
             leading: const Icon(Icons.description_outlined),
             title: Text(
-              moneyCapital.description,
-              style: Theme.of(context).textTheme.headline5,
+              expense.description,
+              style: Theme.of(context).textTheme.labelMedium,
               maxLines: 3,
             ),
           ),
