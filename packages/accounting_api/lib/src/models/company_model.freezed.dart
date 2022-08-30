@@ -56,8 +56,7 @@ mixin _$CompanyModel {
   @JsonKey(name: "natural_id")
   String? get naturalId => throw _privateConstructorUsedError;
   @JsonKey(name: "money_capitals")
-  List<MoneyCapitalModel>? get moneyCapitals =>
-      throw _privateConstructorUsedError;
+  List<ExpenseModel>? get moneyCapitals => throw _privateConstructorUsedError;
   @JsonKey(name: "record_side")
   String? get recordSide => throw _privateConstructorUsedError;
   @JsonKey(name: "record_number")
@@ -119,7 +118,7 @@ abstract class $CompanyModelCopyWith<$Res> {
       @JsonKey(name: "natural_id")
           String? naturalId,
       @JsonKey(name: "money_capitals")
-          List<MoneyCapitalModel>? moneyCapitals,
+          List<ExpenseModel>? moneyCapitals,
       @JsonKey(name: "record_side")
           String? recordSide,
       @JsonKey(name: "record_number")
@@ -236,7 +235,7 @@ class _$CompanyModelCopyWithImpl<$Res> implements $CompanyModelCopyWith<$Res> {
       moneyCapitals: moneyCapitals == freezed
           ? _value.moneyCapitals
           : moneyCapitals // ignore: cast_nullable_to_non_nullable
-              as List<MoneyCapitalModel>?,
+              as List<ExpenseModel>?,
       recordSide: recordSide == freezed
           ? _value.recordSide
           : recordSide // ignore: cast_nullable_to_non_nullable
@@ -309,7 +308,7 @@ abstract class _$$_CompanyModelCopyWith<$Res>
       @JsonKey(name: "natural_id")
           String? naturalId,
       @JsonKey(name: "money_capitals")
-          List<MoneyCapitalModel>? moneyCapitals,
+          List<ExpenseModel>? moneyCapitals,
       @JsonKey(name: "record_side")
           String? recordSide,
       @JsonKey(name: "record_number")
@@ -429,7 +428,7 @@ class __$$_CompanyModelCopyWithImpl<$Res>
       moneyCapitals: moneyCapitals == freezed
           ? _value._moneyCapitals
           : moneyCapitals // ignore: cast_nullable_to_non_nullable
-              as List<MoneyCapitalModel>?,
+              as List<ExpenseModel>?,
       recordSide: recordSide == freezed
           ? _value.recordSide
           : recordSide // ignore: cast_nullable_to_non_nullable
@@ -498,7 +497,7 @@ class _$_CompanyModel implements _CompanyModel {
       @JsonKey(name: "natural_id")
           this.naturalId,
       @JsonKey(name: "money_capitals")
-          final List<MoneyCapitalModel>? moneyCapitals,
+          final List<ExpenseModel>? moneyCapitals,
       @JsonKey(name: "record_side")
           this.recordSide,
       @JsonKey(name: "record_number")
@@ -573,10 +572,10 @@ class _$_CompanyModel implements _CompanyModel {
   @override
   @JsonKey(name: "natural_id")
   final String? naturalId;
-  final List<MoneyCapitalModel>? _moneyCapitals;
+  final List<ExpenseModel>? _moneyCapitals;
   @override
   @JsonKey(name: "money_capitals")
-  List<MoneyCapitalModel>? get moneyCapitals {
+  List<ExpenseModel>? get moneyCapitals {
     final value = _moneyCapitals;
     if (value == null) return null;
     // ignore: implicit_dynamic_type
@@ -730,7 +729,7 @@ abstract class _CompanyModel implements CompanyModel {
       @JsonKey(name: "natural_id")
           final String? naturalId,
       @JsonKey(name: "money_capitals")
-          final List<MoneyCapitalModel>? moneyCapitals,
+          final List<ExpenseModel>? moneyCapitals,
       @JsonKey(name: "record_side")
           final String? recordSide,
       @JsonKey(name: "record_number")
@@ -800,7 +799,7 @@ abstract class _CompanyModel implements CompanyModel {
   String? get naturalId;
   @override
   @JsonKey(name: "money_capitals")
-  List<MoneyCapitalModel>? get moneyCapitals;
+  List<ExpenseModel>? get moneyCapitals;
   @override
   @JsonKey(name: "record_side")
   String? get recordSide;

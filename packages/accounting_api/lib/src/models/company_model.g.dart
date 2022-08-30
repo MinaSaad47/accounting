@@ -32,7 +32,7 @@ _$_CompanyModel _$$_CompanyModelFromJson(Map<String, dynamic> json) =>
           json['joining_date'], const DatetimeJsonConverter().fromJson),
       naturalId: json['natural_id'] as String?,
       moneyCapitals: (json['money_capitals'] as List<dynamic>?)
-          ?.map((e) => MoneyCapitalModel.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => ExpenseModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       recordSide: json['record_side'] as String?,
       recordNumber: json['record_number'] as String,

@@ -7,18 +7,18 @@ abstract class AccountingApi {
   Future<ApiResponse<CompanyModel>> updateCompany(CompanyModel companyModel);
   Future<ApiResponse<String>> loginUser(UserModel userModel);
   Future<ApiResponse<List<UserModel>>> getUsers();
-  Future<ApiResponse<List<MoneyCapitalModel>>> getMoneyCapitals({
+  Future<ApiResponse<List<ExpenseModel>>> getExpenses({
     int? userId,
     int? companyId,
   });
 
   Future<ApiResponse<UserModel>> createUser(UserModel user);
-  Future<ApiResponse<MoneyCapitalModel>> createMoneyCapital({
+  Future<ApiResponse<ExpenseModel>> createExpense({
     required int companyId,
-    required MoneyCapitalModel moneyCapitalModel,
+    required ExpenseModel expenseModel,
   });
 
-  Future<ApiResponse<void>> deleteMoneyCapital({
+  Future<ApiResponse<void>> deleteExpense({
     required int id,
   });
 

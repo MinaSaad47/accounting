@@ -31,7 +31,7 @@ class CompanyModel with _$CompanyModel {
     @JsonKey(name: "joining_date")
         DateTime? joiningDate,
     @JsonKey(name: "natural_id") String? naturalId,
-    @JsonKey(name: "money_capitals") List<MoneyCapitalModel>? moneyCapitals,
+    @JsonKey(name: "money_capitals") List<ExpenseModel>? moneyCapitals,
     @JsonKey(name: "record_side") String? recordSide,
     @JsonKey(name: "record_number") required String recordNumber,
     @JsonKey(name: "user_name") required String userName,

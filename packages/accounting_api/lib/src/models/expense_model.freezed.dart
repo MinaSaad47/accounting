@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'money_capital_model.dart';
+part of 'expense_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-MoneyCapitalModel _$MoneyCapitalModelFromJson(Map<String, dynamic> json) {
-  return _MoneyCapitalModel.fromJson(json);
+ExpenseModel _$ExpenseModelFromJson(Map<String, dynamic> json) {
+  return _ExpenseModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$MoneyCapitalModel {
+mixin _$ExpenseModel {
   int? get id => throw _privateConstructorUsedError;
   num get value => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
@@ -32,15 +32,15 @@ mixin _$MoneyCapitalModel {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $MoneyCapitalModelCopyWith<MoneyCapitalModel> get copyWith =>
+  $ExpenseModelCopyWith<ExpenseModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MoneyCapitalModelCopyWith<$Res> {
-  factory $MoneyCapitalModelCopyWith(
-          MoneyCapitalModel value, $Res Function(MoneyCapitalModel) then) =
-      _$MoneyCapitalModelCopyWithImpl<$Res>;
+abstract class $ExpenseModelCopyWith<$Res> {
+  factory $ExpenseModelCopyWith(
+          ExpenseModel value, $Res Function(ExpenseModel) then) =
+      _$ExpenseModelCopyWithImpl<$Res>;
   $Res call(
       {int? id,
       num value,
@@ -51,13 +51,12 @@ abstract class $MoneyCapitalModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MoneyCapitalModelCopyWithImpl<$Res>
-    implements $MoneyCapitalModelCopyWith<$Res> {
-  _$MoneyCapitalModelCopyWithImpl(this._value, this._then);
+class _$ExpenseModelCopyWithImpl<$Res> implements $ExpenseModelCopyWith<$Res> {
+  _$ExpenseModelCopyWithImpl(this._value, this._then);
 
-  final MoneyCapitalModel _value;
+  final ExpenseModel _value;
   // ignore: unused_field
-  final $Res Function(MoneyCapitalModel) _then;
+  final $Res Function(ExpenseModel) _then;
 
   @override
   $Res call({
@@ -98,11 +97,11 @@ class _$MoneyCapitalModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_MoneyCapitalModelCopyWith<$Res>
-    implements $MoneyCapitalModelCopyWith<$Res> {
-  factory _$$_MoneyCapitalModelCopyWith(_$_MoneyCapitalModel value,
-          $Res Function(_$_MoneyCapitalModel) then) =
-      __$$_MoneyCapitalModelCopyWithImpl<$Res>;
+abstract class _$$_ExpenseModelCopyWith<$Res>
+    implements $ExpenseModelCopyWith<$Res> {
+  factory _$$_ExpenseModelCopyWith(
+          _$_ExpenseModel value, $Res Function(_$_ExpenseModel) then) =
+      __$$_ExpenseModelCopyWithImpl<$Res>;
   @override
   $Res call(
       {int? id,
@@ -114,15 +113,15 @@ abstract class _$$_MoneyCapitalModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MoneyCapitalModelCopyWithImpl<$Res>
-    extends _$MoneyCapitalModelCopyWithImpl<$Res>
-    implements _$$_MoneyCapitalModelCopyWith<$Res> {
-  __$$_MoneyCapitalModelCopyWithImpl(
-      _$_MoneyCapitalModel _value, $Res Function(_$_MoneyCapitalModel) _then)
-      : super(_value, (v) => _then(v as _$_MoneyCapitalModel));
+class __$$_ExpenseModelCopyWithImpl<$Res>
+    extends _$ExpenseModelCopyWithImpl<$Res>
+    implements _$$_ExpenseModelCopyWith<$Res> {
+  __$$_ExpenseModelCopyWithImpl(
+      _$_ExpenseModel _value, $Res Function(_$_ExpenseModel) _then)
+      : super(_value, (v) => _then(v as _$_ExpenseModel));
 
   @override
-  _$_MoneyCapitalModel get _value => super._value as _$_MoneyCapitalModel;
+  _$_ExpenseModel get _value => super._value as _$_ExpenseModel;
 
   @override
   $Res call({
@@ -133,7 +132,7 @@ class __$$_MoneyCapitalModelCopyWithImpl<$Res>
     Object? userName = freezed,
     Object? companyName = freezed,
   }) {
-    return _then(_$_MoneyCapitalModel(
+    return _then(_$_ExpenseModel(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -164,8 +163,8 @@ class __$$_MoneyCapitalModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MoneyCapitalModel implements _MoneyCapitalModel {
-  const _$_MoneyCapitalModel(
+class _$_ExpenseModel implements _ExpenseModel {
+  const _$_ExpenseModel(
       {this.id,
       required this.value,
       required this.description,
@@ -173,8 +172,8 @@ class _$_MoneyCapitalModel implements _MoneyCapitalModel {
       @JsonKey(name: 'user') this.userName,
       @JsonKey(name: 'company') this.companyName});
 
-  factory _$_MoneyCapitalModel.fromJson(Map<String, dynamic> json) =>
-      _$$_MoneyCapitalModelFromJson(json);
+  factory _$_ExpenseModel.fromJson(Map<String, dynamic> json) =>
+      _$$_ExpenseModelFromJson(json);
 
   @override
   final int? id;
@@ -194,14 +193,14 @@ class _$_MoneyCapitalModel implements _MoneyCapitalModel {
 
   @override
   String toString() {
-    return 'MoneyCapitalModel(id: $id, value: $value, description: $description, time: $time, userName: $userName, companyName: $companyName)';
+    return 'ExpenseModel(id: $id, value: $value, description: $description, time: $time, userName: $userName, companyName: $companyName)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MoneyCapitalModel &&
+            other is _$_ExpenseModel &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.value, value) &&
             const DeepCollectionEquality()
@@ -225,30 +224,28 @@ class _$_MoneyCapitalModel implements _MoneyCapitalModel {
 
   @JsonKey(ignore: true)
   @override
-  _$$_MoneyCapitalModelCopyWith<_$_MoneyCapitalModel> get copyWith =>
-      __$$_MoneyCapitalModelCopyWithImpl<_$_MoneyCapitalModel>(
-          this, _$identity);
+  _$$_ExpenseModelCopyWith<_$_ExpenseModel> get copyWith =>
+      __$$_ExpenseModelCopyWithImpl<_$_ExpenseModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MoneyCapitalModelToJson(
+    return _$$_ExpenseModelToJson(
       this,
     );
   }
 }
 
-abstract class _MoneyCapitalModel implements MoneyCapitalModel {
-  const factory _MoneyCapitalModel(
-          {final int? id,
-          required final num value,
-          required final String description,
-          @DatetimeJsonConverter() final DateTime? time,
-          @JsonKey(name: 'user') final String? userName,
-          @JsonKey(name: 'company') final String? companyName}) =
-      _$_MoneyCapitalModel;
+abstract class _ExpenseModel implements ExpenseModel {
+  const factory _ExpenseModel(
+      {final int? id,
+      required final num value,
+      required final String description,
+      @DatetimeJsonConverter() final DateTime? time,
+      @JsonKey(name: 'user') final String? userName,
+      @JsonKey(name: 'company') final String? companyName}) = _$_ExpenseModel;
 
-  factory _MoneyCapitalModel.fromJson(Map<String, dynamic> json) =
-      _$_MoneyCapitalModel.fromJson;
+  factory _ExpenseModel.fromJson(Map<String, dynamic> json) =
+      _$_ExpenseModel.fromJson;
 
   @override
   int? get id;
@@ -267,6 +264,6 @@ abstract class _MoneyCapitalModel implements MoneyCapitalModel {
   String? get companyName;
   @override
   @JsonKey(ignore: true)
-  _$$_MoneyCapitalModelCopyWith<_$_MoneyCapitalModel> get copyWith =>
+  _$$_ExpenseModelCopyWith<_$_ExpenseModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,20 +1,20 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:accounting_api/src/common/datetime_json_converter.dart';
 
-part 'money_capital_model.freezed.dart';
-part 'money_capital_model.g.dart';
+part 'expense_model.freezed.dart';
+part 'expense_model.g.dart';
 
 @freezed
-class MoneyCapitalModel with _$MoneyCapitalModel {
-  const factory MoneyCapitalModel({
+class ExpenseModel with _$ExpenseModel {
+  const factory ExpenseModel({
     int? id,
     required num value,
     required String description,
     @DatetimeJsonConverter() DateTime? time,
     @JsonKey(name: 'user') String? userName,
     @JsonKey(name: 'company') String? companyName,
-  }) = _MoneyCapitalModel;
+  }) = _ExpenseModel;
 
-  factory MoneyCapitalModel.fromJson(Map<String, Object?> json) =>
-      _$MoneyCapitalModelFromJson(json);
+  factory ExpenseModel.fromJson(Map<String, Object?> json) =>
+      _$ExpenseModelFromJson(json);
 }

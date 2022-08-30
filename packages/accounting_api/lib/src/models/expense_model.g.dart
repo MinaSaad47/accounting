@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'money_capital_model.dart';
+part of 'expense_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_MoneyCapitalModel _$$_MoneyCapitalModelFromJson(Map<String, dynamic> json) =>
-    _$_MoneyCapitalModel(
+_$_ExpenseModel _$$_ExpenseModelFromJson(Map<String, dynamic> json) =>
+    _$_ExpenseModel(
       id: json['id'] as int?,
       value: json['value'] as num,
       description: json['description'] as String,
@@ -17,8 +17,7 @@ _$_MoneyCapitalModel _$$_MoneyCapitalModelFromJson(Map<String, dynamic> json) =>
       companyName: json['company'] as String?,
     );
 
-Map<String, dynamic> _$$_MoneyCapitalModelToJson(
-        _$_MoneyCapitalModel instance) =>
+Map<String, dynamic> _$$_ExpenseModelToJson(_$_ExpenseModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'value': instance.value,
