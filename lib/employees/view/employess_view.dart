@@ -1,6 +1,6 @@
 import 'package:accounting/common/common.dart';
 import 'package:accounting/companies/companies.dart';
-import 'package:accounting/employees/cubit/money_capital_cubit.dart';
+import 'package:accounting/employees/cubit/expense_cubit.dart';
 import 'package:accounting/employees/empolyees.dart';
 import 'package:accounting/login/cubit/login_cubit.dart';
 import 'package:accounting_repository/accounting_repository.dart';
@@ -82,7 +82,7 @@ class _BuildListEmployees extends StatelessWidget {
                     ),
                     TextLabelWidget(
                       icon: Icons.money_outlined,
-                      title: AppLocalizations.of(context)!.moneyCapital,
+                      title: AppLocalizations.of(context)!.expenses,
                       content: '${state.list[index].value}',
                     )
                   ],
@@ -196,7 +196,7 @@ class _BuildEmpolyeeInfo extends StatelessWidget {
                   if (!context.read<LoginCubit>().state.user!.isAdmin)
                     TextLabelWidget(
                       icon: Icons.attach_money_outlined,
-                      title: AppLocalizations.of(context)!.moneyCapital,
+                      title: AppLocalizations.of(context)!.expenses,
                       content: '${userModel.value}',
                     ),
                 ],
@@ -219,11 +219,11 @@ class _BuildEmpolyeeInfo extends StatelessWidget {
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  child: BlocBuilder<MoneyCapitalCubit, MoneyCapitalState>(
+                  child: BlocBuilder<MoneyCapitalCubit, ExpenseState>(
                     builder: (context, state) {
                       return _BuildEmployeeMoneyCapitals(
                         companies: state.companies,
-                        moneyCapitals: state.moneyCapitals,
+                        expenses: state.expense,
                       );
                     },
                   ),
@@ -267,12 +267,12 @@ class _BuildEmployeeValueState extends State<_BuildEmployeeValue> {
           Expanded(
             child: FormBuilderTextFieldWidget(
               context,
-              name: AppLocalizations.of(context)!.moneyCapital,
+              name: AppLocalizations.of(context)!.expenses,
               value: '${widget.initial}',
               validator: FormBuilderValidators.compose(
                 [
                   FormBuilderValidators.required(
-                    errorText: AppLocalizations.of(context)!.moneyCapital,
+                    errorText: AppLocalizations.of(context)!.expenses,
                   ),
                   FormBuilderValidators.numeric(
                     errorText: AppLocalizations.of(context)!.expect(
@@ -290,7 +290,7 @@ class _BuildEmployeeValueState extends State<_BuildEmployeeValue> {
               if (formState.saveAndValidate()) {
                 widget.onSave(
                   double.parse(
-                    formState.value[AppLocalizations.of(context)!.moneyCapital],
+                    formState.value[AppLocalizations.of(context)!.expenses],
                   ),
                 );
               }
@@ -307,11 +307,11 @@ class _BuildEmployeeValueState extends State<_BuildEmployeeValue> {
 
 class _BuildEmployeeMoneyCapitals extends StatefulWidget {
   final List<String> companies;
-  final List<List<MoneyCapitalModel>> moneyCapitals;
+  final List<List<ExpenseModel>> expenses;
   const _BuildEmployeeMoneyCapitals({
     Key? key,
     required this.companies,
-    required this.moneyCapitals,
+    required this.expenses,
   }) : super(key: key);
 
   @override
@@ -345,7 +345,7 @@ class _BuildEmployeeMoneyCapitalsState
                 const Icon(Icons.attach_money_outlined),
                 const SizedBox(width: 5),
                 Text(
-                  widget.moneyCapitals[index]
+                  widget.expenses[index]
                       .map((e) => e.value)
                       .fold(0.0, (p, c) => (p as double) + c)
                       .toString(),
@@ -358,12 +358,12 @@ class _BuildEmployeeMoneyCapitalsState
             child: ListView.separated(
               shrinkWrap: true,
               itemBuilder: (context, innerIndex) => MoneyCapitalItemWidget(
-                moneyCapital: widget.moneyCapitals[index][innerIndex],
+                moneyCapital: widget.expenses[index][innerIndex],
               ),
               separatorBuilder: (context, _) => const SizedBox(
                 height: 10,
               ),
-              itemCount: widget.moneyCapitals[index].length,
+              itemCount: widget.expenses[index].length,
             ),
           ),
         ),

@@ -89,21 +89,21 @@ class AccountingDio extends AccountingApi {
   }
 
   @override
-  Future<ApiResponse<List<MoneyCapitalModel>>> getMoneyCapitals({
+  Future<ApiResponse<List<ExpenseModel>>> getExpenses({
     int? userId,
     int? companyId,
   }) async {
-    var response = await _dio.get('money_capitals', queryParameters: {
+    var response = await _dio.get('expenses', queryParameters: {
       'user.id': userId,
       'company.id': companyId,
     });
 
-    return ApiResponse<List<MoneyCapitalModel>>.fromJson(response.data, (p0) {
-      List<MoneyCapitalModel> moneyCapitals = [];
+    return ApiResponse<List<ExpenseModel>>.fromJson(response.data, (p0) {
+      List<ExpenseModel> expenses = [];
       for (var json in (p0 as List<dynamic>)) {
-        moneyCapitals.add(MoneyCapitalModel.fromJson(json));
+        expenses.add(ExpenseModel.fromJson(json));
       }
-      return moneyCapitals;
+      return expenses;
     });
   }
 
@@ -115,21 +115,21 @@ class AccountingDio extends AccountingApi {
   }
 
   @override
-  Future<ApiResponse<MoneyCapitalModel>> createMoneyCapital({
+  Future<ApiResponse<ExpenseModel>> createExpense({
     required int companyId,
-    required MoneyCapitalModel moneyCapitalModel,
+    required ExpenseModel expenseModel,
   }) async {
     var response = await _dio.post(
-      '/company/$companyId/money_capitals',
-      data: moneyCapitalModel.toJson(),
+      '/company/$companyId/expenses',
+      data: expenseModel.toJson(),
     );
-    return ApiResponse<MoneyCapitalModel>.fromJson(
-        response.data, (p0) => MoneyCapitalModel.fromJson(p0 as dynamic));
+    return ApiResponse<ExpenseModel>.fromJson(
+        response.data, (p0) => ExpenseModel.fromJson(p0 as dynamic));
   }
 
   @override
-  Future<ApiResponse<void>> deleteMoneyCapital({required int id}) async {
-    var response = await _dio.delete('money_capitals/$id');
+  Future<ApiResponse<void>> deleteExpense({required int id}) async {
+    var response = await _dio.delete('expenses/$id');
     return ApiResponse<void>.fromJson(response.data, (p0) => dynamic);
   }
 

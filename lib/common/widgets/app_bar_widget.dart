@@ -1,4 +1,3 @@
-import 'package:accounting/common/common.dart';
 import 'package:flutter/material.dart';
 
 class AppBarWidget extends AppBar {

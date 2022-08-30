@@ -1,5 +1,5 @@
 import 'package:accounting/common/common.dart';
-import 'package:accounting/companies/bloc/money_capital_bloc.dart';
+import 'package:accounting/companies/bloc/expense_bloc.dart';
 import 'package:accounting/companies/companies.dart';
 import 'package:accounting/login/cubit/login_cubit.dart';
 import 'package:accounting_repository/accounting_repository.dart';
@@ -138,7 +138,7 @@ class _BuildCompanyInfo extends StatefulWidget {
                 var user = context.read<LoginCubit>().state.user!;
                 return MoneyCapitalBloc(
                   context.read<AccountingRepository>(),
-                )..add(MoneyCapitalGetRequested(
+                )..add(ExpenseGetRequested(
                     companyId: companyModel.id,
                     empolyeeId: !user.isAdmin ? user.id : null,
                   ));
@@ -205,16 +205,16 @@ class _BuildCompanyInfoState extends State<_BuildCompanyInfo> {
             onTap: () {
               showTextInputDialog(
                 context: context,
-                title: AppLocalizations.of(context)!.moneyCapital,
+                title: AppLocalizations.of(context)!.expenses,
                 textFields: [
                   DialogTextField(
-                    hintText: AppLocalizations.of(context)!.moneyCapital,
+                    hintText: AppLocalizations.of(context)!.expenses,
                     keyboardType: TextInputType.number,
                     validator: FormBuilderValidators.compose(
                       [
                         FormBuilderValidators.required(
                           errorText: AppLocalizations.of(context)!.expect(
-                            AppLocalizations.of(context)!.moneyCapital,
+                            AppLocalizations.of(context)!.expenses,
                           ),
                         ),
                         FormBuilderValidators.numeric(
@@ -237,7 +237,7 @@ class _BuildCompanyInfoState extends State<_BuildCompanyInfo> {
                 ],
               ).then(
                 (inputs) {
-                  var moneyCapital = MoneyCapitalModel(
+                  var moneyCapital = ExpenseModel(
                     value: num.parse(inputs![0]),
                     description: inputs[1],
                   );
@@ -252,7 +252,7 @@ class _BuildCompanyInfoState extends State<_BuildCompanyInfo> {
             },
             child: const Icon(Icons.currency_exchange_outlined),
             label: AppLocalizations.of(context)!
-                .add(AppLocalizations.of(context)!.moneyCapital),
+                .add(AppLocalizations.of(context)!.expenses),
           ),
         ],
       ),
@@ -311,7 +311,7 @@ class _BuildCompanyInfoState extends State<_BuildCompanyInfo> {
                       headerBuilder: (context, isExpanded) => ListTile(
                         leading: const Icon(Icons.currency_exchange_outlined),
                         title: Text(
-                          AppLocalizations.of(context)!.moneyCapital,
+                          AppLocalizations.of(context)!.expenses,
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         trailing: Row(
@@ -319,7 +319,7 @@ class _BuildCompanyInfoState extends State<_BuildCompanyInfo> {
                           children: [
                             const Icon(Icons.attach_money_outlined),
                             const SizedBox(width: 5),
-                            BlocBuilder<MoneyCapitalBloc, MoneyCapitalState>(
+                            BlocBuilder<MoneyCapitalBloc, ExpenseState>(
                               builder: (context, state) {
                                 return Text(
                                   state.list
@@ -635,14 +635,14 @@ class _BuildMoneyCapitals extends StatefulWidget {
 class _BuildMoneyCapitalsState extends State<_BuildMoneyCapitals> {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MoneyCapitalBloc, MoneyCapitalState>(
+    return BlocConsumer<MoneyCapitalBloc, ExpenseState>(
       listener: (context, state) {
-        if (state.status == MoneyCapitalStatus.failure) {
+        if (state.status == ExpenseStatus.failure) {
           showToast(context, message: state.message, level: ToastLevel.error);
-        } else if (state.action != MoneyCapitalAction.get &&
-            state.status == MoneyCapitalStatus.success) {
+        } else if (state.action != ExpenseAction.get &&
+            state.status == ExpenseStatus.success) {
           var user = context.read<LoginCubit>().state.user!;
-          context.read<MoneyCapitalBloc>().add(MoneyCapitalGetRequested(
+          context.read<MoneyCapitalBloc>().add(ExpenseGetRequested(
                 companyId: widget.companyId,
                 empolyeeId: !user.isAdmin ? user.id : null,
               ));
@@ -654,7 +654,7 @@ class _BuildMoneyCapitalsState extends State<_BuildMoneyCapitals> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              if (state.status == MoneyCapitalStatus.loading)
+              if (state.status == ExpenseStatus.loading)
                 const LinearProgressIndicator(),
               ListView.separated(
                 shrinkWrap: true,
@@ -662,7 +662,7 @@ class _BuildMoneyCapitalsState extends State<_BuildMoneyCapitals> {
                   moneyCapital: state.list[index],
                   onDelete: () {
                     context.read<MoneyCapitalBloc>().add(
-                          MoneyCapitalDeleteRequested(
+                          ExpenseDeleteRequested(
                             state.list[index].id!,
                           ),
                         );

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class MoneyCapitalItemWidget extends StatelessWidget {
-  final MoneyCapitalModel moneyCapital;
+  final ExpenseModel moneyCapital;
   final Function()? onDelete;
   final Function()? onEdit;
   const MoneyCapitalItemWidget({

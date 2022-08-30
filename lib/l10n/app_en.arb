@@ -1,4 +1,7 @@
 {
+  
+  "sameh": "Sameh Girgs",
+
   "add": "add {input}",
   "@add": {
     "placeholders": {
@@ -71,7 +74,7 @@
   "accounts": "accounts",
   "joiningDate": "joining date",
   "naturalId": "natural id",
-  "moneyCapital": "money capital",
+  "expenses": "expenses",
   "recordSide": "record side",
   "recordNumber": "record number",
   "userName": "user name",

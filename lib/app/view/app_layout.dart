@@ -23,7 +23,7 @@ class _AppLayoutState extends State<AppLayout> {
       child: Scaffold(
         appBar: AppBar(
           title: Center(
-            child: Text(AppLocalizations.of(context)!.accounting),
+            child: Text(AppLocalizations.of(context)!.sameh),
           ),
           actions: [
             MaterialButton(

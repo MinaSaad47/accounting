@@ -1,6 +1,5 @@
 import 'package:cache/cache.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 class CachedRepository {
   final Cache _cache;

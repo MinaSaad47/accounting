@@ -1,8 +1,10 @@
 import 'package:accounting/common/common.dart';
 import 'package:accounting_repository/accounting_repository.dart';
+import 'package:accounting_api/accounting_api.dart';
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'employees_cubit.freezed.dart';
 part 'employees_state.dart';
 
 class EmployeesCubit extends Cubit<EmployeesState> {
@@ -19,7 +21,7 @@ class EmployeesCubit extends Cubit<EmployeesState> {
       emit(state.copyWith(
         action: EmployeeAction.get,
         status: EmployeeStatus.success,
-        list: response.data,
+        list: response.data!,
         message: response.message,
       ));
     } else {
@@ -61,6 +63,7 @@ class EmployeesCubit extends Cubit<EmployeesState> {
     ));
     var response = await _accountingRepository.payUser(id: id, value: value);
     if (response.status) {
+      log.d(response.data);
       emit(state.copyWith(
         action: EmployeeAction.pay,
         status: EmployeeStatus.success,

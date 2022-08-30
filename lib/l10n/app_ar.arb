@@ -1,5 +1,7 @@
 {
 
+  "sameh": "سامح جرجس",
+
   "search": "بحث عن {input}",
   "add": "اضافة {input}",
   "edit": "تعديل {input}",
@@ -37,7 +39,7 @@
   "accounts": "الحسابات",
   "joiningDate": "تاريخ الالتحاق",
   "naturalId": "الرقم القومي",
-  "moneyCapital": "رأس المال",
+  "expenses": "مصروفات",
   "recordSide": "جهة السجل",
   "recordNumber": "رقم السجل",
   "userName": "اسم المستخدم",
