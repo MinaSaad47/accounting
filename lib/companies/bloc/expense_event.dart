@@ -1,28 +1,28 @@
 part of 'expense_bloc.dart';
 
-abstract class MoneyCapitalEvent extends Equatable {
-  const MoneyCapitalEvent();
+abstract class ExpenseEvent extends Equatable {
+  const ExpenseEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class MoneyCapitalCreateRequested extends MoneyCapitalEvent {
+class ExpenseCreateRequested extends ExpenseEvent {
   final ExpenseModel expense;
   final CompanyModel company;
 
-  const MoneyCapitalCreateRequested(this.expense, this.company);
+  const ExpenseCreateRequested(this.expense, this.company);
   @override
   List<Object> get props => [expense, company];
 }
 
-class ExpenseGetRequested extends MoneyCapitalEvent {
+class ExpenseGetRequested extends ExpenseEvent {
   final int? empolyeeId, companyId;
 
   const ExpenseGetRequested({this.empolyeeId, this.companyId});
 }
 
-class ExpenseDeleteRequested extends MoneyCapitalEvent {
+class ExpenseDeleteRequested extends ExpenseEvent {
   final int id;
 
   const ExpenseDeleteRequested(this.id);

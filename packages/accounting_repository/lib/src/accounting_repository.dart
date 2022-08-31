@@ -55,6 +55,27 @@ class AccountingRepository {
   Future<ApiResponse<void>> deleteExpense({required int id}) async =>
       await _accountingApi.deleteExpense(id: id);
 
+  Future<ApiResponse<List<IncomeModel>>> getIncomes({
+    int? adminId,
+    int? companyId,
+  }) async =>
+      await _accountingApi.getIncomes(
+        adminId: adminId,
+        companyId: companyId,
+      );
+
+  Future<ApiResponse<IncomeModel>> createIncome({
+    required int companyId,
+    required IncomeModel incomeModel,
+  }) async =>
+      await _accountingApi.createIncome(
+        companyId: companyId,
+        incomeModel: incomeModel,
+      );
+
+  Future<ApiResponse<void>> deleteIncome({required int id}) async =>
+      await _accountingApi.deleteIncome(id: id);
+
   Future<ApiResponse<UserModel>> getCurrentUser() async =>
       await _accountingApi.getCurrentUser();
 

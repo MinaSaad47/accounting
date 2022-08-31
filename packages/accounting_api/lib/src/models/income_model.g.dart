@@ -13,6 +13,7 @@ _$_IncomeModel _$$_IncomeModelFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String,
       time: _$JsonConverterFromJson<String, DateTime>(
           json['time'], const DatetimeJsonConverter().fromJson),
+      adminName: json['admin'] as String?,
       companyName: json['company'] as String?,
     );
 
@@ -23,6 +24,7 @@ Map<String, dynamic> _$$_IncomeModelToJson(_$_IncomeModel instance) =>
       'description': instance.description,
       'time': _$JsonConverterToJson<String, DateTime>(
           instance.time, const DatetimeJsonConverter().toJson),
+      'admin': instance.adminName,
       'company': instance.companyName,
     };
 

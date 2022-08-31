@@ -11,6 +11,7 @@ class IncomeModel with _$IncomeModel {
     required num value,
     required String description,
     @DatetimeJsonConverter() DateTime? time,
+    @JsonKey(name: 'admin') String? adminName,
     @JsonKey(name: 'company') String? companyName,
   }) = _IncomeModel;
 

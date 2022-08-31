@@ -75,6 +75,7 @@
   "joiningDate": "joining date",
   "naturalId": "natural id",
   "expenses": "expenses",
+  "incomes": "incomes",
   "recordSide": "record side",
   "recordNumber": "record number",
   "userName": "user name",

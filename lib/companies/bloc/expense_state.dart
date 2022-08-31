@@ -14,32 +14,16 @@ enum ExpenseAction {
   delete,
 }
 
-class ExpenseState extends Equatable {
-  final List<ExpenseModel> list;
-  final ExpenseStatus status;
-  final ExpenseAction action;
-  final String message;
+@freezed
+class ExpenseState with _$ExpenseState {
+  const ExpenseState._();
 
-  const ExpenseState({
-    this.action = ExpenseAction.none,
-    this.list = const [],
-    this.status = ExpenseStatus.initial,
-    this.message = '',
-  });
+  double get total => list.map((e) => e.value).fold(0.0, (p, c) => p + c);
 
-  ExpenseState copyWith({
-    List<ExpenseModel>? list,
-    ExpenseStatus? status,
-    ExpenseAction? action,
-    String? message,
-  }) =>
-      ExpenseState(
-        list: list ?? this.list,
-        status: status ?? this.status,
-        action: action ?? this.action,
-        message: message ?? this.message,
-      );
-
-  @override
-  List<Object> get props => [action, list, status, message];
+  const factory ExpenseState({
+    @Default([]) List<ExpenseModel> list,
+    @Default(ExpenseStatus.initial) ExpenseStatus status,
+    @Default(ExpenseAction.none) ExpenseAction action,
+    @Default('') String message,
+  }) = _ExpenseState;
 }

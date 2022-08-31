@@ -25,6 +25,8 @@ mixin _$IncomeModel {
   String get description => throw _privateConstructorUsedError;
   @DatetimeJsonConverter()
   DateTime? get time => throw _privateConstructorUsedError;
+  @JsonKey(name: 'admin')
+  String? get adminName => throw _privateConstructorUsedError;
   @JsonKey(name: 'company')
   String? get companyName => throw _privateConstructorUsedError;
 
@@ -44,6 +46,7 @@ abstract class $IncomeModelCopyWith<$Res> {
       num value,
       String description,
       @DatetimeJsonConverter() DateTime? time,
+      @JsonKey(name: 'admin') String? adminName,
       @JsonKey(name: 'company') String? companyName});
 }
 
@@ -61,6 +64,7 @@ class _$IncomeModelCopyWithImpl<$Res> implements $IncomeModelCopyWith<$Res> {
     Object? value = freezed,
     Object? description = freezed,
     Object? time = freezed,
+    Object? adminName = freezed,
     Object? companyName = freezed,
   }) {
     return _then(_value.copyWith(
@@ -80,6 +84,10 @@ class _$IncomeModelCopyWithImpl<$Res> implements $IncomeModelCopyWith<$Res> {
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      adminName: adminName == freezed
+          ? _value.adminName
+          : adminName // ignore: cast_nullable_to_non_nullable
+              as String?,
       companyName: companyName == freezed
           ? _value.companyName
           : companyName // ignore: cast_nullable_to_non_nullable
@@ -100,6 +108,7 @@ abstract class _$$_IncomeModelCopyWith<$Res>
       num value,
       String description,
       @DatetimeJsonConverter() DateTime? time,
+      @JsonKey(name: 'admin') String? adminName,
       @JsonKey(name: 'company') String? companyName});
 }
 
@@ -119,6 +128,7 @@ class __$$_IncomeModelCopyWithImpl<$Res> extends _$IncomeModelCopyWithImpl<$Res>
     Object? value = freezed,
     Object? description = freezed,
     Object? time = freezed,
+    Object? adminName = freezed,
     Object? companyName = freezed,
   }) {
     return _then(_$_IncomeModel(
@@ -138,6 +148,10 @@ class __$$_IncomeModelCopyWithImpl<$Res> extends _$IncomeModelCopyWithImpl<$Res>
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      adminName: adminName == freezed
+          ? _value.adminName
+          : adminName // ignore: cast_nullable_to_non_nullable
+              as String?,
       companyName: companyName == freezed
           ? _value.companyName
           : companyName // ignore: cast_nullable_to_non_nullable
@@ -154,6 +168,7 @@ class _$_IncomeModel implements _IncomeModel {
       required this.value,
       required this.description,
       @DatetimeJsonConverter() this.time,
+      @JsonKey(name: 'admin') this.adminName,
       @JsonKey(name: 'company') this.companyName});
 
   factory _$_IncomeModel.fromJson(Map<String, dynamic> json) =>
@@ -169,12 +184,15 @@ class _$_IncomeModel implements _IncomeModel {
   @DatetimeJsonConverter()
   final DateTime? time;
   @override
+  @JsonKey(name: 'admin')
+  final String? adminName;
+  @override
   @JsonKey(name: 'company')
   final String? companyName;
 
   @override
   String toString() {
-    return 'IncomeModel(id: $id, value: $value, description: $description, time: $time, companyName: $companyName)';
+    return 'IncomeModel(id: $id, value: $value, description: $description, time: $time, adminName: $adminName, companyName: $companyName)';
   }
 
   @override
@@ -187,6 +205,7 @@ class _$_IncomeModel implements _IncomeModel {
             const DeepCollectionEquality()
                 .equals(other.description, description) &&
             const DeepCollectionEquality().equals(other.time, time) &&
+            const DeepCollectionEquality().equals(other.adminName, adminName) &&
             const DeepCollectionEquality()
                 .equals(other.companyName, companyName));
   }
@@ -199,6 +218,7 @@ class _$_IncomeModel implements _IncomeModel {
       const DeepCollectionEquality().hash(value),
       const DeepCollectionEquality().hash(description),
       const DeepCollectionEquality().hash(time),
+      const DeepCollectionEquality().hash(adminName),
       const DeepCollectionEquality().hash(companyName));
 
   @JsonKey(ignore: true)
@@ -220,6 +240,7 @@ abstract class _IncomeModel implements IncomeModel {
       required final num value,
       required final String description,
       @DatetimeJsonConverter() final DateTime? time,
+      @JsonKey(name: 'admin') final String? adminName,
       @JsonKey(name: 'company') final String? companyName}) = _$_IncomeModel;
 
   factory _IncomeModel.fromJson(Map<String, dynamic> json) =
@@ -234,6 +255,9 @@ abstract class _IncomeModel implements IncomeModel {
   @override
   @DatetimeJsonConverter()
   DateTime? get time;
+  @override
+  @JsonKey(name: 'admin')
+  String? get adminName;
   @override
   @JsonKey(name: 'company')
   String? get companyName;

@@ -108,13 +108,6 @@ class AccountingDio extends AccountingApi {
   }
 
   @override
-  Future<ApiResponse<UserModel>> createUser(UserModel user) async {
-    var response = await _dio.post('users', data: user.toJson());
-    return ApiResponse<UserModel>.fromJson(
-        response.data, (p0) => UserModel.fromJson(p0 as dynamic));
-  }
-
-  @override
   Future<ApiResponse<ExpenseModel>> createExpense({
     required int companyId,
     required ExpenseModel expenseModel,
@@ -131,6 +124,13 @@ class AccountingDio extends AccountingApi {
   Future<ApiResponse<void>> deleteExpense({required int id}) async {
     var response = await _dio.delete('expenses/$id');
     return ApiResponse<void>.fromJson(response.data, (p0) => dynamic);
+  }
+
+  @override
+  Future<ApiResponse<UserModel>> createUser(UserModel user) async {
+    var response = await _dio.post('users', data: user.toJson());
+    return ApiResponse<UserModel>.fromJson(
+        response.data, (p0) => UserModel.fromJson(p0 as dynamic));
   }
 
   @override
@@ -159,6 +159,44 @@ class AccountingDio extends AccountingApi {
   @override
   Future<ApiResponse<void>> deleteUser({required int id}) async {
     var response = await _dio.delete('users/$id');
+    return ApiResponse<void>.fromJson(response.data, (p0) => dynamic);
+  }
+
+  @override
+  Future<ApiResponse<List<IncomeModel>>> getIncomes({
+    int? adminId,
+    int? companyId,
+  }) async {
+    var response = await _dio.get('incomes', queryParameters: {
+      'admin.id': adminId,
+      'company.id': companyId,
+    });
+
+    return ApiResponse<List<IncomeModel>>.fromJson(response.data, (p0) {
+      List<IncomeModel> expenses = [];
+      for (var json in (p0 as List<dynamic>)) {
+        expenses.add(IncomeModel.fromJson(json));
+      }
+      return expenses;
+    });
+  }
+
+  @override
+  Future<ApiResponse<IncomeModel>> createIncome({
+    required int companyId,
+    required IncomeModel incomeModel,
+  }) async {
+    var response = await _dio.post(
+      '/company/$companyId/incomes',
+      data: incomeModel.toJson(),
+    );
+    return ApiResponse<IncomeModel>.fromJson(
+        response.data, (p0) => IncomeModel.fromJson(p0 as dynamic));
+  }
+
+  @override
+  Future<ApiResponse<void>> deleteIncome({required int id}) async {
+    var response = await _dio.delete('incomes/$id');
     return ApiResponse<void>.fromJson(response.data, (p0) => dynamic);
   }
 }

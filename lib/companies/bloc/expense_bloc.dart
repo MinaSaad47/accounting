@@ -1,13 +1,15 @@
 import 'package:accounting_repository/accounting_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'expense_bloc.freezed.dart';
 part 'expense_event.dart';
 part 'expense_state.dart';
 
-class ExpenseBloc extends Bloc<MoneyCapitalEvent, ExpenseState> {
+class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
   ExpenseBloc(this._accountingRepository) : super(const ExpenseState()) {
-    on<MoneyCapitalCreateRequested>(_onExpenseCreateRequested);
+    on<ExpenseCreateRequested>(_onExpenseCreateRequested);
     on<ExpenseGetRequested>(_onExpenseGetRequested);
     on<ExpenseDeleteRequested>(_onExpenseDeleteRequested);
   }
@@ -15,7 +17,7 @@ class ExpenseBloc extends Bloc<MoneyCapitalEvent, ExpenseState> {
   final AccountingRepository _accountingRepository;
 
   Future _onExpenseCreateRequested(
-    MoneyCapitalCreateRequested event,
+    ExpenseCreateRequested event,
     Emitter<ExpenseState> emit,
   ) async {
     emit(state.copyWith(
@@ -56,7 +58,7 @@ class ExpenseBloc extends Bloc<MoneyCapitalEvent, ExpenseState> {
     if (response.status) {
       emit(state.copyWith(
         action: ExpenseAction.get,
-        list: response.data,
+        list: response.data!,
         status: ExpenseStatus.success,
         message: response.message,
       ));
