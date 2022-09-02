@@ -2,6 +2,7 @@ import 'package:accounting/app/bloc/app_bloc.dart';
 import 'package:accounting/common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AppLayout extends StatefulWidget {
   const AppLayout({Key? key}) : super(key: key);
@@ -50,6 +51,23 @@ class _AppLayoutState extends State<AppLayout> {
           ],
         ),
         drawer: const DrawerWidget(),
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: AspectRatio(
+                  aspectRatio: 2,
+                  child: SvgPicture.asset(
+                    'assets/images/logo.svg',
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

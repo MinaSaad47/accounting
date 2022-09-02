@@ -1,9 +1,11 @@
 import 'package:accounting/common/common.dart';
 import 'package:accounting/login/cubit/login_cubit.dart';
+import 'package:accounting/utils/utils.dart';
 import 'package:accounting_repository/accounting_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -21,11 +23,11 @@ class _LoginViewState extends State<LoginView> {
         listener: (context, state) {
           if (state.action == LoginAction.get &&
               state.status == LoginStatus.success) {
-            showToast(context, message: state.message);
+            Utils.toast(context, message: state.message);
             Navigator.of(context).popAndPushNamed('/');
           } else if (state.action == LoginAction.get &&
               state.status == LoginStatus.failure) {
-            showToast(
+            Utils.toast(
               context,
               message: state.message,
               level: ToastLevel.error,
@@ -44,6 +46,10 @@ class _LoginViewState extends State<LoginView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  SvgPicture.asset(
+                    'assets/images/logo.svg',
+                    color: Theme.of(context).primaryColor,
+                  ),
                   Text(
                     AppLocalizations.of(context)!.login,
                     style: Theme.of(context).textTheme.headline1,
@@ -71,7 +77,7 @@ class _LoginViewState extends State<LoginView> {
                         context.read<LoginCubit>().getCurrentUser();
                       } else if (state.action == LoginAction.login &&
                           state.status == LoginStatus.failure) {
-                        showToast(
+                        Utils.toast(
                           context,
                           message: state.message,
                           level: ToastLevel.error,

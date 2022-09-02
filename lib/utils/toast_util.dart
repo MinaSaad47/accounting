@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of 'utils.dart';
 
 enum ToastLevel {
   success,
@@ -6,7 +6,7 @@ enum ToastLevel {
   error,
 }
 
-void showToast(
+void _toast(
   BuildContext context, {
   required String message,
   ToastLevel level = ToastLevel.success,

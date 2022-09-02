@@ -2,6 +2,7 @@ import 'package:accounting/common/common.dart';
 import 'package:accounting/companies/companies.dart';
 import 'package:accounting/companies/widgets/company_widget.dart';
 import 'package:accounting/login/cubit/login_cubit.dart';
+import 'package:accounting/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -69,7 +70,7 @@ class _BuildSearchCompany extends StatelessWidget {
             child: BlocConsumer<CompaniesBloc, CompaniesState>(
               listener: (context, state) {
                 if (state is CompaniesGetInFailure) {
-                  showToast(
+                  Utils.toast(
                     context,
                     message: state.error,
                     level: ToastLevel.error,

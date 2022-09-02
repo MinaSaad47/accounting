@@ -1,6 +1,7 @@
 import 'package:accounting/common/common.dart';
 import 'package:accounting/companies/bloc/companies_bloc.dart';
 import 'package:accounting/login/cubit/login_cubit.dart';
+import 'package:accounting/utils/utils.dart';
 import 'package:accounting_api/accounting_api.dart';
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
@@ -171,13 +172,13 @@ class _BuildCompanyEditFormState extends State<CompanyEditWidget> {
                 BlocConsumer<CompaniesBloc, CompaniesState>(
                   listener: (context, state) {
                     if (state is CompaniesSaveFailure) {
-                      showToast(
+                      Utils.toast(
                         context,
                         message: state.error,
                         level: ToastLevel.error,
                       );
                     } else if (state is CompaniesSaveSuccess) {
-                      showToast(
+                      Utils.toast(
                         context,
                         message: state.message,
                       );
@@ -261,7 +262,7 @@ class _BuildSaveCompanyButton extends StatelessWidget {
             verificationCode:
                 formState.value[AppLocalizations.of(context)!.verificationCode],
           );
-          log.d(savedCompany.toString());
+          Utils.log.d(savedCompany.toString());
           if (company == null) {
             context
                 .read<CompaniesBloc>()

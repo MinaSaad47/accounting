@@ -96,5 +96,7 @@
   
   "user": "user",
   "admin": "admin",
-  "permissions": "permissions"
+  "permissions": "permissions",
+  
+  "dues": "dues"
 }

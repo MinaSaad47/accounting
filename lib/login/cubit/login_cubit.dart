@@ -1,4 +1,5 @@
 import 'package:accounting/common/common.dart';
+import 'package:accounting/utils/utils.dart';
 import 'package:accounting_repository/accounting_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -23,7 +24,7 @@ class LoginCubit extends Cubit<LoginState> {
     ));
     var response = await accountingRepository.loginUser(user);
     if (response.status) {
-      log.d('Token: ${response.data}');
+      Utils.log.d('Token: ${response.data}');
       cachedRepository.token = response.data;
       emit(state.copyWith(
           action: LoginAction.login,

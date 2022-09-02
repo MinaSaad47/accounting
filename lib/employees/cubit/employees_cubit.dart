@@ -1,4 +1,4 @@
-import 'package:accounting/common/common.dart';
+import 'package:accounting/utils/utils.dart';
 import 'package:accounting_repository/accounting_repository.dart';
 import 'package:accounting_api/accounting_api.dart';
 import 'package:bloc/bloc.dart';
@@ -25,7 +25,7 @@ class EmployeesCubit extends Cubit<EmployeesState> {
         message: response.message,
       ));
     } else {
-      log.e(response.message);
+      Utils.log.d(response.message);
       emit(state.copyWith(
         action: EmployeeAction.get,
         status: EmployeeStatus.failure,
@@ -47,7 +47,7 @@ class EmployeesCubit extends Cubit<EmployeesState> {
         message: response.message,
       ));
     } else {
-      log.e(response.message);
+      Utils.log.e(response.message);
       emit(state.copyWith(
         action: EmployeeAction.create,
         status: EmployeeStatus.failure,
@@ -63,7 +63,7 @@ class EmployeesCubit extends Cubit<EmployeesState> {
     ));
     var response = await _accountingRepository.payUser(id: id, value: value);
     if (response.status) {
-      log.d(response.data);
+      Utils.log.d(response.data);
       emit(state.copyWith(
         action: EmployeeAction.pay,
         status: EmployeeStatus.success,
@@ -71,7 +71,7 @@ class EmployeesCubit extends Cubit<EmployeesState> {
         user: response.data,
       ));
     } else {
-      log.e(response.message);
+      Utils.log.e(response.message);
       emit(state.copyWith(
         action: EmployeeAction.pay,
         status: EmployeeStatus.failure,
@@ -93,7 +93,7 @@ class EmployeesCubit extends Cubit<EmployeesState> {
         message: response.message,
       ));
     } else {
-      log.e(response.message);
+      Utils.log.e(response.message);
       emit(state.copyWith(
         action: EmployeeAction.delete,
         status: EmployeeStatus.failure,

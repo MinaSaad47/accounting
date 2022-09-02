@@ -3,6 +3,7 @@ import 'package:accounting/companies/companies.dart';
 import 'package:accounting/employees/cubit/expense_cubit.dart';
 import 'package:accounting/employees/empolyees.dart';
 import 'package:accounting/login/cubit/login_cubit.dart';
+import 'package:accounting/utils/utils.dart';
 import 'package:accounting_repository/accounting_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,7 +59,7 @@ class _BuildListEmployees extends StatelessWidget {
       listener: (context, state) {
         if (state.action == EmployeeAction.get &&
             state.status == EmployeeStatus.failure) {
-          showToast(
+          Utils.toast(
             context,
             message: state.message,
             level: ToastLevel.error,
@@ -133,14 +134,14 @@ class _BuildEmpolyeeInfo extends StatelessWidget {
       listener: (context, state) {
         if (state.action == EmployeeAction.pay) {
           if (state.status == EmployeeStatus.success) {
-            showToast(context, message: state.message);
+            Utils.toast(context, message: state.message);
             context.read<EmployeesCubit>().getEmployees();
             var loginCubit = context.read<LoginCubit>();
             if (state.user!.id == loginCubit.state.user!.id) {
               loginCubit.getCurrentUser();
             }
           } else if (state.status == EmployeeStatus.failure) {
-            showToast(
+            Utils.toast(
               context,
               message: state.message,
               level: ToastLevel.error,
@@ -148,11 +149,11 @@ class _BuildEmpolyeeInfo extends StatelessWidget {
           }
         } else if (state.action == EmployeeAction.delete) {
           if (state.status == EmployeeStatus.success) {
-            showToast(context, message: state.message);
+            Utils.toast(context, message: state.message);
             context.read<EmployeesCubit>().getEmployees();
             Navigator.of(context).pop();
           } else if (state.status == EmployeeStatus.failure) {
-            showToast(
+            Utils.toast(
               context,
               message: state.message,
               level: ToastLevel.error,
@@ -414,11 +415,11 @@ class _BuildAddEmployeeState extends State<_BuildAddEmployee> {
               listener: (context, state) {
                 if (state.action == EmployeeAction.create &&
                     state.status == EmployeeStatus.success) {
-                  showToast(context, message: state.message);
+                  Utils.toast(context, message: state.message);
                   context.read<EmployeesCubit>().getEmployees();
                 } else if (state.action == EmployeeAction.create &&
                     state.status == EmployeeStatus.failure) {
-                  showToast(
+                  Utils.toast(
                     context,
                     message: state.message,
                     level: ToastLevel.error,

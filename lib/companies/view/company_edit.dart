@@ -1,6 +1,7 @@
 import 'package:accounting/common/common.dart';
 import 'package:accounting/companies/companies.dart';
 import 'package:accounting/companies/widgets/company_widget.dart';
+import 'package:accounting/utils/utils.dart';
 import 'package:accounting_api/accounting_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,10 +32,10 @@ class _CompanyEditState extends State<CompanyEdit> {
                   : Container(),
               listener: (context, state) {
                 if (state is CompaniesDeleteSuccess) {
-                  showToast(context, message: state.message);
+                  Utils.toast(context, message: state.message);
                   Navigator.of(context).pop();
                 } else if (state is CompaniesDeleteFailure) {
-                  showToast(
+                  Utils.toast(
                     context,
                     message: state.error,
                     level: ToastLevel.error,
