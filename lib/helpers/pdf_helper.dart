@@ -22,8 +22,12 @@ class PdfHelper {
   }) async {
     if (!_initialized) {
       Utils.log.d('[PdfHelper] loading data');
-      _font1 = await PdfGoogleFonts.notoSansArabicMedium();
-      _font2 = await PdfGoogleFonts.robotoMedium();
+      _font1 = pw.Font.ttf(
+        await rootBundle.load('assets/fonts/Cairo-Regular.ttf'),
+      );
+      _font2 = pw.Font.ttf(
+        await rootBundle.load('assets/fonts/Roboto-Regular.ttf'),
+      );
       _background = await rootBundle.loadString(
         'assets/images/page_background.svg',
       );

@@ -56,54 +56,56 @@ class _IncomesAndExpensesListState extends State<IncomesAndExpensesList> {
           },
         )
       ],
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Builder(
-                builder: (context) {
-                  var incomesTotal = context.select(
-                    (IncomeBloc bloc) => bloc.state.total,
-                  );
-                  var expensesTotal = context.select(
-                    (ExpenseBloc bloc) => bloc.state.total,
-                  );
+      child: LayoutBuilder(
+        builder: (context, constraints) => SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Builder(
+                  builder: (context) {
+                    var incomesTotal = context.select(
+                      (IncomeBloc bloc) => bloc.state.total,
+                    );
+                    var expensesTotal = context.select(
+                      (ExpenseBloc bloc) => bloc.state.total,
+                    );
 
-                  var total = incomesTotal + expensesTotal;
+                    var total = incomesTotal + expensesTotal;
 
-                  var expensePerc = (expensesTotal / total) * 100;
-                  var expenseStr = expensePerc.toStringAsFixed(
-                    expensePerc.truncateToDouble() == expensePerc ? 0 : 2,
-                  );
-                  var incomePerc = (incomesTotal / total) * 100;
-                  var incomeStr = incomePerc.toStringAsFixed(
-                    incomePerc.truncateToDouble() == incomePerc ? 0 : 2,
-                  );
+                    var expensePerc = (expensesTotal / total) * 100;
+                    var expenseStr = expensePerc.toStringAsFixed(
+                      expensePerc.truncateToDouble() == expensePerc ? 0 : 2,
+                    );
+                    var incomePerc = (incomesTotal / total) * 100;
+                    var incomeStr = incomePerc.toStringAsFixed(
+                      incomePerc.truncateToDouble() == incomePerc ? 0 : 2,
+                    );
 
-                  return total > 0
-                      ? AspectRatio(
-                          aspectRatio: 3,
-                          child: Card(
-                            elevation: 0,
-                            child: Padding(
-                              padding: const EdgeInsets.all(30.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Flexible(
-                                    flex: 4,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Flexible(
-                                          flex: 3,
-                                          child: ListTile(
+                    return total > 0
+                        ? ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxHeight: constraints.minHeight / 3,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Flexible(
+                                  flex: 2,
+                                  child: Card(
+                                    elevation: 10,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          ListTile(
                                             leading: const Icon(
-                                              Icons.request_quote_outlined,
+                                              Icons.payments_outlined,
                                             ),
                                             title: Text(
                                               AppLocalizations.of(context)!
@@ -119,10 +121,7 @@ class _IncomesAndExpensesListState extends State<IncomesAndExpensesList> {
                                                   .subtitle2,
                                             ),
                                           ),
-                                        ),
-                                        Flexible(
-                                          flex: 1,
-                                          child: ElevatedButton(
+                                          ElevatedButton(
                                             child: const Text('PDF'),
                                             onPressed: () {
                                               PdfHelper.generateInvoice(
@@ -138,24 +137,27 @@ class _IncomesAndExpensesListState extends State<IncomesAndExpensesList> {
                                               );
                                             },
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                  Flexible(
-                                    flex: 1,
+                                ),
+                                Flexible(
+                                  flex: 3,
+                                  child: Card(
+                                    elevation: 10,
                                     child: LayoutBuilder(
                                       builder: (context, constraints) =>
                                           PieChart(
                                         PieChartData(
                                           centerSpaceRadius: 0,
-                                          sectionsSpace: 0,
                                           borderData: FlBorderData(show: false),
                                           sections: [
                                             if (incomePerc > 0)
                                               PieChartSectionData(
                                                 radius:
-                                                    constraints.maxWidth * 0.52,
+                                                    constraints.maxHeight * 0.4,
+                                                showTitle: true,
                                                 titleStyle: Theme.of(context)
                                                     .textTheme
                                                     .labelMedium!
@@ -168,62 +170,38 @@ class _IncomesAndExpensesListState extends State<IncomesAndExpensesList> {
                                                     0.4,
                                                 badgePositionPercentageOffset:
                                                     1,
-                                                badgeWidget: CircleAvatar(
-                                                  radius: constraints.maxWidth *
-                                                      0.1,
-                                                  backgroundColor: Colors.blue,
-                                                  child: CircleAvatar(
-                                                    radius:
-                                                        constraints.maxWidth *
-                                                            0.09,
-                                                    backgroundColor:
-                                                        Theme.of(context)
-                                                            .colorScheme
-                                                            .surface,
-                                                    child: const FittedBox(
-                                                      child: Icon(
-                                                        Icons
-                                                            .move_to_inbox_outlined,
-                                                        color: Colors.blue,
-                                                      ),
-                                                    ),
+                                                badgeWidget: const Material(
+                                                  color: Colors.blue,
+                                                  child: Icon(
+                                                    Icons
+                                                        .move_to_inbox_outlined,
+                                                    color: Colors.white,
                                                   ),
                                                 ),
                                               ),
                                             if (expensePerc > 0)
                                               PieChartSectionData(
                                                 radius:
-                                                    constraints.maxWidth * 0.52,
+                                                    constraints.maxHeight * 0.4,
+                                                showTitle: true,
                                                 color: Colors.red,
                                                 titleStyle: Theme.of(context)
                                                     .textTheme
                                                     .labelMedium!
                                                     .copyWith(
-                                                        color: Colors.white),
+                                                      color: Colors.white,
+                                                    ),
                                                 value: expensePerc,
                                                 title: '$expenseStr %',
                                                 titlePositionPercentageOffset:
                                                     0.4,
                                                 badgePositionPercentageOffset:
                                                     1,
-                                                badgeWidget: CircleAvatar(
-                                                  radius: constraints.maxWidth *
-                                                      0.1,
-                                                  backgroundColor: Colors.red,
-                                                  child: CircleAvatar(
-                                                    radius:
-                                                        constraints.maxWidth *
-                                                            0.09,
-                                                    backgroundColor:
-                                                        Theme.of(context)
-                                                            .colorScheme
-                                                            .surface,
-                                                    child: const FittedBox(
-                                                      child: Icon(
-                                                        Icons.outbox_outlined,
-                                                        color: Colors.red,
-                                                      ),
-                                                    ),
+                                                badgeWidget: const Material(
+                                                  color: Colors.red,
+                                                  child: Icon(
+                                                    color: Colors.white,
+                                                    Icons.outbox_outlined,
                                                   ),
                                                 ),
                                               ),
@@ -232,140 +210,143 @@ class _IncomesAndExpensesListState extends State<IncomesAndExpensesList> {
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ),
-                        )
-                      : Container();
-                },
-              ),
-              const SizedBox(height: 10),
-              ExpansionPanelList(
-                children: [
-                  ExpansionPanel(
-                    isExpanded: _isOpen[0],
-                    headerBuilder: (context, isExpanded) => ListTile(
-                      leading: const Icon(Icons.move_to_inbox_outlined),
-                      title: Text(
-                        AppLocalizations.of(context)!.incomes,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(Icons.attach_money_outlined),
-                          const SizedBox(width: 5),
-                          BlocBuilder<IncomeBloc, IncomeState>(
-                            builder: (context, state) {
-                              return Text(state.total.toString());
-                            },
                           )
-                        ],
+                        : Container();
+                  },
+                ),
+                const SizedBox(height: 10),
+                ExpansionPanelList(
+                  children: [
+                    ExpansionPanel(
+                      isExpanded: _isOpen[0],
+                      headerBuilder: (context, isExpanded) => ListTile(
+                        leading: const Icon(Icons.move_to_inbox_outlined),
+                        title: Text(
+                          AppLocalizations.of(context)!.incomes,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.payments_outlined),
+                            const SizedBox(width: 5),
+                            BlocBuilder<IncomeBloc, IncomeState>(
+                              builder: (context, state) {
+                                return Text(state.total.toString());
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                      body: BlocBuilder<IncomeBloc, IncomeState>(
+                        builder: (context, state) {
+                          return Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Column(
+                              children: [
+                                if (state.status == ExpenseStatus.loading)
+                                  const LinearProgressIndicator(),
+                                ListView.separated(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) => IncomeWidget(
+                                    income: state.list[index],
+                                    onDelete: () {
+                                      context.read<IncomeBloc>().add(
+                                            IncomeDeleteRequested(
+                                              state.list[index].id!,
+                                            ),
+                                          );
+                                    },
+                                  ),
+                                  separatorBuilder: (context, index) =>
+                                      Container(
+                                    margin: const EdgeInsets.all(20),
+                                    height: 2,
+                                    color: Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.3),
+                                  ),
+                                  itemCount: state.list.length,
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                       ),
                     ),
-                    body: BlocBuilder<IncomeBloc, IncomeState>(
-                      builder: (context, state) {
-                        return Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Column(
-                            children: [
-                              if (state.status == ExpenseStatus.loading)
-                                const LinearProgressIndicator(),
-                              ListView.separated(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) => IncomeWidget(
-                                  income: state.list[index],
-                                  onDelete: () {
-                                    context.read<IncomeBloc>().add(
-                                          IncomeDeleteRequested(
-                                            state.list[index].id!,
-                                          ),
-                                        );
-                                  },
-                                ),
-                                separatorBuilder: (context, index) => Container(
-                                  margin: const EdgeInsets.all(20),
-                                  height: 2,
-                                  color: Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(0.3),
-                                ),
-                                itemCount: state.list.length,
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  ExpansionPanel(
-                    isExpanded: _isOpen[1],
-                    headerBuilder: (context, isExpanded) => ListTile(
-                      leading: const Icon(Icons.outbox_outlined),
-                      title: Text(
-                        AppLocalizations.of(context)!.expenses,
-                        style: Theme.of(context).textTheme.titleLarge,
+                    ExpansionPanel(
+                      isExpanded: _isOpen[1],
+                      headerBuilder: (context, isExpanded) => ListTile(
+                        leading: const Icon(Icons.outbox_outlined),
+                        title: Text(
+                          AppLocalizations.of(context)!.expenses,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.payments_outlined),
+                            const SizedBox(width: 5),
+                            BlocBuilder<ExpenseBloc, ExpenseState>(
+                              builder: (context, state) {
+                                return Text(state.total.toString());
+                              },
+                            )
+                          ],
+                        ),
                       ),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(Icons.attach_money_outlined),
-                          const SizedBox(width: 5),
-                          BlocBuilder<ExpenseBloc, ExpenseState>(
-                            builder: (context, state) {
-                              return Text(state.total.toString());
-                            },
-                          )
-                        ],
+                      body: BlocBuilder<ExpenseBloc, ExpenseState>(
+                        builder: (context, state) {
+                          return Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Column(
+                              children: [
+                                if (state.status == ExpenseStatus.loading)
+                                  const LinearProgressIndicator(),
+                                ListView.separated(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) =>
+                                      ExpenseWidget(
+                                    expense: state.list[index],
+                                    onDelete: () {
+                                      context.read<ExpenseBloc>().add(
+                                            ExpenseDeleteRequested(
+                                              state.list[index].id!,
+                                            ),
+                                          );
+                                    },
+                                  ),
+                                  separatorBuilder: (context, index) =>
+                                      Container(
+                                    margin: const EdgeInsets.all(20),
+                                    height: 2,
+                                    color: Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.3),
+                                  ),
+                                  itemCount: state.list.length,
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                       ),
                     ),
-                    body: BlocBuilder<ExpenseBloc, ExpenseState>(
-                      builder: (context, state) {
-                        return Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Column(
-                            children: [
-                              if (state.status == ExpenseStatus.loading)
-                                const LinearProgressIndicator(),
-                              ListView.separated(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) => ExpenseWidget(
-                                  expense: state.list[index],
-                                  onDelete: () {
-                                    context.read<ExpenseBloc>().add(
-                                          ExpenseDeleteRequested(
-                                            state.list[index].id!,
-                                          ),
-                                        );
-                                  },
-                                ),
-                                separatorBuilder: (context, index) => Container(
-                                  margin: const EdgeInsets.all(20),
-                                  height: 2,
-                                  color: Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(0.3),
-                                ),
-                                itemCount: state.list.length,
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-                expansionCallback: (index, isOpen) {
-                  setState(() {
-                    _isOpen.fillRange(0, _isOpen.length, false);
-                    _isOpen[index] = !isOpen;
-                  });
-                },
-              ),
-            ],
+                  ],
+                  expansionCallback: (index, isOpen) {
+                    setState(() {
+                      _isOpen.fillRange(0, _isOpen.length, false);
+                      _isOpen[index] = !isOpen;
+                    });
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
