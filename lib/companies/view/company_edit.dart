@@ -2,13 +2,11 @@ import 'package:accounting/common/common.dart';
 import 'package:accounting/companies/companies.dart';
 import 'package:accounting/companies/widgets/company_widget.dart';
 import 'package:accounting/utils/utils.dart';
-import 'package:accounting_api/accounting_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CompanyEdit extends StatefulWidget {
-  final CompanyModel company;
-  const CompanyEdit({Key? key, required this.company}) : super(key: key);
+  const CompanyEdit({Key? key}) : super(key: key);
 
   @override
   State<CompanyEdit> createState() => _CompanyEditState();
@@ -18,32 +16,37 @@ class _CompanyEditState extends State<CompanyEdit> {
   final List<bool> _isOpen = List.filled(1, false);
   @override
   Widget build(BuildContext context) {
+    var company = context.select((CompaniesBloc bloc) => bloc.state.selected)!;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            BlocConsumer<CompaniesBloc, CompaniesState>(
-              builder: (context, state) => state is CompaniesDeleteInProgress
-                  ? const Padding(
-                      padding: EdgeInsets.only(bottom: 20.0),
-                      child: LinearProgressIndicator(),
-                    )
-                  : Container(),
+            BlocConsumer<CompaniesBloc, CompanyState>(
+              builder: (context, state) =>
+                  (state.action == CompanyAction.delete &&
+                          state.status == CompanyStatus.loading)
+                      ? const Padding(
+                          padding: EdgeInsets.only(bottom: 20.0),
+                          child: LinearProgressIndicator(),
+                        )
+                      : Container(),
               listener: (context, state) {
-                if (state is CompaniesDeleteSuccess) {
-                  Utils.toast(context, message: state.message);
-                  Navigator.of(context).pop();
-                } else if (state is CompaniesDeleteFailure) {
-                  Utils.toast(
-                    context,
-                    message: state.error,
-                    level: ToastLevel.error,
-                  );
+                if (state.action == CompanyAction.delete) {
+                  if (state.status == CompanyStatus.success) {
+                    Utils.toast(context, message: state.message);
+                    Navigator.of(context).pop();
+                  } else if (state.status == CompanyStatus.failure) {
+                    Utils.toast(
+                      context,
+                      message: state.message,
+                      level: ToastLevel.error,
+                    );
+                  }
                 }
               },
             ),
-            CompanyWidget(company: widget.company),
+            CompanyWidget(company: company),
             const SizedBox(height: 30),
             ExpansionPanelList(
               expandedHeaderPadding: const EdgeInsets.all(20),
@@ -61,7 +64,7 @@ class _CompanyEditState extends State<CompanyEdit> {
                   body: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: CompanyEditWidget(
-                      company: widget.company,
+                      company: company,
                     ),
                   ),
                 ),

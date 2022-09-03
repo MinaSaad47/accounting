@@ -61,40 +61,42 @@ class _BuildSearchCompany extends StatelessWidget {
               if (query.isNotEmpty) {
                 context
                     .read<CompaniesBloc>()
-                    .add(CompaniesSearchRequested(query));
+                    .add(CompanySearchRequested(query));
               }
             },
           ),
           const SizedBox(height: 20),
           Expanded(
-            child: BlocConsumer<CompaniesBloc, CompaniesState>(
+            child: BlocConsumer<CompaniesBloc, CompanyState>(
               listener: (context, state) {
-                if (state is CompaniesGetInFailure) {
+                if (state.action == CompanyAction.get &&
+                    state.status == CompanyStatus.failure) {
                   Utils.toast(
                     context,
-                    message: state.error,
+                    message: state.message,
                     level: ToastLevel.error,
                   );
                 }
               },
               builder: (context, state) {
-                if (state is CompaniesGetSuccess) {
-                  return ListView.separated(
-                    itemBuilder: (context, index) {
-                      var company = state.companies[index];
-                      return CompanyWidget(company: company);
-                    },
-                    separatorBuilder: (context, index) => Container(
-                      margin: const EdgeInsets.all(10),
-                      height: 2,
-                    ),
-                    itemCount: state.companies.length,
-                  );
-                } else if (state is CompaniesGetInProgress) {
-                  return const Center(child: CircularProgressIndicator());
-                } else {
-                  return Container();
+                if (state.action == CompanyAction.get) {
+                  if (state.status == CompanyStatus.success) {
+                    return ListView.separated(
+                      itemBuilder: (context, index) {
+                        var company = state.list[index];
+                        return CompanyWidget(company: company);
+                      },
+                      separatorBuilder: (context, index) => Container(
+                        margin: const EdgeInsets.all(10),
+                        height: 2,
+                      ),
+                      itemCount: state.list.length,
+                    );
+                  } else if (state.status == CompanyStatus.loading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
                 }
+                return Container();
               },
             ),
           )

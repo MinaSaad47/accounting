@@ -18,7 +18,7 @@ enum EmployeeAction {
 @freezed
 class EmployeesState with _$EmployeesState {
   const factory EmployeesState({
-    UserModel? user,
+    UserModel? selected,
     @Default([]) List<UserModel> list,
     @Default('') String message,
     @Default(EmployeeAction.none) EmployeeAction action,

@@ -4,3 +4,4 @@ export 'funder_model.dart';
 export 'expense_model.dart';
 export 'user_model.dart';
 export 'income_model.dart';
+export 'document_model.dart';

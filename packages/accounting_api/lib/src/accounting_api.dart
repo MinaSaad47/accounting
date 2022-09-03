@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:accounting_api/accounting_api.dart';
 import 'package:accounting_api/src/models/models.dart';
 
@@ -40,4 +42,13 @@ abstract class AccountingApi {
   Future<ApiResponse<String>> loginUser(UserModel userModel);
   Future<ApiResponse<List<UserModel>>> getUsers();
   Future<ApiResponse<UserModel>> createUser(UserModel user);
+
+  Future<ApiResponse<List<DocumentModel>>> getDocuments({
+    required int companyId,
+  });
+  Future<ApiResponse<DocumentModel>> createDocument({
+    required int companyId,
+    required File document,
+  });
+  Future<File> retreiveDocument({required String path});
 }

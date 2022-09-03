@@ -1,9 +1,11 @@
 import 'package:accounting/common/common.dart';
+import 'package:accounting/companies/bloc/document_bloc.dart';
 import 'package:accounting/companies/bloc/expense_bloc.dart';
 import 'package:accounting/companies/bloc/income_bloc.dart';
 import 'package:accounting/companies/companies.dart';
 import 'package:accounting/companies/view/company_edit.dart';
 import 'package:accounting/login/cubit/login_cubit.dart';
+import 'package:accounting/utils/utils.dart';
 import 'package:accounting_api/accounting_api.dart';
 import 'package:accounting_repository/accounting_repository.dart';
 import 'package:adaptive_dialog/adaptive_dialog.dart';
@@ -13,46 +15,52 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class CompanyInfo extends StatelessWidget {
-  final CompanyModel company;
   const CompanyInfo({
     Key? key,
-    required this.company,
   }) : super(key: key);
 
-  static route(BuildContext context, CompanyModel companyModel) =>
-      MaterialPageRoute(
-        builder: (_) => MultiBlocProvider(
-          providers: [
-            BlocProvider<CompaniesBloc>.value(
-              value: context.read<CompaniesBloc>(),
-            ),
-            BlocProvider(
-              create: (context) {
-                var user = context.read<LoginCubit>().state.user!;
-                return ExpenseBloc(
-                  context.read<AccountingRepository>(),
-                )..add(ExpenseGetRequested(
-                    companyId: companyModel.id,
-                    empolyeeId: !user.isAdmin ? user.id : null,
-                  ));
-              },
-            ),
-            BlocProvider(
-              create: (context) {
-                return IncomeBloc(
-                  context.read<AccountingRepository>(),
-                )..add(IncomeGetRequested(
-                    companyId: companyModel.id,
-                  ));
-              },
-            ),
-          ],
-          child: CompanyInfo(company: companyModel),
-        ),
+  static route(BuildContext context) {
+    var company = context.read<CompaniesBloc>().state.selected;
+    return MaterialPageRoute(builder: (_) {
+      return MultiBlocProvider(
+        providers: [
+          BlocProvider<CompaniesBloc>.value(
+            value: context.read<CompaniesBloc>(),
+          ),
+          BlocProvider(
+            create: (context) {
+              var user = context.read<LoginCubit>().state.user!;
+              return ExpenseBloc(
+                context.read<AccountingRepository>(),
+              )..add(ExpenseGetRequested(
+                  companyId: company?.id,
+                  empolyeeId: !user.isAdmin ? user.id : null,
+                ));
+            },
+          ),
+          BlocProvider(
+            create: (context) {
+              return IncomeBloc(
+                context.read<AccountingRepository>(),
+              )..add(IncomeGetRequested(companyId: company?.id));
+            },
+          ),
+          BlocProvider(
+            create: (context) {
+              return DocumentBloc(
+                context.read<AccountingRepository>(),
+              )..add(DocumentGetRequested(company!.id!));
+            },
+          ),
+        ],
+        child: const CompanyInfo(),
       );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    var company = context.read<CompaniesBloc>().state.selected!;
     var pageController = PageController(initialPage: 0);
     return Scaffold(
       appBar: AppBar(
@@ -66,7 +74,7 @@ class CompanyInfo extends StatelessWidget {
               onPressed: () {
                 context
                     .read<CompaniesBloc>()
-                    .add(CompaniesDeleteRequested(company.id!));
+                    .add(CompanyDeleteRequested(company.id!));
               },
               icon: const Icon(
                 Icons.delete_outline,
@@ -81,53 +89,78 @@ class CompanyInfo extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              MaterialButton(
-                onPressed: () {
-                  pageController.animateToPage(
-                    0,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(AppLocalizations.of(context)!.edit('')),
-                    const Icon(Icons.edit_outlined),
-                  ],
+              const Spacer(),
+              Expanded(
+                child: MaterialButton(
+                  onPressed: () {
+                    pageController.animateToPage(
+                      0,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(AppLocalizations.of(context)!.edit('')),
+                      const Icon(Icons.edit_outlined),
+                    ],
+                  ),
                 ),
               ),
-              MaterialButton(
-                onPressed: () {
-                  pageController.animateToPage(
-                    1,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(AppLocalizations.of(context)!.funders),
-                    const Icon(Icons.people_outline),
-                  ],
+              Expanded(
+                child: MaterialButton(
+                  onPressed: () {
+                    pageController.animateToPage(
+                      1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(AppLocalizations.of(context)!.funders),
+                      const Icon(Icons.people_outline),
+                    ],
+                  ),
                 ),
               ),
-              MaterialButton(
-                onPressed: () {
-                  pageController.animateToPage(
-                    2,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                        '${AppLocalizations.of(context)!.incomes} / ${AppLocalizations.of(context)!.expenses}'),
-                    const Icon(Icons.currency_exchange_outlined),
-                  ],
+              Expanded(
+                child: MaterialButton(
+                  onPressed: () {
+                    pageController.animateToPage(
+                      2,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(AppLocalizations.of(context)!.documents),
+                      const Icon(Icons.document_scanner_outlined),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: MaterialButton(
+                  onPressed: () {
+                    pageController.animateToPage(
+                      3,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                          '${AppLocalizations.of(context)!.incomes} / ${AppLocalizations.of(context)!.expenses}'),
+                      const Icon(Icons.currency_exchange_outlined),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -272,9 +305,10 @@ class CompanyInfo extends StatelessWidget {
       body: PageView(
         controller: pageController,
         children: [
-          CompanyEdit(company: company),
+          const CompanyEdit(),
           Container(),
-          IncomesAndExpensesList(companyId: company.id!),
+          const DocuementsList(),
+          const IncomesAndExpensesList(),
         ],
       ),
     );

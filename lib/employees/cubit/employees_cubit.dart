@@ -68,7 +68,7 @@ class EmployeesCubit extends Cubit<EmployeesState> {
         action: EmployeeAction.pay,
         status: EmployeeStatus.success,
         message: response.message,
-        user: response.data,
+        selected: response.data,
       ));
     } else {
       Utils.log.e(response.message);

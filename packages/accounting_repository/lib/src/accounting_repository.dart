@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:accounting_api/accounting_api.dart';
 
 class AccountingRepository {
@@ -90,4 +92,18 @@ class AccountingRepository {
 
   Future<ApiResponse<void>> deleteUser({required int id}) async =>
       await _accountingApi.deleteUser(id: id);
+
+  Future<ApiResponse<DocumentModel>> createDocument({
+    required int companyId,
+    required File document,
+  }) async =>
+      _accountingApi.createDocument(companyId: companyId, document: document);
+
+  Future<ApiResponse<List<DocumentModel>>> getDocuments({
+    required int companyId,
+  }) async =>
+      _accountingApi.getDocuments(companyId: companyId);
+
+  Future<File> retreiveDocument({required String path}) async =>
+      _accountingApi.retreiveDocument(path: path);
 }

@@ -1,5 +1,5 @@
 import 'package:accounting/common/common.dart';
-import 'package:accounting/companies/bloc/companies_bloc.dart';
+import 'package:accounting/companies/bloc/company_bloc.dart';
 import 'package:accounting/login/cubit/login_cubit.dart';
 import 'package:accounting/utils/utils.dart';
 import 'package:accounting_api/accounting_api.dart';
@@ -169,24 +169,27 @@ class _BuildCompanyEditFormState extends State<CompanyEditWidget> {
                 ),
               ],
               if (context.read<LoginCubit>().state.user!.isAdmin)
-                BlocConsumer<CompaniesBloc, CompaniesState>(
+                BlocConsumer<CompaniesBloc, CompanyState>(
                   listener: (context, state) {
-                    if (state is CompaniesSaveFailure) {
-                      Utils.toast(
-                        context,
-                        message: state.error,
-                        level: ToastLevel.error,
-                      );
-                    } else if (state is CompaniesSaveSuccess) {
-                      Utils.toast(
-                        context,
-                        message: state.message,
-                      );
+                    if (state.action == CompanyAction.save) {
+                      if (state.status == CompanyStatus.success) {
+                        Utils.toast(
+                          context,
+                          message: state.message,
+                        );
+                      } else if (state.status == CompanyStatus.failure) {
+                        Utils.toast(
+                          context,
+                          message: state.message,
+                          level: ToastLevel.error,
+                        );
+                      }
                     }
                   },
                   builder: (context, state) => Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: state is CompaniesSaveInProgress
+                    child: (state.action == CompanyAction.save &&
+                            state.status == CompanyStatus.loading)
                         ? const CircularProgressIndicator()
                         : _BuildSaveCompanyButton(
                             formKey: formKey,
@@ -266,11 +269,11 @@ class _BuildSaveCompanyButton extends StatelessWidget {
           if (company == null) {
             context
                 .read<CompaniesBloc>()
-                .add(CompaniesCreateRequested(savedCompany));
+                .add(CompanyCreateRequested(savedCompany));
           } else {
             context
                 .read<CompaniesBloc>()
-                .add(CompaniesEditRequested(savedCompany));
+                .add(CompanyEditRequested(savedCompany));
           }
         }
       },

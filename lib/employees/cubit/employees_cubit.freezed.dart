@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EmployeesState {
-  UserModel? get user => throw _privateConstructorUsedError;
+  UserModel? get selected => throw _privateConstructorUsedError;
   List<UserModel> get list => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
   EmployeeAction get action => throw _privateConstructorUsedError;
@@ -33,13 +33,13 @@ abstract class $EmployeesStateCopyWith<$Res> {
           EmployeesState value, $Res Function(EmployeesState) then) =
       _$EmployeesStateCopyWithImpl<$Res>;
   $Res call(
-      {UserModel? user,
+      {UserModel? selected,
       List<UserModel> list,
       String message,
       EmployeeAction action,
       EmployeeStatus status});
 
-  $UserModelCopyWith<$Res>? get user;
+  $UserModelCopyWith<$Res>? get selected;
 }
 
 /// @nodoc
@@ -53,16 +53,16 @@ class _$EmployeesStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? user = freezed,
+    Object? selected = freezed,
     Object? list = freezed,
     Object? message = freezed,
     Object? action = freezed,
     Object? status = freezed,
   }) {
     return _then(_value.copyWith(
-      user: user == freezed
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
+      selected: selected == freezed
+          ? _value.selected
+          : selected // ignore: cast_nullable_to_non_nullable
               as UserModel?,
       list: list == freezed
           ? _value.list
@@ -84,13 +84,13 @@ class _$EmployeesStateCopyWithImpl<$Res>
   }
 
   @override
-  $UserModelCopyWith<$Res>? get user {
-    if (_value.user == null) {
+  $UserModelCopyWith<$Res>? get selected {
+    if (_value.selected == null) {
       return null;
     }
 
-    return $UserModelCopyWith<$Res>(_value.user!, (value) {
-      return _then(_value.copyWith(user: value));
+    return $UserModelCopyWith<$Res>(_value.selected!, (value) {
+      return _then(_value.copyWith(selected: value));
     });
   }
 }
@@ -103,14 +103,14 @@ abstract class _$$_EmployeesStateCopyWith<$Res>
       __$$_EmployeesStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {UserModel? user,
+      {UserModel? selected,
       List<UserModel> list,
       String message,
       EmployeeAction action,
       EmployeeStatus status});
 
   @override
-  $UserModelCopyWith<$Res>? get user;
+  $UserModelCopyWith<$Res>? get selected;
 }
 
 /// @nodoc
@@ -126,16 +126,16 @@ class __$$_EmployeesStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? user = freezed,
+    Object? selected = freezed,
     Object? list = freezed,
     Object? message = freezed,
     Object? action = freezed,
     Object? status = freezed,
   }) {
     return _then(_$_EmployeesState(
-      user: user == freezed
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
+      selected: selected == freezed
+          ? _value.selected
+          : selected // ignore: cast_nullable_to_non_nullable
               as UserModel?,
       list: list == freezed
           ? _value._list
@@ -161,7 +161,7 @@ class __$$_EmployeesStateCopyWithImpl<$Res>
 
 class _$_EmployeesState implements _EmployeesState {
   const _$_EmployeesState(
-      {this.user,
+      {this.selected,
       final List<UserModel> list = const [],
       this.message = '',
       this.action = EmployeeAction.none,
@@ -169,7 +169,7 @@ class _$_EmployeesState implements _EmployeesState {
       : _list = list;
 
   @override
-  final UserModel? user;
+  final UserModel? selected;
   final List<UserModel> _list;
   @override
   @JsonKey()
@@ -190,7 +190,7 @@ class _$_EmployeesState implements _EmployeesState {
 
   @override
   String toString() {
-    return 'EmployeesState(user: $user, list: $list, message: $message, action: $action, status: $status)';
+    return 'EmployeesState(selected: $selected, list: $list, message: $message, action: $action, status: $status)';
   }
 
   @override
@@ -198,7 +198,7 @@ class _$_EmployeesState implements _EmployeesState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_EmployeesState &&
-            const DeepCollectionEquality().equals(other.user, user) &&
+            const DeepCollectionEquality().equals(other.selected, selected) &&
             const DeepCollectionEquality().equals(other._list, _list) &&
             const DeepCollectionEquality().equals(other.message, message) &&
             const DeepCollectionEquality().equals(other.action, action) &&
@@ -208,7 +208,7 @@ class _$_EmployeesState implements _EmployeesState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(user),
+      const DeepCollectionEquality().hash(selected),
       const DeepCollectionEquality().hash(_list),
       const DeepCollectionEquality().hash(message),
       const DeepCollectionEquality().hash(action),
@@ -222,14 +222,14 @@ class _$_EmployeesState implements _EmployeesState {
 
 abstract class _EmployeesState implements EmployeesState {
   const factory _EmployeesState(
-      {final UserModel? user,
+      {final UserModel? selected,
       final List<UserModel> list,
       final String message,
       final EmployeeAction action,
       final EmployeeStatus status}) = _$_EmployeesState;
 
   @override
-  UserModel? get user;
+  UserModel? get selected;
   @override
   List<UserModel> get list;
   @override

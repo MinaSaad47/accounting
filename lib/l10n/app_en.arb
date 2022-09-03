@@ -98,5 +98,6 @@
   "admin": "admin",
   "permissions": "permissions",
   
-  "dues": "dues"
+  "dues": "dues",
+  "documents": "documents"
 }

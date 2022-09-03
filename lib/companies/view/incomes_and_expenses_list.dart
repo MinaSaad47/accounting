@@ -10,10 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class IncomesAndExpensesList extends StatefulWidget {
-  final int companyId;
   const IncomesAndExpensesList({
     Key? key,
-    required this.companyId,
   }) : super(key: key);
 
   @override
@@ -24,6 +22,7 @@ class _IncomesAndExpensesListState extends State<IncomesAndExpensesList> {
   final List<bool> _isOpen = List.filled(2, false);
   @override
   Widget build(BuildContext context) {
+    var company = context.select((CompaniesBloc bloc) => bloc.state.selected)!;
     return MultiBlocListener(
       listeners: [
         BlocListener<IncomeBloc, IncomeState>(
@@ -34,7 +33,7 @@ class _IncomesAndExpensesListState extends State<IncomesAndExpensesList> {
             } else if (state.action != IncomeAction.get &&
                 state.status == IncomeStatus.success) {
               context.read<IncomeBloc>().add(IncomeGetRequested(
-                    companyId: widget.companyId,
+                    companyId: company.id,
                   ));
             }
           },
@@ -48,7 +47,7 @@ class _IncomesAndExpensesListState extends State<IncomesAndExpensesList> {
                 state.status == ExpenseStatus.success) {
               var user = context.read<LoginCubit>().state.user!;
               context.read<ExpenseBloc>().add(ExpenseGetRequested(
-                    companyId: widget.companyId,
+                    companyId: company.id,
                     empolyeeId: !user.isAdmin ? user.id : null,
                   ));
               context.read<LoginCubit>().getCurrentUser();

@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:accounting_api/accounting_api.dart';
 import 'package:dio/dio.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AccountingDio extends AccountingApi {
   final Dio _dio;
@@ -198,5 +202,41 @@ class AccountingDio extends AccountingApi {
   Future<ApiResponse<void>> deleteIncome({required int id}) async {
     var response = await _dio.delete('incomes/$id');
     return ApiResponse<void>.fromJson(response.data, (p0) => dynamic);
+  }
+
+  @override
+  Future<ApiResponse<DocumentModel>> createDocument({
+    required int companyId,
+    required File document,
+  }) async {
+    var name = basename(document.path);
+    var response = await _dio.post(
+      'company/$companyId/$name',
+      data: await document.readAsBytes(),
+    );
+    return ApiResponse<DocumentModel>.fromJson(
+        response.data, (p0) => DocumentModel.fromJson(p0 as dynamic));
+  }
+
+  @override
+  Future<ApiResponse<List<DocumentModel>>> getDocuments({
+    required int companyId,
+  }) async {
+    var response = await _dio.get('company/$companyId/documents');
+    return ApiResponse<List<DocumentModel>>.fromJson(response.data, (p0) {
+      List<DocumentModel> documents = [];
+      for (var json in (p0 as List<dynamic>)) {
+        documents.add(DocumentModel.fromJson(json));
+      }
+      return documents;
+    });
+  }
+
+  @override
+  Future<File> retreiveDocument({required String path}) async {
+    var tmpDir = await getTemporaryDirectory();
+    var savePath = join(tmpDir.path, basename(path));
+    await _dio.download('/documents/$path', savePath);
+    return File(savePath);
   }
 }
