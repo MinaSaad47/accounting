@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:accounting_api/accounting_api.dart';
+import 'package:accounting_dio/src/interceptor/interceptor.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -18,7 +20,7 @@ class AccountingDio extends AccountingApi {
               if (token != null) 'authorization': token,
             },
           ),
-        );
+        )..interceptors.add(DioInterceptor(Connectivity()));
   @override
   Future<ApiResponse<CompanyModel>> createCompany(
     CompanyModel companyModel,

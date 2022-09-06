@@ -2,6 +2,7 @@ import 'package:accounting/common/common.dart';
 import 'package:accounting/companies/companies.dart';
 import 'package:accounting/companies/widgets/company_widget.dart';
 import 'package:accounting/login/cubit/login_cubit.dart';
+import 'package:accounting/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,33 +12,60 @@ class CompaniesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var user = context.read<LoginCubit>().state.user!;
-    return DefaultTabController(
-      length: user.isAdmin ? 2 : 1,
-      child: Scaffold(
-        appBar: AppBarWidget(
-          title: AppLocalizations.of(context)!.companies,
-          tabBar: TabBar(
-            tabs: [
-              Tab(
-                child: Text(AppLocalizations.of(context)!
-                    .search(AppLocalizations.of(context)!.company)),
-              ),
-              if (user.isAdmin)
+    return BlocListener<CompaniesBloc, CompanyState>(
+      listener: (context, state) {
+        switch (state.status) {
+          case CompanyStatus.failure:
+            Utils.toast(
+              context,
+              message: state.message,
+              level: ToastLevel.error,
+            );
+            break;
+          case CompanyStatus.success:
+            switch (state.action) {
+              case CompanyAction.delete:
+              case CompanyAction.save:
+                Navigator.of(context).pop();
+                Utils.toast(
+                  context,
+                  message: state.message,
+                );
+                break;
+              default:
+            }
+            break;
+          default:
+        }
+      },
+      child: DefaultTabController(
+        length: user.isAdmin ? 2 : 1,
+        child: Scaffold(
+          appBar: AppBarWidget(
+            title: AppLocalizations.of(context)!.companies,
+            tabBar: TabBar(
+              tabs: [
                 Tab(
-                  child: Text(
-                    AppLocalizations.of(context)!
-                        .add(AppLocalizations.of(context)!.company),
-                  ),
+                  child: Text(AppLocalizations.of(context)!
+                      .search(AppLocalizations.of(context)!.company)),
                 ),
+                if (user.isAdmin)
+                  Tab(
+                    child: Text(
+                      AppLocalizations.of(context)!
+                          .add(AppLocalizations.of(context)!.company),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          drawer: const DrawerWidget(),
+          body: TabBarView(
+            children: [
+              const _BuildSearchCompany(),
+              if (user.isAdmin) const _BuildAddCompany(),
             ],
           ),
-        ),
-        drawer: const DrawerWidget(),
-        body: TabBarView(
-          children: [
-            const _BuildSearchCompany(),
-            if (user.isAdmin) const _BuildAddCompany(),
-          ],
         ),
       ),
     );

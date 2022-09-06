@@ -153,23 +153,7 @@ class _BuildCompanyEditFormState extends State<CompanyEditWidget> {
                 ],
               ),
               if (context.read<LoginCubit>().state.user!.isAdmin)
-                BlocConsumer<CompaniesBloc, CompanyState>(
-                  listener: (context, state) {
-                    if (state.action == CompanyAction.save) {
-                      if (state.status == CompanyStatus.success) {
-                        Utils.toast(
-                          context,
-                          message: state.message,
-                        );
-                      } else if (state.status == CompanyStatus.failure) {
-                        Utils.toast(
-                          context,
-                          message: state.message,
-                          level: ToastLevel.error,
-                        );
-                      }
-                    }
-                  },
+                BlocBuilder<CompaniesBloc, CompanyState>(
                   builder: (context, state) => Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: (state.action == CompanyAction.save &&

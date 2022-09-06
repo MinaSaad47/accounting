@@ -73,33 +73,6 @@ class CompanyInfo extends StatelessWidget {
     var pageController = PageController(initialPage: 0);
     return MultiBlocListener(
       listeners: [
-        BlocListener<CompaniesBloc, CompanyState>(
-          listener: (context, state) {
-            switch (state.status) {
-              case CompanyStatus.failure:
-                Utils.toast(
-                  context,
-                  message: state.message,
-                  level: ToastLevel.error,
-                );
-                break;
-              case CompanyStatus.success:
-                switch (state.action) {
-                  case CompanyAction.delete:
-                  case CompanyAction.save:
-                    Navigator.of(context).pop();
-                    break;
-                  default:
-                }
-                Utils.toast(
-                  context,
-                  message: state.message,
-                );
-                break;
-              default:
-            }
-          },
-        ),
         BlocListener<FunderBloc, FunderState>(
           listener: (context, state) {
             switch (state.status) {
