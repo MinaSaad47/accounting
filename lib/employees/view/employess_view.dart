@@ -171,11 +171,11 @@ class _BuildEmpolyeeInfo extends StatelessWidget {
                 color: Colors.red.shade900,
                 tooltip: AppLocalizations.of(context)!.delete,
                 iconSize: 40,
-                onPressed: () {
+                onPressed: () => Utils.adminDo(context, fn: () {
                   context
                       .read<EmployeesCubit>()
                       .deleteEmployee(id: userModel.id!);
-                },
+                }),
                 icon: const Icon(
                   Icons.delete_outline,
                 ),
@@ -222,7 +222,7 @@ class _BuildEmpolyeeInfo extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: BlocBuilder<MoneyCapitalCubit, ExpenseState>(
                     builder: (context, state) {
-                      return _BuildEmployeeMoneyCapitals(
+                      return _BuildEmployeeExpenses(
                         companies: state.companies,
                         expenses: state.expense,
                       );
@@ -286,7 +286,7 @@ class _BuildEmployeeValueState extends State<_BuildEmployeeValue> {
           ),
           const SizedBox(width: 10),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () => Utils.adminDo(context, fn: () {
               var formState = formKey.currentState!;
               if (formState.saveAndValidate()) {
                 widget.onSave(
@@ -295,7 +295,7 @@ class _BuildEmployeeValueState extends State<_BuildEmployeeValue> {
                   ),
                 );
               }
-            },
+            }),
             child: Text(
               AppLocalizations.of(context)!.save(''),
             ),
@@ -306,22 +306,20 @@ class _BuildEmployeeValueState extends State<_BuildEmployeeValue> {
   }
 }
 
-class _BuildEmployeeMoneyCapitals extends StatefulWidget {
+class _BuildEmployeeExpenses extends StatefulWidget {
   final List<String> companies;
   final List<List<ExpenseModel>> expenses;
-  const _BuildEmployeeMoneyCapitals({
+  const _BuildEmployeeExpenses({
     Key? key,
     required this.companies,
     required this.expenses,
   }) : super(key: key);
 
   @override
-  State<_BuildEmployeeMoneyCapitals> createState() =>
-      _BuildEmployeeMoneyCapitalsState();
+  State<_BuildEmployeeExpenses> createState() => _BuildEmployeeExpensesState();
 }
 
-class _BuildEmployeeMoneyCapitalsState
-    extends State<_BuildEmployeeMoneyCapitals> {
+class _BuildEmployeeExpensesState extends State<_BuildEmployeeExpenses> {
   late List<bool> _isOpend = List.filled(widget.companies.length, false);
 
   @override

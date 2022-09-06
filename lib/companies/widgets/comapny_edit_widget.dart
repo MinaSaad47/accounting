@@ -185,7 +185,8 @@ class _BuildSaveCompanyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => Utils.adminDo(context, () {
+      onPressed: () =>
+          Utils.adminDo(context, password: company != null, fn: () {
         var formState = formKey.currentState!;
         if (formState.validate()) {
           formState.save();

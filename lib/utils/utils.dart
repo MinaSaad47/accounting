@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:accounting/common/common.dart';
 import 'package:accounting/login/cubit/login_cubit.dart';
 import 'package:adaptive_dialog/adaptive_dialog.dart';
@@ -25,6 +23,10 @@ class Utils {
 
   static String formatDate(DateTime dt) => _formatDate(dt);
 
-  static void adminDo(BuildContext context, void Function() function) =>
-      _adminDo(context, function);
+  static void adminDo(
+    BuildContext context, {
+    bool password = true,
+    required void Function() fn,
+  }) =>
+      _adminDo(context, fn: fn, requirePassword: password);
 }

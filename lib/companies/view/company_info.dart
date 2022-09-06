@@ -196,7 +196,7 @@ class CompanyInfo extends StatelessWidget {
                 color: Colors.red.shade900,
                 tooltip: AppLocalizations.of(context)!.delete,
                 iconSize: 40,
-                onPressed: () => Utils.adminDo(context, () {
+                onPressed: () => Utils.adminDo(context, fn: () {
                   context
                       .read<CompaniesBloc>()
                       .add(CompanyDeleteRequested(company.id!));
@@ -350,7 +350,7 @@ class CompanyInfo extends StatelessWidget {
                   .add(AppLocalizations.of(context)!.expenses),
             ),
             SpeedDialChild(
-              onTap: () => Utils.adminDo(context, () {
+              onTap: () => Utils.adminDo(context, password: false, fn: () {
                 showTextInputDialog(
                   context: context,
                   title: AppLocalizations.of(context)!.incomes,
@@ -403,7 +403,7 @@ class CompanyInfo extends StatelessWidget {
                   .add(AppLocalizations.of(context)!.incomes),
             ),
             SpeedDialChild(
-              onTap: () => Utils.adminDo(context, () {
+              onTap: () => Utils.adminDo(context, password: false, fn: () {
                 showTextInputDialog(
                   context: context,
                   textFields: [
@@ -431,7 +431,7 @@ class CompanyInfo extends StatelessWidget {
                   .add(AppLocalizations.of(context)!.funders),
             ),
             SpeedDialChild(
-              onTap: () => Utils.adminDo(context, () {
+              onTap: () => Utils.adminDo(context, password: false, fn: () {
                 context
                     .read<DocumentBloc>()
                     .add(DocumentCreateRequested(company.id!, (perc) {}));

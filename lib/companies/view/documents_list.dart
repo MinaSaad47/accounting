@@ -9,8 +9,7 @@ class DocuementsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DocumentBloc, DocumentState>(
-     builder: (context, state) {
+    return BlocBuilder<DocumentBloc, DocumentState>(builder: (context, state) {
       return Padding(
         padding: const EdgeInsets.only(top: 20.0),
         child: Column(
@@ -58,42 +57,71 @@ class _BuildDocumentItemState extends State<_BuildDocumentItem> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.picture_as_pdf_outlined),
-                Text(widget.document.name),
-                Text(Utils.formatDate(widget.document.time)),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        context.read<DocumentBloc>().add(
-                              DocumentRetreiveRequested(
-                                widget.document.path,
-                                (perc) {
-                                  setState(() {
-                                    progress = perc;
-                                  });
-                                },
+                const Icon(Icons.file_present_outlined, size: 30),
+                const SizedBox(width: 20),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Text(
+                                widget.document.name,
                               ),
-                            );
-                      },
-                      icon: const Icon(Icons.file_download_outlined),
-                    ),
-                    IconButton(
-                      onPressed: () => Utils.adminDo(context, () {
-                        context
-                            .read<DocumentBloc>()
-                            .add(DocumentDeleteRequested(widget.document.id!));
-                      }),
-                      icon: Icon(
-                        Icons.delete_forever_outlined,
-                        color: Theme.of(context).colorScheme.error,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                )
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Text(
+                              Utils.formatDate(widget.document.time),
+                            ),
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  context.read<DocumentBloc>().add(
+                                        DocumentRetreiveRequested(
+                                          widget.document.path,
+                                          (perc) {
+                                            setState(() {
+                                              progress = perc;
+                                            });
+                                          },
+                                        ),
+                                      );
+                                },
+                                icon: const Icon(Icons.file_download_outlined),
+                              ),
+                              IconButton(
+                                onPressed: () => Utils.adminDo(context, fn: () {
+                                  context.read<DocumentBloc>().add(
+                                      DocumentDeleteRequested(
+                                          widget.document.id!));
+                                }),
+                                icon: Icon(
+                                  Icons.delete_forever_outlined,
+                                  color: Theme.of(context).colorScheme.error,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
             if (0.0 < progress && progress < 1.0)
@@ -101,6 +129,25 @@ class _BuildDocumentItemState extends State<_BuildDocumentItem> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _BuilderDivider extends StatelessWidget {
+  const _BuilderDivider({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 5,
+      ),
+      height: 20,
+      width: 2,
+      color: Colors.grey,
     );
   }
 }

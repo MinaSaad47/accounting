@@ -113,7 +113,8 @@ class _IncomesAndExpensesListState extends State<IncomesAndExpensesList> {
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) => IncomeWidget(
                                   income: state.list[index],
-                                  onDelete: () => Utils.adminDo(context, () {
+                                  onDelete: () =>
+                                      Utils.adminDo(context, fn: () {
                                     context.read<IncomeBloc>().add(
                                           IncomeDeleteRequested(
                                             state.list[index].id!,

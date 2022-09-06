@@ -47,16 +47,23 @@ class _BuildFunderItem extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(Icons.person_outline),
-                const SizedBox(width: 10),
-                Text(funder.name),
-              ],
+            Expanded(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.person_outline),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Text(funder.name),
+                    ),
+                  ),
+                ],
+              ),
             ),
             IconButton(
-              onPressed: () => Utils.adminDo(context, () {
+              onPressed: () => Utils.adminDo(context, fn: () {
                 context
                     .read<FunderBloc>()
                     .add(FunderDeleteRequested(funder.id!));
