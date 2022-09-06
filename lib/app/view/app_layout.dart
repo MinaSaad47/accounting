@@ -51,21 +51,14 @@ class _AppLayoutState extends State<AppLayout> {
           ],
         ),
         drawer: const DrawerWidget(),
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: AspectRatio(
-                  aspectRatio: 2,
-                  child: SvgPicture.asset(
-                    'assets/images/logo.svg',
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              ),
-            ],
+        body: Container(
+          margin: const EdgeInsets.all(20),
+          height: double.infinity,
+          width: double.infinity,
+          child: SvgPicture.asset(
+            fit: BoxFit.contain,
+            'assets/images/logo.svg',
+            color: Theme.of(context).primaryColor,
           ),
         ),
       ),

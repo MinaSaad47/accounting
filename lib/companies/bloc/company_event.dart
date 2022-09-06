@@ -37,12 +37,3 @@ class CompanyDeleteRequested extends CompanyEvent {
   @override
   List<Object?> get props => [id];
 }
-
-class CompanySelectRequested extends CompanyEvent {
-  final CompanyModel selected;
-
-  CompanySelectRequested(this.selected);
-
-  @override
-  List<Object?> get props => [selected];
-}

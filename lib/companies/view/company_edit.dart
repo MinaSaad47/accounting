@@ -1,7 +1,7 @@
 import 'package:accounting/common/common.dart';
 import 'package:accounting/companies/companies.dart';
 import 'package:accounting/companies/widgets/company_widget.dart';
-import 'package:accounting/utils/utils.dart';
+import 'package:accounting_repository/accounting_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,13 +16,13 @@ class _CompanyEditState extends State<CompanyEdit> {
   final List<bool> _isOpen = List.filled(1, false);
   @override
   Widget build(BuildContext context) {
-    var company = context.select((CompaniesBloc bloc) => bloc.state.selected)!;
+    var company = context.read<CompanyModel>();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            BlocConsumer<CompaniesBloc, CompanyState>(
+            BlocBuilder<CompaniesBloc, CompanyState>(
               builder: (context, state) =>
                   (state.action == CompanyAction.delete &&
                           state.status == CompanyStatus.loading)
@@ -31,20 +31,6 @@ class _CompanyEditState extends State<CompanyEdit> {
                           child: LinearProgressIndicator(),
                         )
                       : Container(),
-              listener: (context, state) {
-                if (state.action == CompanyAction.delete) {
-                  if (state.status == CompanyStatus.success) {
-                    Utils.toast(context, message: state.message);
-                    Navigator.of(context).pop();
-                  } else if (state.status == CompanyStatus.failure) {
-                    Utils.toast(
-                      context,
-                      message: state.message,
-                      level: ToastLevel.error,
-                    );
-                  }
-                }
-              },
             ),
             CompanyWidget(company: company),
             const SizedBox(height: 30),

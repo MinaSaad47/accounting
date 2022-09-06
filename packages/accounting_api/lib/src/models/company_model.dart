@@ -12,7 +12,6 @@ part 'company_model.g.dart';
 class CompanyModel with _$CompanyModel {
   const factory CompanyModel({
     @JsonKey(name: "id") int? id,
-    @JsonKey(name: "funders") required List<FunderModel> funders,
     @JsonKey(name: "commercial_feature") required String commercialFeature,
     @JsonKey(name: "is_working") required bool isWorking,
     @JsonKey(name: "legal_entity") required String legalEntity,

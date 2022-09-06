@@ -43,12 +43,30 @@ abstract class AccountingApi {
   Future<ApiResponse<List<UserModel>>> getUsers();
   Future<ApiResponse<UserModel>> createUser(UserModel user);
 
+  /* Documents  */
   Future<ApiResponse<List<DocumentModel>>> getDocuments({
     required int companyId,
   });
   Future<ApiResponse<DocumentModel>> createDocument({
     required int companyId,
     required File document,
+    required void Function(double) onProgress,
   });
-  Future<File> retreiveDocument({required String path});
+  Future<File> retreiveDocument({
+    required String path,
+    required void Function(double) onProgress,
+  });
+  Future<ApiResponse<String>> deleteDocument({required int id});
+
+  /* Funders  */
+  Future<ApiResponse<List<FunderModel>>> getFunders({
+    required int companyId,
+  });
+
+  Future<ApiResponse<FunderModel>> createFunder({
+    required int companyId,
+    required FunderModel funder,
+  });
+
+  Future<ApiResponse<String>> deleteFunder({required int id});
 }

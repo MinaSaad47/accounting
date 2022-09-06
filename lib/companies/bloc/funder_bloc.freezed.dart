@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'income_bloc.dart';
+part of 'funder_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,36 +15,36 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$IncomeState {
-  List<IncomeModel> get list => throw _privateConstructorUsedError;
-  IncomeStatus get status => throw _privateConstructorUsedError;
-  IncomeAction get action => throw _privateConstructorUsedError;
+mixin _$FunderState {
+  List<FunderModel> get list => throw _privateConstructorUsedError;
+  FunderStatus get status => throw _privateConstructorUsedError;
+  FunderAction get action => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $IncomeStateCopyWith<IncomeState> get copyWith =>
+  $FunderStateCopyWith<FunderState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $IncomeStateCopyWith<$Res> {
-  factory $IncomeStateCopyWith(
-          IncomeState value, $Res Function(IncomeState) then) =
-      _$IncomeStateCopyWithImpl<$Res>;
+abstract class $FunderStateCopyWith<$Res> {
+  factory $FunderStateCopyWith(
+          FunderState value, $Res Function(FunderState) then) =
+      _$FunderStateCopyWithImpl<$Res>;
   $Res call(
-      {List<IncomeModel> list,
-      IncomeStatus status,
-      IncomeAction action,
+      {List<FunderModel> list,
+      FunderStatus status,
+      FunderAction action,
       String message});
 }
 
 /// @nodoc
-class _$IncomeStateCopyWithImpl<$Res> implements $IncomeStateCopyWith<$Res> {
-  _$IncomeStateCopyWithImpl(this._value, this._then);
+class _$FunderStateCopyWithImpl<$Res> implements $FunderStateCopyWith<$Res> {
+  _$FunderStateCopyWithImpl(this._value, this._then);
 
-  final IncomeState _value;
+  final FunderState _value;
   // ignore: unused_field
-  final $Res Function(IncomeState) _then;
+  final $Res Function(FunderState) _then;
 
   @override
   $Res call({
@@ -57,15 +57,15 @@ class _$IncomeStateCopyWithImpl<$Res> implements $IncomeStateCopyWith<$Res> {
       list: list == freezed
           ? _value.list
           : list // ignore: cast_nullable_to_non_nullable
-              as List<IncomeModel>,
+              as List<FunderModel>,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as IncomeStatus,
+              as FunderStatus,
       action: action == freezed
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
-              as IncomeAction,
+              as FunderAction,
       message: message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -75,28 +75,28 @@ class _$IncomeStateCopyWithImpl<$Res> implements $IncomeStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_IncomeStateCopyWith<$Res>
-    implements $IncomeStateCopyWith<$Res> {
-  factory _$$_IncomeStateCopyWith(
-          _$_IncomeState value, $Res Function(_$_IncomeState) then) =
-      __$$_IncomeStateCopyWithImpl<$Res>;
+abstract class _$$_FunderStateCopyWith<$Res>
+    implements $FunderStateCopyWith<$Res> {
+  factory _$$_FunderStateCopyWith(
+          _$_FunderState value, $Res Function(_$_FunderState) then) =
+      __$$_FunderStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {List<IncomeModel> list,
-      IncomeStatus status,
-      IncomeAction action,
+      {List<FunderModel> list,
+      FunderStatus status,
+      FunderAction action,
       String message});
 }
 
 /// @nodoc
-class __$$_IncomeStateCopyWithImpl<$Res> extends _$IncomeStateCopyWithImpl<$Res>
-    implements _$$_IncomeStateCopyWith<$Res> {
-  __$$_IncomeStateCopyWithImpl(
-      _$_IncomeState _value, $Res Function(_$_IncomeState) _then)
-      : super(_value, (v) => _then(v as _$_IncomeState));
+class __$$_FunderStateCopyWithImpl<$Res> extends _$FunderStateCopyWithImpl<$Res>
+    implements _$$_FunderStateCopyWith<$Res> {
+  __$$_FunderStateCopyWithImpl(
+      _$_FunderState _value, $Res Function(_$_FunderState) _then)
+      : super(_value, (v) => _then(v as _$_FunderState));
 
   @override
-  _$_IncomeState get _value => super._value as _$_IncomeState;
+  _$_FunderState get _value => super._value as _$_FunderState;
 
   @override
   $Res call({
@@ -105,19 +105,19 @@ class __$$_IncomeStateCopyWithImpl<$Res> extends _$IncomeStateCopyWithImpl<$Res>
     Object? action = freezed,
     Object? message = freezed,
   }) {
-    return _then(_$_IncomeState(
+    return _then(_$_FunderState(
       list: list == freezed
           ? _value._list
           : list // ignore: cast_nullable_to_non_nullable
-              as List<IncomeModel>,
+              as List<FunderModel>,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as IncomeStatus,
+              as FunderStatus,
       action: action == freezed
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
-              as IncomeAction,
+              as FunderAction,
       message: message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -128,29 +128,29 @@ class __$$_IncomeStateCopyWithImpl<$Res> extends _$IncomeStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_IncomeState extends _IncomeState {
-  const _$_IncomeState(
-      {final List<IncomeModel> list = const [],
-      this.status = IncomeStatus.initial,
-      this.action = IncomeAction.none,
+class _$_FunderState extends _FunderState {
+  const _$_FunderState(
+      {final List<FunderModel> list = const [],
+      this.status = FunderStatus.initial,
+      this.action = FunderAction.none,
       this.message = ''})
       : _list = list,
         super._();
 
-  final List<IncomeModel> _list;
+  final List<FunderModel> _list;
   @override
   @JsonKey()
-  List<IncomeModel> get list {
+  List<FunderModel> get list {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_list);
   }
 
   @override
   @JsonKey()
-  final IncomeStatus status;
+  final FunderStatus status;
   @override
   @JsonKey()
-  final IncomeAction action;
+  final FunderAction action;
   @override
   @JsonKey()
   final String message;
@@ -159,7 +159,7 @@ class _$_IncomeState extends _IncomeState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_IncomeState &&
+            other is _$_FunderState &&
             const DeepCollectionEquality().equals(other._list, _list) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.action, action) &&
@@ -176,28 +176,28 @@ class _$_IncomeState extends _IncomeState {
 
   @JsonKey(ignore: true)
   @override
-  _$$_IncomeStateCopyWith<_$_IncomeState> get copyWith =>
-      __$$_IncomeStateCopyWithImpl<_$_IncomeState>(this, _$identity);
+  _$$_FunderStateCopyWith<_$_FunderState> get copyWith =>
+      __$$_FunderStateCopyWithImpl<_$_FunderState>(this, _$identity);
 }
 
-abstract class _IncomeState extends IncomeState {
-  const factory _IncomeState(
-      {final List<IncomeModel> list,
-      final IncomeStatus status,
-      final IncomeAction action,
-      final String message}) = _$_IncomeState;
-  const _IncomeState._() : super._();
+abstract class _FunderState extends FunderState {
+  const factory _FunderState(
+      {final List<FunderModel> list,
+      final FunderStatus status,
+      final FunderAction action,
+      final String message}) = _$_FunderState;
+  const _FunderState._() : super._();
 
   @override
-  List<IncomeModel> get list;
+  List<FunderModel> get list;
   @override
-  IncomeStatus get status;
+  FunderStatus get status;
   @override
-  IncomeAction get action;
+  FunderAction get action;
   @override
   String get message;
   @override
   @JsonKey(ignore: true)
-  _$$_IncomeStateCopyWith<_$_IncomeState> get copyWith =>
+  _$$_FunderStateCopyWith<_$_FunderState> get copyWith =>
       throw _privateConstructorUsedError;
 }

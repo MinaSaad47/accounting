@@ -1,6 +1,8 @@
+import 'package:accounting/common/common.dart';
 import 'package:accounting/utils/utils.dart';
 import 'package:accounting_api/accounting_api.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -15,7 +17,9 @@ late final PdfColor _color3;
 bool _initialized = false;
 
 class PdfHelper {
-  static Future<void> generateInvoice({
+  static Future<void> generateInvoice(
+    BuildContext context, {
+    required CompanyModel company,
     required List<IncomeModel> incomes,
     required List<ExpenseModel> expenses,
     required double total,
@@ -39,43 +43,96 @@ class PdfHelper {
 
     final doc = pw.Document();
 
-    doc
-      ..addPage(
-        pw.MultiPage(
-          pageTheme: await _buildTheme(),
-          build: (context) => [
-            _buildHeader(),
-            pw.Align(
-              alignment: pw.Alignment.centerRight,
-              child: ArText('الايرادات', style: pw.TextStyle(color: _color2)),
+    doc.addPage(
+      pw.MultiPage(
+        pageTheme: await _buildTheme(),
+        build: (_) => [
+          _buildHeader(),
+          _buildCompanyContent(context, company),
+          pw.Align(
+            alignment: pw.Alignment.centerRight,
+            child: ArText(
+              'الايرادات',
+              style: pw.TextStyle(
+                color: _color2,
+                fontSize: 1 * PdfPageFormat.cm,
+              ),
             ),
-            _buildIncomeContent(incomes),
-          ],
-        ),
-      )
-      ..addPage(
-        pw.MultiPage(
-          pageTheme: await _buildTheme(),
-          build: (context) => [
-            pw.Align(
-              alignment: pw.Alignment.centerRight,
-              child: ArText('المصروفات', style: pw.TextStyle(color: _color1)),
+          ),
+          _buildIncomeContent(incomes),
+          pw.Align(
+            alignment: pw.Alignment.centerRight,
+            child: ArText(
+              'المصروفات',
+              style: pw.TextStyle(
+                color: _color1,
+                fontSize: 1 * PdfPageFormat.cm,
+              ),
             ),
-            _buildExpenseContent(expenses),
-          ],
-        ),
-      )
-      ..addPage(
-        pw.MultiPage(
-          pageTheme: await _buildTheme(),
-          build: (context) => [
-            pw.Align(
-              alignment: pw.Alignment.centerRight,
-              child: _buildDues(total),
+          ),
+          _buildExpenseContent(expenses),
+          pw.Align(
+            alignment: pw.Alignment.centerRight,
+            child: ArText(
+              'المستحقات',
+              style: pw.TextStyle(
+                color: _color3,
+                fontSize: 1 * PdfPageFormat.cm,
+              ),
             ),
-          ],
-        ),
-      );
+          ),
+          pw.Align(
+            alignment: pw.Alignment.centerRight,
+            child: _buildDues(total),
+          ),
+        ],
+      ),
+    );
+    // ..addPage(pw.MultiPage(
+    //   pageTheme: await _buildTheme(),
+    //   build: (_) => [
+    //     pw.Align(
+    //       alignment: pw.Alignment.centerRight,
+    //       child: ArText(
+    //         'الايرادات',
+    //         style: pw.TextStyle(
+    //           color: _color2,
+    //           fontSize: 1 * PdfPageFormat.cm,
+    //         ),
+    //       ),
+    //     ),
+    //     _buildIncomeContent(incomes),
+    //   ],
+    // ))
+    // ..addPage(
+    //   pw.MultiPage(
+    //     pageTheme: await _buildTheme(),
+    //     build: (_) => [
+    //       pw.Align(
+    //         alignment: pw.Alignment.centerRight,
+    //         child: ArText(
+    //           'المصروفات',
+    //           style: pw.TextStyle(
+    //             color: _color1,
+    //             fontSize: 1 * PdfPageFormat.cm,
+    //           ),
+    //         ),
+    //       ),
+    //       _buildExpenseContent(expenses),
+    //     ],
+    //   ),
+    // )
+    // ..addPage(
+    //   pw.MultiPage(
+    //     pageTheme: await _buildTheme(),
+    //     build: (_) => [
+    //       pw.Align(
+    //         alignment: pw.Alignment.centerRight,
+    //         child: _buildDues(total),
+    //       ),
+    //     ],
+    //   ),
+    // );
 
     Printing.layoutPdf(
       onLayout: (format) => doc.save(),
@@ -113,7 +170,7 @@ class PdfHelper {
           mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
           children: [
             pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              crossAxisAlignment: pw.CrossAxisAlignment.center,
               children: [
                 ArText(
                   'الفاتورة',
@@ -122,12 +179,66 @@ class PdfHelper {
                   ),
                 ),
                 pw.SizedBox(height: 0.5 * PdfPageFormat.cm),
-                EnText(Utils.formatDate(DateTime.now())),
+                ArText(
+                  Utils.formatDate(DateTime.now()),
+                  style: const pw.TextStyle(
+                    fontSize: 1 * PdfPageFormat.cm,
+                  ),
+                ),
               ],
             ),
           ],
         ),
       );
+
+  static pw.Widget _buildCompanyContent(
+    BuildContext context,
+    CompanyModel company,
+  ) {
+    List<List<dynamic>> data = [
+      [
+        company.id,
+        'id',
+      ],
+      [
+        company.commercialFeature,
+        AppLocalizations.of(context)!.commercialFeature,
+      ],
+      [
+        company.recordNumber,
+        AppLocalizations.of(context)!.registerNumber,
+      ],
+      [
+        company.userName,
+        AppLocalizations.of(context)!.userName,
+      ],
+      [
+        company.email,
+        AppLocalizations.of(context)!.email,
+      ],
+    ];
+
+    return pw.Directionality(
+      textDirection: pw.TextDirection.rtl,
+      child: pw.Table.fromTextArray(
+        headers: null,
+        data: data,
+        cellStyle: pw.TextStyle(
+          font: _font1,
+          fontSize: 5 * PdfPageFormat.mm,
+        ),
+        headerAlignment: pw.Alignment.centerRight,
+        border: pw.TableBorder.all(
+          color: _color3,
+          width: 2 * PdfPageFormat.point,
+        ),
+        cellAlignments: {
+          0: pw.Alignment.centerRight,
+          1: pw.Alignment.centerRight,
+        },
+      ),
+    );
+  }
 
   static pw.Widget _buildIncomeContent(List<IncomeModel> incomes) {
     final headers = [
@@ -152,10 +263,15 @@ class PdfHelper {
           font: _font1,
           fontWeight: pw.FontWeight.bold,
           color: PdfColors.white,
+          fontSize: 5 * PdfPageFormat.mm,
         ),
-        cellStyle: pw.TextStyle(font: _font1, color: _color2),
-        headerDecoration: pw.BoxDecoration(color: _color2),
+        cellStyle: pw.TextStyle(
+          font: _font1,
+          color: _color2,
+          fontSize: 5 * PdfPageFormat.mm,
+        ),
         headerAlignment: pw.Alignment.centerRight,
+        headerDecoration: pw.BoxDecoration(color: _color2),
         border: null,
         data: data,
         columnWidths: {
@@ -193,8 +309,13 @@ class PdfHelper {
           font: _font1,
           fontWeight: pw.FontWeight.bold,
           color: PdfColors.white,
+          fontSize: 5 * PdfPageFormat.mm,
         ),
-        cellStyle: pw.TextStyle(font: _font1, color: _color1),
+        cellStyle: pw.TextStyle(
+          font: _font1,
+          color: _color1,
+          fontSize: 5 * PdfPageFormat.mm,
+        ),
         headerDecoration: pw.BoxDecoration(color: _color1),
         headerAlignment: pw.Alignment.centerRight,
         border: null,
@@ -220,33 +341,23 @@ class PdfHelper {
           borderRadius: pw.BorderRadius.circular(10),
           border: pw.Border.all(
             color: _color3,
-            width: 2 * PdfPageFormat.mm,
+            width: 2 * PdfPageFormat.point,
           ),
         ),
-        child: pw.Column(
+        child: pw.Row(
+          mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
           children: [
             ArText(
-              'المستحقات',
+              'جنيه',
               style: const pw.TextStyle(
-                fontSize: 0.5 * PdfPageFormat.cm,
+                fontSize: 1 * PdfPageFormat.cm,
               ),
             ),
-            pw.Row(
-              mainAxisAlignment: pw.MainAxisAlignment.center,
-              children: [
-                ArText(
-                  'جنيه',
-                  style: const pw.TextStyle(
-                    fontSize: 0.5 * PdfPageFormat.cm,
-                  ),
-                ),
-                ArText(
-                  total.toStringAsFixed(2),
-                  style: const pw.TextStyle(
-                    fontSize: 0.5 * PdfPageFormat.cm,
-                  ),
-                ),
-              ],
+            ArText(
+              total.toStringAsFixed(2),
+              style: const pw.TextStyle(
+                fontSize: 1 * PdfPageFormat.cm,
+              ),
             ),
           ],
         ),

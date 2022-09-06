@@ -1,24 +1,27 @@
 import 'package:accounting/common/common.dart';
+import 'package:accounting/login/cubit/login_cubit.dart';
 import 'package:accounting_api/accounting_api.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class IncomeWidget extends StatelessWidget {
   final IncomeModel income;
   final Function()? onDelete;
-  final Function()? onEdit;
   const IncomeWidget({
     Key? key,
     required this.income,
     this.onDelete,
-    this.onEdit,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var user = context.read<LoginCubit>().state.user;
     return ExpansionTile(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Expanded(
             child: Column(
@@ -37,14 +40,24 @@ class IncomeWidget extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              clipBehavior: Clip.none,
               children: [
-                const CircleAvatar(
-                  minRadius: 15,
-                  child: Icon(Icons.person_outline),
+                AvatarGlow(
+                  glowColor: Theme.of(context).primaryColor,
+                  showTwoGlows: true,
+                  animate: user?.name == income.adminName,
+                  endRadius: 30,
+                  child: const Material(
+                    elevation: 8,
+                    shape: CircleBorder(),
+                    child: CircleAvatar(
+                      maxRadius: 15,
+                      child: Icon(Icons.person_outline),
+                    ),
+                  ),
                 ),
-                const SizedBox(width: 5),
                 Text(
                   income.adminName!,
                   style: Theme.of(context).textTheme.labelMedium,
@@ -68,23 +81,6 @@ class IncomeWidget extends StatelessWidget {
               ],
             ),
           ),
-          if (onEdit != null)
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Theme.of(context).colorScheme.secondary,
-              ),
-              onPressed: onEdit,
-              child: Row(
-                children: [
-                  const Icon(Icons.edit_outlined),
-                  const SizedBox(width: 4),
-                  Text(
-                    AppLocalizations.of(context)!.edit(''),
-                    style: Theme.of(context).textTheme.labelMedium,
-                  ),
-                ],
-              ),
-            ),
           if (onDelete != null) ...[
             const SizedBox(width: 5),
             ElevatedButton(
@@ -125,19 +121,19 @@ class IncomeWidget extends StatelessWidget {
 class ExpenseWidget extends StatelessWidget {
   final ExpenseModel expense;
   final Function()? onDelete;
-  final Function()? onEdit;
   const ExpenseWidget({
     Key? key,
     required this.expense,
     this.onDelete,
-    this.onEdit,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var user = context.read<LoginCubit>().state.user;
     return ExpansionTile(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Expanded(
             child: Column(
@@ -156,16 +152,26 @@ class ExpenseWidget extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              clipBehavior: Clip.none,
               children: [
-                const CircleAvatar(
-                  minRadius: 15,
-                  child: Icon(Icons.person_outline),
+                AvatarGlow(
+                  glowColor: Theme.of(context).primaryColor,
+                  showTwoGlows: true,
+                  animate: user?.name == expense.userName,
+                  endRadius: 30,
+                  child: const Material(
+                    elevation: 8,
+                    shape: CircleBorder(),
+                    child: CircleAvatar(
+                      maxRadius: 15,
+                      child: Icon(Icons.person_outline),
+                    ),
+                  ),
                 ),
-                const SizedBox(width: 5),
                 Text(
-                  '${expense.userName}',
+                  expense.userName!,
                   style: Theme.of(context).textTheme.labelMedium,
                 ),
               ],
@@ -187,30 +193,13 @@ class ExpenseWidget extends StatelessWidget {
               ],
             ),
           ),
-          if (onEdit != null)
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Theme.of(context).colorScheme.secondary,
-              ),
-              onPressed: onEdit,
-              child: Row(
-                children: [
-                  const Icon(Icons.edit_outlined),
-                  const SizedBox(width: 4),
-                  Text(
-                    AppLocalizations.of(context)!.edit(''),
-                    style: Theme.of(context).textTheme.labelMedium,
-                  ),
-                ],
-              ),
-            ),
           if (onDelete != null) ...[
             const SizedBox(width: 5),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: Theme.of(context).colorScheme.error,
               ),
-              onPressed: onDelete,
+              onPressed: user?.name == expense.userName ? onDelete : null,
               child: Row(
                 children: [
                   const Icon(Icons.delete_outline),

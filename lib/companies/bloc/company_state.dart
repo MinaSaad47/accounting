@@ -6,6 +6,7 @@ enum CompanyAction {
   delete,
   save,
 }
+
 enum CompanyStatus {
   initial,
   loading,
@@ -13,13 +14,19 @@ enum CompanyStatus {
   failure,
 }
 
-@freezed
+@Freezed(toStringOverride: false)
 class CompanyState with _$CompanyState {
-  const factory CompanyState ({
+  const CompanyState._();
+  @override
+  String toString() {
+    return '($action, $status)';
+  }
+
+  const factory CompanyState({
     @Default([]) List<CompanyModel> list,
-    @Default(null) CompanyModel? selected,
     @Default(CompanyStatus.initial) CompanyStatus status,
     @Default(CompanyAction.none) CompanyAction action,
     @Default('') message,
   }) = _CompanyState;
+
 }

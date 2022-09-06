@@ -14,9 +14,13 @@ enum IncomeAction {
   delete,
 }
 
-@freezed
+@Freezed(toStringOverride: false)
 class IncomeState with _$IncomeState {
   const IncomeState._();
+  @override
+  String toString() {
+    return '($action, $status)';
+  }
 
   double get total => list.map((e) => e.value).fold(0.0, (p, c) => p + c);
 

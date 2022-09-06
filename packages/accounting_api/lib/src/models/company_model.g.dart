@@ -9,11 +9,6 @@ part of 'company_model.dart';
 _$_CompanyModel _$$_CompanyModelFromJson(Map<String, dynamic> json) =>
     _$_CompanyModel(
       id: json['id'] as int?,
-      funders: (json['funders'] as List<dynamic>)
-          .map((e) => FunderModel.fromJson((e as Map<String, dynamic>).map(
-                (k, e) => MapEntry(k, e as Object),
-              )))
-          .toList(),
       commercialFeature: json['commercial_feature'] as String,
       isWorking: json['is_working'] as bool,
       legalEntity: json['legal_entity'] as String,
@@ -45,7 +40,6 @@ _$_CompanyModel _$$_CompanyModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_CompanyModelToJson(_$_CompanyModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'funders': instance.funders,
       'commercial_feature': instance.commercialFeature,
       'is_working': instance.isWorking,
       'legal_entity': instance.legalEntity,

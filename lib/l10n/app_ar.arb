@@ -63,5 +63,7 @@
   "permissions": "صلاحيات",
 
   "dues": "المتسحقات",
-  "documents": "مستندات"
+  "documents": "مستندات",
+  "unauth": "غير مصرح لمستخدم غير مسؤول",
+  "notCorrect": "{input} غير صحيح"
 }

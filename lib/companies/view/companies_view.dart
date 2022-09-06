@@ -2,7 +2,6 @@ import 'package:accounting/common/common.dart';
 import 'package:accounting/companies/companies.dart';
 import 'package:accounting/companies/widgets/company_widget.dart';
 import 'package:accounting/login/cubit/login_cubit.dart';
-import 'package:accounting/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -67,17 +66,8 @@ class _BuildSearchCompany extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Expanded(
-            child: BlocConsumer<CompaniesBloc, CompanyState>(
-              listener: (context, state) {
-                if (state.action == CompanyAction.get &&
-                    state.status == CompanyStatus.failure) {
-                  Utils.toast(
-                    context,
-                    message: state.message,
-                    level: ToastLevel.error,
-                  );
-                }
-              },
+            child: BlocBuilder<CompaniesBloc, CompanyState>(
+              buildWhen: (prev, curr) => curr.list.length != prev.list.length,
               builder: (context, state) {
                 if (state.action == CompanyAction.get) {
                   if (state.status == CompanyStatus.success) {

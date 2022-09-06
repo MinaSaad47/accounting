@@ -158,11 +158,6 @@ class _$_DocumentState extends _DocumentState {
   final String message;
 
   @override
-  String toString() {
-    return 'DocumentState(list: $list, status: $status, action: $action, message: $message)';
-  }
-
-  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&

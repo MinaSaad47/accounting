@@ -14,9 +14,13 @@ enum ExpenseAction {
   delete,
 }
 
-@freezed
+@Freezed(toStringOverride: false)
 class ExpenseState with _$ExpenseState {
   const ExpenseState._();
+  @override
+  String toString() {
+    return '($action, $status)';
+  }
 
   double get total => list.map((e) => e.value).fold(0.0, (p, c) => p + c);
 

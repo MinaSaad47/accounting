@@ -96,14 +96,39 @@ class AccountingRepository {
   Future<ApiResponse<DocumentModel>> createDocument({
     required int companyId,
     required File document,
+    required void Function(double) onProgress,
   }) async =>
-      _accountingApi.createDocument(companyId: companyId, document: document);
+      _accountingApi.createDocument(
+        companyId: companyId,
+        document: document,
+        onProgress: onProgress,
+      );
 
   Future<ApiResponse<List<DocumentModel>>> getDocuments({
     required int companyId,
   }) async =>
       _accountingApi.getDocuments(companyId: companyId);
 
-  Future<File> retreiveDocument({required String path}) async =>
-      _accountingApi.retreiveDocument(path: path);
+  Future<File> retreiveDocument({
+    required String path,
+    required void Function(double) onProgress,
+  }) async =>
+      _accountingApi.retreiveDocument(path: path, onProgress: onProgress);
+
+  Future<ApiResponse<String>> deleteDocument({required int id}) async =>
+      await _accountingApi.deleteDocument(id: id);
+
+  Future<ApiResponse<FunderModel>> createFunder({
+    required int companyId,
+    required FunderModel funder,
+  }) async =>
+      _accountingApi.createFunder(companyId: companyId, funder: funder);
+
+  Future<ApiResponse<String>> deleteFunder({required int id}) async =>
+      _accountingApi.deleteFunder(id: id);
+
+  Future<ApiResponse<List<FunderModel>>> getFunders({
+    required int companyId,
+  }) async =>
+      _accountingApi.getFunders(companyId: companyId);
 }

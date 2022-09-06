@@ -12,11 +12,16 @@ enum DocumentAction {
   get,
   create,
   delete,
+  retreive,
 }
 
-@freezed
+@Freezed(toStringOverride: false)
 class DocumentState with _$DocumentState {
   const DocumentState._();
+  @override
+  String toString() {
+    return '($action, $status)';
+  }
 
   const factory DocumentState({
     @Default([]) List<DocumentModel> list,

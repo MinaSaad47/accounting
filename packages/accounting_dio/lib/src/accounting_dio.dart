@@ -208,12 +208,15 @@ class AccountingDio extends AccountingApi {
   Future<ApiResponse<DocumentModel>> createDocument({
     required int companyId,
     required File document,
+    required void Function(double) onProgress,
   }) async {
-    var name = basename(document.path);
-    var response = await _dio.post(
-      'company/$companyId/$name',
-      data: await document.readAsBytes(),
-    );
+    var formData = FormData.fromMap({
+      'file': await MultipartFile.fromFile(document.path),
+    });
+    var response = await _dio.post('company/$companyId/documents/',
+        data: formData, onSendProgress: (count, total) {
+      onProgress(count / total);
+    });
     return ApiResponse<DocumentModel>.fromJson(
         response.data, (p0) => DocumentModel.fromJson(p0 as dynamic));
   }
@@ -233,10 +236,60 @@ class AccountingDio extends AccountingApi {
   }
 
   @override
-  Future<File> retreiveDocument({required String path}) async {
+  Future<File> retreiveDocument({
+    required String path,
+    required void Function(double) onProgress,
+  }) async {
     var tmpDir = await getTemporaryDirectory();
     var savePath = join(tmpDir.path, basename(path));
-    await _dio.download('/documents/$path', savePath);
+    await _dio.download(
+      '/documents/$path',
+      savePath,
+      onReceiveProgress: (count, total) {
+        onProgress(count / total);
+      },
+    );
     return File(savePath);
+  }
+
+  @override
+  Future<ApiResponse<String>> deleteDocument({required int id}) async {
+    var response = await _dio.delete('documents/$id');
+    return ApiResponse<String>.fromJson(response.data, (p0) => p0 as String);
+  }
+
+  @override
+  Future<ApiResponse<FunderModel>> createFunder({
+    required int companyId,
+    required FunderModel funder,
+  }) async {
+    var response = await _dio.post(
+      'company/$companyId/funders',
+      data: funder.toJson(),
+    );
+
+    return ApiResponse<FunderModel>.fromJson(
+        response.data, (p0) => FunderModel.fromJson(p0 as dynamic));
+  }
+
+  @override
+  Future<ApiResponse<String>> deleteFunder({required int id}) async {
+    var response = await _dio.delete('funders/$id');
+
+    return ApiResponse<String>.fromJson(response.data, (p0) => p0 as String);
+  }
+
+  @override
+  Future<ApiResponse<List<FunderModel>>> getFunders({
+    required int companyId,
+  }) async {
+    var response = await _dio.get('company/$companyId/funders');
+    return ApiResponse<List<FunderModel>>.fromJson(response.data, (p0) {
+      List<FunderModel> funders = [];
+      for (var json in (p0 as List<dynamic>)) {
+        funders.add(FunderModel.fromJson(json));
+      }
+      return funders;
+    });
   }
 }

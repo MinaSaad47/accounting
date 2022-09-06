@@ -157,11 +157,6 @@ class _$_ExpenseState extends _ExpenseState {
   final String message;
 
   @override
-  String toString() {
-    return 'ExpenseState(list: $list, status: $status, action: $action, message: $message)';
-  }
-
-  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&

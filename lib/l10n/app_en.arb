@@ -99,5 +99,14 @@
   "permissions": "permissions",
   
   "dues": "dues",
-  "documents": "documents"
+  "documents": "documents",
+  "unauth": "unauthorized for non admin user",
+  "notCorrect": "{input} is not correct",
+  "@notCorrect": {
+    "placeholders": {
+      "input": {
+        "type": "String"
+      }
+    }
+  }
 }

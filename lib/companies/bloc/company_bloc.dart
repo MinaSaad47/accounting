@@ -1,5 +1,3 @@
-import 'package:accounting/utils/utils.dart';
-import 'package:accounting_api/accounting_api.dart';
 import 'package:accounting_repository/accounting_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -26,7 +24,6 @@ class CompaniesBloc extends Bloc<CompanyEvent, CompanyState> {
     );
     on<CompanyCreateRequested>(_onCreateRequested);
     on<CompanyDeleteRequested>(_onDeleteRequested);
-    on<CompanySelectRequested>(_onSelectRequested);
   }
 
   Future _onCreateRequested(
@@ -64,10 +61,11 @@ class CompaniesBloc extends Bloc<CompanyEvent, CompanyState> {
     var response = await _accountingRepository.saveCompany(event.company);
     if (response.status) {
       emit(state.copyWith(
-          action: CompanyAction.save,
-          status: CompanyStatus.success,
-          selected: response.data,
-          message: response.message));
+        action: CompanyAction.save,
+        status: CompanyStatus.success,
+        list: [],
+        message: response.message,
+      ));
     } else {
       emit(state.copyWith(
         action: CompanyAction.save,
@@ -114,22 +112,16 @@ class CompaniesBloc extends Bloc<CompanyEvent, CompanyState> {
     if (response.status) {
       emit(state.copyWith(
         action: CompanyAction.delete,
+        message: response.message,
         status: CompanyStatus.success,
-        selected: null,
+        list: [],
       ));
     } else {
       emit(state.copyWith(
         action: CompanyAction.delete,
+        message: response.message,
         status: CompanyStatus.failure,
       ));
     }
-  }
-
-  Future _onSelectRequested(
-    CompanySelectRequested event,
-    Emitter<CompanyState> emit,
-  ) async {
-    Utils.log.d('[Company Selected] ${event.selected}');
-    emit(state.copyWith(selected: event.selected));
   }
 }

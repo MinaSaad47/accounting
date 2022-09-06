@@ -22,8 +22,6 @@ CompanyModel _$CompanyModelFromJson(Map<String, dynamic> json) {
 mixin _$CompanyModel {
   @JsonKey(name: "id")
   int? get id => throw _privateConstructorUsedError;
-  @JsonKey(name: "funders")
-  List<FunderModel> get funders => throw _privateConstructorUsedError;
   @JsonKey(name: "commercial_feature")
   String get commercialFeature => throw _privateConstructorUsedError;
   @JsonKey(name: "is_working")
@@ -84,8 +82,6 @@ abstract class $CompanyModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "id")
           int? id,
-      @JsonKey(name: "funders")
-          List<FunderModel> funders,
       @JsonKey(name: "commercial_feature")
           String commercialFeature,
       @JsonKey(name: "is_working")
@@ -144,7 +140,6 @@ class _$CompanyModelCopyWithImpl<$Res> implements $CompanyModelCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
-    Object? funders = freezed,
     Object? commercialFeature = freezed,
     Object? isWorking = freezed,
     Object? legalEntity = freezed,
@@ -172,10 +167,6 @@ class _$CompanyModelCopyWithImpl<$Res> implements $CompanyModelCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      funders: funders == freezed
-          ? _value.funders
-          : funders // ignore: cast_nullable_to_non_nullable
-              as List<FunderModel>,
       commercialFeature: commercialFeature == freezed
           ? _value.commercialFeature
           : commercialFeature // ignore: cast_nullable_to_non_nullable
@@ -274,8 +265,6 @@ abstract class _$$_CompanyModelCopyWith<$Res>
   $Res call(
       {@JsonKey(name: "id")
           int? id,
-      @JsonKey(name: "funders")
-          List<FunderModel> funders,
       @JsonKey(name: "commercial_feature")
           String commercialFeature,
       @JsonKey(name: "is_working")
@@ -337,7 +326,6 @@ class __$$_CompanyModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? funders = freezed,
     Object? commercialFeature = freezed,
     Object? isWorking = freezed,
     Object? legalEntity = freezed,
@@ -365,10 +353,6 @@ class __$$_CompanyModelCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      funders: funders == freezed
-          ? _value._funders
-          : funders // ignore: cast_nullable_to_non_nullable
-              as List<FunderModel>,
       commercialFeature: commercialFeature == freezed
           ? _value.commercialFeature
           : commercialFeature // ignore: cast_nullable_to_non_nullable
@@ -463,8 +447,6 @@ class _$_CompanyModel implements _CompanyModel {
   const _$_CompanyModel(
       {@JsonKey(name: "id")
           this.id,
-      @JsonKey(name: "funders")
-          required final List<FunderModel> funders,
       @JsonKey(name: "commercial_feature")
           required this.commercialFeature,
       @JsonKey(name: "is_working")
@@ -510,8 +492,7 @@ class _$_CompanyModel implements _CompanyModel {
           this.verificationCode,
       @JsonKey(name: "email")
           required this.email})
-      : _funders = funders,
-        _moneyCapitals = moneyCapitals;
+      : _moneyCapitals = moneyCapitals;
 
   factory _$_CompanyModel.fromJson(Map<String, dynamic> json) =>
       _$$_CompanyModelFromJson(json);
@@ -519,14 +500,6 @@ class _$_CompanyModel implements _CompanyModel {
   @override
   @JsonKey(name: "id")
   final int? id;
-  final List<FunderModel> _funders;
-  @override
-  @JsonKey(name: "funders")
-  List<FunderModel> get funders {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_funders);
-  }
-
   @override
   @JsonKey(name: "commercial_feature")
   final String commercialFeature;
@@ -603,7 +576,7 @@ class _$_CompanyModel implements _CompanyModel {
 
   @override
   String toString() {
-    return 'CompanyModel(id: $id, funders: $funders, commercialFeature: $commercialFeature, isWorking: $isWorking, legalEntity: $legalEntity, fileNumber: $fileNumber, registerNumber: $registerNumber, startDate: $startDate, stopDate: $stopDate, generalTaxMission: $generalTaxMission, valueTaxMission: $valueTaxMission, activityNature: $activityNature, activityLocation: $activityLocation, accounts: $accounts, joiningDate: $joiningDate, naturalId: $naturalId, moneyCapitals: $moneyCapitals, recordSide: $recordSide, recordNumber: $recordNumber, userName: $userName, passport: $passport, verificationCode: $verificationCode, email: $email)';
+    return 'CompanyModel(id: $id, commercialFeature: $commercialFeature, isWorking: $isWorking, legalEntity: $legalEntity, fileNumber: $fileNumber, registerNumber: $registerNumber, startDate: $startDate, stopDate: $stopDate, generalTaxMission: $generalTaxMission, valueTaxMission: $valueTaxMission, activityNature: $activityNature, activityLocation: $activityLocation, accounts: $accounts, joiningDate: $joiningDate, naturalId: $naturalId, moneyCapitals: $moneyCapitals, recordSide: $recordSide, recordNumber: $recordNumber, userName: $userName, passport: $passport, verificationCode: $verificationCode, email: $email)';
   }
 
   @override
@@ -612,7 +585,6 @@ class _$_CompanyModel implements _CompanyModel {
         (other.runtimeType == runtimeType &&
             other is _$_CompanyModel &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other._funders, _funders) &&
             const DeepCollectionEquality()
                 .equals(other.commercialFeature, commercialFeature) &&
             const DeepCollectionEquality().equals(other.isWorking, isWorking) &&
@@ -654,7 +626,6 @@ class _$_CompanyModel implements _CompanyModel {
   int get hashCode => Object.hashAll([
         runtimeType,
         const DeepCollectionEquality().hash(id),
-        const DeepCollectionEquality().hash(_funders),
         const DeepCollectionEquality().hash(commercialFeature),
         const DeepCollectionEquality().hash(isWorking),
         const DeepCollectionEquality().hash(legalEntity),
@@ -695,8 +666,6 @@ abstract class _CompanyModel implements CompanyModel {
   const factory _CompanyModel(
       {@JsonKey(name: "id")
           final int? id,
-      @JsonKey(name: "funders")
-          required final List<FunderModel> funders,
       @JsonKey(name: "commercial_feature")
           required final String commercialFeature,
       @JsonKey(name: "is_working")
@@ -749,9 +718,6 @@ abstract class _CompanyModel implements CompanyModel {
   @override
   @JsonKey(name: "id")
   int? get id;
-  @override
-  @JsonKey(name: "funders")
-  List<FunderModel> get funders;
   @override
   @JsonKey(name: "commercial_feature")
   String get commercialFeature;

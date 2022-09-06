@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$CompanyState {
   List<CompanyModel> get list => throw _privateConstructorUsedError;
-  CompanyModel? get selected => throw _privateConstructorUsedError;
   CompanyStatus get status => throw _privateConstructorUsedError;
   CompanyAction get action => throw _privateConstructorUsedError;
   dynamic get message => throw _privateConstructorUsedError;
@@ -34,12 +33,9 @@ abstract class $CompanyStateCopyWith<$Res> {
       _$CompanyStateCopyWithImpl<$Res>;
   $Res call(
       {List<CompanyModel> list,
-      CompanyModel? selected,
       CompanyStatus status,
       CompanyAction action,
       dynamic message});
-
-  $CompanyModelCopyWith<$Res>? get selected;
 }
 
 /// @nodoc
@@ -53,7 +49,6 @@ class _$CompanyStateCopyWithImpl<$Res> implements $CompanyStateCopyWith<$Res> {
   @override
   $Res call({
     Object? list = freezed,
-    Object? selected = freezed,
     Object? status = freezed,
     Object? action = freezed,
     Object? message = freezed,
@@ -63,10 +58,6 @@ class _$CompanyStateCopyWithImpl<$Res> implements $CompanyStateCopyWith<$Res> {
           ? _value.list
           : list // ignore: cast_nullable_to_non_nullable
               as List<CompanyModel>,
-      selected: selected == freezed
-          ? _value.selected
-          : selected // ignore: cast_nullable_to_non_nullable
-              as CompanyModel?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -81,17 +72,6 @@ class _$CompanyStateCopyWithImpl<$Res> implements $CompanyStateCopyWith<$Res> {
               as dynamic,
     ));
   }
-
-  @override
-  $CompanyModelCopyWith<$Res>? get selected {
-    if (_value.selected == null) {
-      return null;
-    }
-
-    return $CompanyModelCopyWith<$Res>(_value.selected!, (value) {
-      return _then(_value.copyWith(selected: value));
-    });
-  }
 }
 
 /// @nodoc
@@ -103,13 +83,9 @@ abstract class _$$_CompanyStateCopyWith<$Res>
   @override
   $Res call(
       {List<CompanyModel> list,
-      CompanyModel? selected,
       CompanyStatus status,
       CompanyAction action,
       dynamic message});
-
-  @override
-  $CompanyModelCopyWith<$Res>? get selected;
 }
 
 /// @nodoc
@@ -126,7 +102,6 @@ class __$$_CompanyStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? list = freezed,
-    Object? selected = freezed,
     Object? status = freezed,
     Object? action = freezed,
     Object? message = freezed,
@@ -136,10 +111,6 @@ class __$$_CompanyStateCopyWithImpl<$Res>
           ? _value._list
           : list // ignore: cast_nullable_to_non_nullable
               as List<CompanyModel>,
-      selected: selected == freezed
-          ? _value.selected
-          : selected // ignore: cast_nullable_to_non_nullable
-              as CompanyModel?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -155,14 +126,14 @@ class __$$_CompanyStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CompanyState implements _CompanyState {
+class _$_CompanyState extends _CompanyState {
   const _$_CompanyState(
       {final List<CompanyModel> list = const [],
-      this.selected = null,
       this.status = CompanyStatus.initial,
       this.action = CompanyAction.none,
       this.message = ''})
-      : _list = list;
+      : _list = list,
+        super._();
 
   final List<CompanyModel> _list;
   @override
@@ -174,9 +145,6 @@ class _$_CompanyState implements _CompanyState {
 
   @override
   @JsonKey()
-  final CompanyModel? selected;
-  @override
-  @JsonKey()
   final CompanyStatus status;
   @override
   @JsonKey()
@@ -186,17 +154,11 @@ class _$_CompanyState implements _CompanyState {
   final dynamic message;
 
   @override
-  String toString() {
-    return 'CompanyState(list: $list, selected: $selected, status: $status, action: $action, message: $message)';
-  }
-
-  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CompanyState &&
             const DeepCollectionEquality().equals(other._list, _list) &&
-            const DeepCollectionEquality().equals(other.selected, selected) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.action, action) &&
             const DeepCollectionEquality().equals(other.message, message));
@@ -206,7 +168,6 @@ class _$_CompanyState implements _CompanyState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_list),
-      const DeepCollectionEquality().hash(selected),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(action),
       const DeepCollectionEquality().hash(message));
@@ -217,18 +178,16 @@ class _$_CompanyState implements _CompanyState {
       __$$_CompanyStateCopyWithImpl<_$_CompanyState>(this, _$identity);
 }
 
-abstract class _CompanyState implements CompanyState {
+abstract class _CompanyState extends CompanyState {
   const factory _CompanyState(
       {final List<CompanyModel> list,
-      final CompanyModel? selected,
       final CompanyStatus status,
       final CompanyAction action,
       final dynamic message}) = _$_CompanyState;
+  const _CompanyState._() : super._();
 
   @override
   List<CompanyModel> get list;
-  @override
-  CompanyModel? get selected;
   @override
   CompanyStatus get status;
   @override

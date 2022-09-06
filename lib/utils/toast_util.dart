@@ -13,9 +13,16 @@ void _toast(
 }) {
   const List<Color> colors = [
     Colors.green,
-    Colors.yellow,
+    Colors.orange,
     Colors.red,
   ];
+
+  const List<IconData> icons = [
+    Icons.message_outlined,
+    Icons.warning_amber_outlined,
+    Icons.error_outline,
+  ];
+
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       padding: const EdgeInsets.all(20.0),
@@ -30,11 +37,18 @@ void _toast(
       ),
       content: Center(
         heightFactor: double.minPositive,
-        child: Text(
-          message,
-          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                color: Colors.white,
-              ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icons[level.index], color: Colors.white),
+            const SizedBox(width: 5),
+            Text(
+              message,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Colors.white,
+                  ),
+            ),
+          ],
         ),
       ),
     ),

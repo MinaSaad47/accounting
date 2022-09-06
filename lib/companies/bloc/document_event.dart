@@ -9,11 +9,11 @@ abstract class DocumentEvent extends Equatable {
 
 class DocumentCreateRequested extends DocumentEvent {
   final int companyId;
-  final File document;
+  final void Function(double) onProgress;
 
-  const DocumentCreateRequested(this.document, this.companyId);
+  const DocumentCreateRequested(this.companyId, this.onProgress);
   @override
-  List<Object> get props => [document, companyId];
+  List<Object> get props => [companyId];
 }
 
 class DocumentGetRequested extends DocumentEvent {
@@ -26,4 +26,11 @@ class DocumentDeleteRequested extends DocumentEvent {
   final int id;
 
   const DocumentDeleteRequested(this.id);
+}
+
+class DocumentRetreiveRequested extends DocumentEvent {
+  final String path;
+  final void Function(double) onProgress;
+
+  const DocumentRetreiveRequested(this.path, this.onProgress);
 }

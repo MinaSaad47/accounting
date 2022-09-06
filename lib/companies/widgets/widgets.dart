@@ -1,2 +1,2 @@
-export 'expense_and_widget.dart';
+export 'income_expense_widget.dart';
 export 'comapny_edit_widget.dart';
