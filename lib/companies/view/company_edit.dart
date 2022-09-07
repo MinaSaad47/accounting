@@ -32,7 +32,7 @@ class _CompanyEditState extends State<CompanyEdit> {
                         )
                       : Container(),
             ),
-            CompanyWidget(company: company),
+            CompanyWidget(company: company, showInfo: false),
             const SizedBox(height: 30),
             ExpansionPanelList(
               expandedHeaderPadding: const EdgeInsets.all(20),

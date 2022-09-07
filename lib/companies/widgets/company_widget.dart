@@ -5,15 +5,20 @@ import 'package:flutter/material.dart';
 
 class CompanyWidget extends StatelessWidget {
   final CompanyModel company;
-  const CompanyWidget({Key? key, required this.company}) : super(key: key);
+  final bool showInfo;
+  const CompanyWidget({
+    Key? key,
+    required this.company,
+    this.showInfo = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListItemWidget(
       title: company.id.toString(),
-      onPressed: () {
+      onPressed: showInfo ? () {
         Navigator.of(context).push(CompanyInfo.route(context, company));
-      },
+      } : null,
       labels: [
         TextLabelWidget(
           icon: Icons.featured_play_list_outlined,
