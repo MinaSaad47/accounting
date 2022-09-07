@@ -94,7 +94,7 @@ class DrawerWidget extends StatelessWidget {
                 route: SettingsPage.route(),
               ),
               ListTile(
-                title: const Text('About'),
+                title: Text(AppLocalizations.of(context)!.about),
                 leading: const Icon(Icons.info_outline),
                 onTap: () {
                   showAboutDialog(
