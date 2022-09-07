@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:path/path.dart';
 
 import 'package:accounting/utils/utils.dart';
 import 'package:accounting_api/accounting_api.dart';
@@ -8,6 +7,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:path/path.dart';
 
 part 'document_bloc.freezed.dart';
 part 'document_event.dart';
@@ -97,12 +97,13 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
         path: event.path,
         onProgress: event.onProgress,
       );
-      var newPath = await FilePicker.platform.saveFile(
-        fileName: basename(retreived.path),
-      );
-      if (newPath != null) {
+
+      var dir = await FilePicker.platform.getDirectoryPath();
+      if (dir != null) {
+        var newPath = join(dir, basename(retreived.path));
         retreived.copy(newPath);
       }
+
       emit(state.copyWith(
         action: DocumentAction.retreive,
         status: DocumentStatus.success,

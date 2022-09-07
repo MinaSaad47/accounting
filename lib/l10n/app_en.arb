@@ -1,5 +1,8 @@
 {
   
+  "about": "about",
+  "appName": "NGATT",
+  
   "sameh": "Sameh Girgs",
 
   "add": "add {input}",

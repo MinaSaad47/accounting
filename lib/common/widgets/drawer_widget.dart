@@ -6,6 +6,8 @@ import 'package:accounting/settings/settings.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({Key? key}) : super(key: key);
@@ -91,7 +93,39 @@ class DrawerWidget extends StatelessWidget {
                 icon: Icons.settings_outlined,
                 route: SettingsPage.route(),
               ),
-              const SizedBox(height: 40),
+              ListTile(
+                title: const Text('About'),
+                leading: const Icon(Icons.info_outline),
+                onTap: () {
+                  showAboutDialog(
+                    context: context,
+                    applicationName: AppLocalizations.of(context)!.appName,
+                    applicationIcon: SvgPicture.asset(
+                      'assets/images/logo.svg',
+                      color: Theme.of(context).primaryColor,
+                      fit: BoxFit.contain,
+                    ),
+                    applicationVersion: Constants.appVersion,
+                    children: [
+                      const ListTile(
+                        title: Text(Constants.authorName),
+                        leading: Icon(Icons.person),
+                      ),
+                      const SizedBox(height: 10),
+                      ListTile(
+                        onTap: () async {
+                          var uri = Uri.parse(Constants.github);
+                          if (await canLaunchUrl(uri)) {
+                            launchUrl(uri);
+                          }
+                        },
+                        title: const Text('github'),
+                        leading: const Icon(Icons.code),
+                      )
+                    ],
+                  );
+                },
+              )
             ],
           ),
         ),

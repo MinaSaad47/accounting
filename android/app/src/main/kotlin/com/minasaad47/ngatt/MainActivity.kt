@@ -1,4 +1,4 @@
-package com.example.accounting
+package com.minasaad47.ngatt
 
 import io.flutter.embedding.android.FlutterActivity
 
