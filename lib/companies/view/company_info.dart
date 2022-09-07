@@ -16,7 +16,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
-class CompanyInfo extends StatelessWidget {
+class CompanyInfo extends StatefulWidget {
   const CompanyInfo({
     Key? key,
   }) : super(key: key);
@@ -68,9 +68,24 @@ class CompanyInfo extends StatelessWidget {
   }
 
   @override
+  State<CompanyInfo> createState() => _CompanyInfoState();
+}
+
+class _CompanyInfoState extends State<CompanyInfo> {
+  late final company = context.read<CompanyModel>();
+  final pageController = PageController(initialPage: 0);
+
+  late final selectedColor = Theme.of(context).colorScheme.secondary;
+  late final colorsList = [selectedColor, null, null, null];
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var company = context.read<CompanyModel>();
-    var pageController = PageController(initialPage: 0);
     return MultiBlocListener(
       listeners: [
         BlocListener<FunderBloc, FunderState>(
@@ -217,12 +232,9 @@ class CompanyInfo extends StatelessWidget {
                 const Spacer(),
                 Expanded(
                   child: MaterialButton(
+                    color: colorsList[0],
                     onPressed: () {
-                      pageController.animateToPage(
-                        0,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
+                      setSelected(0);
                     },
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -235,12 +247,9 @@ class CompanyInfo extends StatelessWidget {
                 ),
                 Expanded(
                   child: MaterialButton(
+                    color: colorsList[1],
                     onPressed: () {
-                      pageController.animateToPage(
-                        1,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
+                      setSelected(1);
                     },
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -253,12 +262,9 @@ class CompanyInfo extends StatelessWidget {
                 ),
                 Expanded(
                   child: MaterialButton(
+                    color: colorsList[2],
                     onPressed: () {
-                      pageController.animateToPage(
-                        2,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
+                      setSelected(2);
                     },
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -271,18 +277,17 @@ class CompanyInfo extends StatelessWidget {
                 ),
                 Expanded(
                   child: MaterialButton(
+                    color: colorsList[3],
                     onPressed: () {
-                      pageController.animateToPage(
-                        3,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
+                      setSelected(3);
                     },
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                            '${AppLocalizations.of(context)!.incomes} / ${AppLocalizations.of(context)!.expenses}'),
+                        FittedBox(
+                          child: Text(
+                              '${AppLocalizations.of(context)!.incomes} / ${AppLocalizations.of(context)!.expenses}'),
+                        ),
                         const Icon(Icons.currency_exchange_outlined),
                       ],
                     ),
@@ -448,6 +453,7 @@ class CompanyInfo extends StatelessWidget {
                 : FloatingActionButtonLocation.endDocked,
         body: PageView(
           controller: pageController,
+          allowImplicitScrolling: false,
           children: const [
             CompanyEdit(),
             FundersList(),
@@ -456,6 +462,18 @@ class CompanyInfo extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void setSelected(int index) {
+    setState(() {
+      colorsList.fillRange(0, colorsList.length, null);
+      colorsList[index] = selectedColor;
+    });
+    pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
     );
   }
 }

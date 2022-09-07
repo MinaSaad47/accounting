@@ -93,16 +93,19 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
     ));
 
     try {
+      var dir = await FilePicker.platform.getDirectoryPath();
+
+      if (dir == null) {
+        return;
+      }
+
       var retreived = await _accountingRepository.retreiveDocument(
         path: event.path,
         onProgress: event.onProgress,
       );
 
-      var dir = await FilePicker.platform.getDirectoryPath();
-      if (dir != null) {
-        var newPath = join(dir, basename(retreived.path));
-        retreived.copy(newPath);
-      }
+      await retreived.copy(join(dir, basename(retreived.path)));
+      await retreived.delete();
 
       emit(state.copyWith(
         action: DocumentAction.retreive,
