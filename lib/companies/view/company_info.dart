@@ -455,7 +455,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
                 : FloatingActionButtonLocation.endDocked,
         body: PageView(
           controller: pageController,
-          allowImplicitScrolling: false,
+          physics: const NeverScrollableScrollPhysics(),
           children: const [
             CompanyEdit(),
             FundersList(),
