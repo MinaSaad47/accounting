@@ -86,6 +86,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
 
   @override
   Widget build(BuildContext context) {
+    final isEn = context.read<CachedRepository>().locale?.languageCode == 'en';
     return MultiBlocListener(
       listeners: [
         BlocListener<FunderBloc, FunderState>(
@@ -229,7 +230,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Spacer(),
+                if (!isEn) const Spacer(),
                 Expanded(
                   child: MaterialButton(
                     color: colorsList[0],
@@ -293,6 +294,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
                     ),
                   ),
                 ),
+                if (isEn) const Spacer(),
               ],
             ),
           ),
