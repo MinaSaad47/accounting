@@ -22,14 +22,14 @@ Future main() async {
     var envIP = Platform.environment['SAMEH_SERVER'];
     accountingRepository = AccountingRepository(
       AccountingDio(
-        baseUrl: 'http://${envIP ?? '192.168.1.47:4747'}/api/',
+        baseUrl: 'http://${envIP ?? '127.0.0.1:4747'}/api/',
         token: cachedRepository.token,
       ),
     );
   } else {
     accountingRepository = AccountingRepository(
       AccountingDio(
-        baseUrl: 'http://192.168.1.47:4747/api/',
+        baseUrl: 'http://192.168.1.17:4747/api/',
         token: cachedRepository.token,
       ),
     );

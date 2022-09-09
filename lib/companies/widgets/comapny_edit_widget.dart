@@ -6,6 +6,7 @@ import 'package:accounting_api/accounting_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 
 class CompanyEditWidget extends StatefulWidget {
   final CompanyModel? company;
@@ -61,6 +62,17 @@ class _BuildCompanyEditFormState extends State<CompanyEditWidget> {
                     context,
                     name: AppLocalizations.of(context)!.registerNumber,
                     value: company?.registerNumber,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                        errorText: AppLocalizations.of(context)!.expect(
+                            AppLocalizations.of(context)!.registerNumber),
+                      ),
+                      FormBuilderValidators.numeric(
+                        errorText: AppLocalizations.of(context)!.expect(
+                          AppLocalizations.of(context)!.number,
+                        ),
+                      ),
+                    ]),
                   ),
                   FormBuilderDateTimePickerWidget(
                     context,
@@ -125,6 +137,17 @@ class _BuildCompanyEditFormState extends State<CompanyEditWidget> {
                     context,
                     name: AppLocalizations.of(context)!.recordNumber,
                     value: company?.recordNumber.toString(),
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                        errorText: AppLocalizations.of(context)!
+                            .expect(AppLocalizations.of(context)!.recordNumber),
+                      ),
+                      FormBuilderValidators.numeric(
+                        errorText: AppLocalizations.of(context)!.expect(
+                          AppLocalizations.of(context)!.number,
+                        ),
+                      ),
+                    ]),
                   ),
                   FormBuilderTextFieldWidget(
                     context,
@@ -149,6 +172,18 @@ class _BuildCompanyEditFormState extends State<CompanyEditWidget> {
                     context,
                     name: AppLocalizations.of(context)!.email,
                     value: company?.email,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                        errorText: AppLocalizations.of(context)!.expect(
+                          AppLocalizations.of(context)!.email,
+                        ),
+                      ),
+                      FormBuilderValidators.email(
+                        errorText: AppLocalizations.of(context)!.notCorrect(
+                          AppLocalizations.of(context)!.email,
+                        ),
+                      ),
+                    ]),
                   ),
                 ],
               ),
@@ -246,88 +281,3 @@ class _BuildSaveCompanyButton extends StatelessWidget {
     );
   }
 }
-
-// class _BuildFunders extends StatefulWidget {
-//   final List<FunderModel>? funders;
-//   final Function(List<FunderModel>) onUpdate;
-//   const _BuildFunders({
-//     Key? key,
-//     this.funders,
-//     required this.onUpdate,
-//   }) : super(key: key);
-// 
-//   @override
-//   State<_BuildFunders> createState() => _BuildFundersState();
-// }
-// 
-// class _BuildFundersState extends State<_BuildFunders> {
-//   late var funders = widget.funders;
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       decoration: BoxDecoration(
-//         border: Border.all(
-//           color: Theme.of(context).primaryColor,
-//           width: 2,
-//         ),
-//         borderRadius: BorderRadius.circular(10),
-//       ),
-//       child: Column(
-//         children: [
-//           Padding(
-//             padding: const EdgeInsets.all(8.0),
-//             child: Row(
-//               children: [
-//                 Text(
-//                   AppLocalizations.of(context)!.funders,
-//                   style: Theme.of(context).textTheme.headline3,
-//                 ),
-//                 const Spacer(),
-//                 IconButton(
-//                   onPressed: () async {
-//                     var inputs = await showTextInputDialog(
-//                       context: context,
-//                       textFields: [
-//                         DialogTextField(
-//                           hintText: AppLocalizations.of(context)!.funderName,
-//                           validator: FormBuilderValidators.required(
-//                             errorText: AppLocalizations.of(context)!.expect(
-//                               AppLocalizations.of(context)!.funderName,
-//                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     );
-//                     var name = inputs![0];
-//                     setState(() {
-//                       funders = [...?funders, FunderModel(name: name)];
-//                     });
-//                     widget.onUpdate(funders!);
-//                   },
-//                   icon: const Icon(Icons.add_outlined),
-//                 ),
-//               ],
-//             ),
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.all(8.0),
-//             child: Container(
-//               color: Theme.of(context).primaryColor.withOpacity(0.4),
-//               height: 2,
-//             ),
-//           ),
-//           ...?funders
-//               ?.map((f) => ListTile(
-//                     leading: Icon(
-//                       Icons.person,
-//                       color: Theme.of(context).primaryColor,
-//                     ),
-//                     title: Text(f.name),
-//                   ))
-//               .toList(),
-//         ],
-//       ),
-//     );
-//   }
-// }
-// 
