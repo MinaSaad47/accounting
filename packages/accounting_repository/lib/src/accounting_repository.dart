@@ -115,8 +115,8 @@ class AccountingRepository {
   }) async =>
       _accountingApi.retreiveDocument(path: path, onProgress: onProgress);
 
-  Future<ApiResponse<String>> deleteDocument({required int id}) async =>
-      await _accountingApi.deleteDocument(id: id);
+  Future<ApiResponse<String>> deleteDocument({required String path}) async =>
+      await _accountingApi.deleteDocument(path: path);
 
   Future<ApiResponse<FunderModel>> createFunder({
     required int companyId,

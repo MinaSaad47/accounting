@@ -108,7 +108,7 @@ class _BuildDocumentItemState extends State<_BuildDocumentItem> {
                                 onPressed: () => Utils.adminDo(context, fn: () {
                                   context.read<DocumentBloc>().add(
                                       DocumentDeleteRequested(
-                                          widget.document.id!));
+                                          widget.document.path));
                                 }),
                                 icon: Icon(
                                   Icons.delete_forever_outlined,

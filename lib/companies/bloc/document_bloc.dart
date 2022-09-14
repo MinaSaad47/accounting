@@ -128,7 +128,7 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
       action: DocumentAction.delete,
       status: DocumentStatus.loading,
     ));
-    var response = await _accountingRepository.deleteDocument(id: event.id);
+    var response = await _accountingRepository.deleteDocument(path: event.path);
     if (response.status) {
       emit(state.copyWith(
         action: DocumentAction.delete,

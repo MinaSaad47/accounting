@@ -255,8 +255,8 @@ class AccountingDio extends AccountingApi {
   }
 
   @override
-  Future<ApiResponse<String>> deleteDocument({required int id}) async {
-    var response = await _dio.delete('documents/$id');
+  Future<ApiResponse<String>> deleteDocument({required String path}) async {
+    var response = await _dio.delete('documents', data: {'path': path});
     return ApiResponse<String>.fromJson(response.data, (p0) => p0 as String);
   }
 

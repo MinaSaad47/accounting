@@ -56,7 +56,7 @@ abstract class AccountingApi {
     required String path,
     required void Function(double) onProgress,
   });
-  Future<ApiResponse<String>> deleteDocument({required int id});
+  Future<ApiResponse<String>> deleteDocument({required String path});
 
   /* Funders  */
   Future<ApiResponse<List<FunderModel>>> getFunders({
