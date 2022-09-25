@@ -7,13 +7,11 @@ part 'document_model.g.dart';
 @freezed
 class DocumentModel with _$DocumentModel {
   const factory DocumentModel({
-    int? id,
     required String name,
     required String path,
     @DatetimeJsonConverter() required DateTime time,
   }) = _DocumentModel;
-  
-  
+
   factory DocumentModel.fromJson(Map<String, Object?> json) =>
       _$DocumentModelFromJson(json);
 }

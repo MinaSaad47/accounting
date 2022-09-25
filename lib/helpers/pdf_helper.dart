@@ -201,21 +201,84 @@ class PdfHelper {
         'id',
       ],
       [
+        company.owner,
+        AppLocalizations.of(context)!.owner,
+      ],
+      [
         company.commercialFeature,
         AppLocalizations.of(context)!.commercialFeature,
       ],
       [
-        company.recordNumber,
-        AppLocalizations.of(context)!.registerNumber,
+        company.isWorking
+            ? AppLocalizations.of(context)!.working
+            : AppLocalizations.of(context)!.notWorking,
+        AppLocalizations.of(context)!.isWorking,
       ],
-      [
-        company.userName,
-        AppLocalizations.of(context)!.userName,
-      ],
-      [
-        company.email,
-        AppLocalizations.of(context)!.email,
-      ],
+      if (company.recordNumber != null)
+        [
+          company.recordNumber,
+          AppLocalizations.of(context)!.registerNumber,
+        ],
+      if (company.legalEntity != null)
+        [
+          company.legalEntity,
+          AppLocalizations.of(context)!.legalEntity,
+        ],
+      if (company.fileNumber != null)
+        [
+          company.fileNumber,
+          AppLocalizations.of(context)!.fileNumber,
+        ],
+      if (company.registerNumber != null)
+        [
+          company.registerNumber,
+          AppLocalizations.of(context)!.registerNumber,
+        ],
+      if (company.startDate != null)
+        [
+          Utils.formatDate(company.startDate!),
+          AppLocalizations.of(context)!.startDate,
+        ],
+      if (company.stopDate != null)
+        [
+          Utils.formatDate(company.stopDate!),
+          AppLocalizations.of(context)!.stopDate,
+        ],
+      if (company.generalTaxMission != null)
+        [
+          company.generalTaxMission,
+          AppLocalizations.of(context)!.generalTaxMission,
+        ],
+      if (company.valueTaxMission != null)
+        [
+          company.valueTaxMission,
+          AppLocalizations.of(context)!.valueTaxMission,
+        ],
+      if (company.activityNature != null)
+        [
+          company.activityNature,
+          AppLocalizations.of(context)!.activityNature,
+        ],
+      if (company.activityLocation != null)
+        [
+          company.activityLocation,
+          AppLocalizations.of(context)!.activityLocation,
+        ],
+      if (company.recordNumber != null)
+        [
+          company.recordNumber,
+          AppLocalizations.of(context)!.recordNumber,
+        ],
+      if (company.username != null)
+        [
+          company.username,
+          AppLocalizations.of(context)!.username,
+        ],
+      if (company.email != null)
+        [
+          company.email,
+          AppLocalizations.of(context)!.email,
+        ],
     ];
 
     return pw.Directionality(

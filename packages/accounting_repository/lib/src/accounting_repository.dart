@@ -20,7 +20,10 @@ class AccountingRepository {
   Future<ApiResponse<CompanyModel>> saveCompany(
       CompanyModel companyModel) async {
     try {
-      return await _accountingApi.updateCompany(companyModel);
+      return await _accountingApi.updateCompany(
+        id: companyModel.id!,
+        company: companyModel,
+      );
     } on UserUnauthorizedError catch (_) {}
     throw Error();
   }
@@ -115,8 +118,8 @@ class AccountingRepository {
   }) async =>
       _accountingApi.retreiveDocument(path: path, onProgress: onProgress);
 
-  Future<ApiResponse<String>> deleteDocument({required int id}) async =>
-      await _accountingApi.deleteDocument(id: id);
+  Future<ApiResponse<String>> deleteDocument({required String path}) async =>
+      await _accountingApi.deleteDocument(path: path);
 
   Future<ApiResponse<FunderModel>> createFunder({
     required int companyId,

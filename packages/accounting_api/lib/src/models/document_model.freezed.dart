@@ -20,7 +20,6 @@ DocumentModel _$DocumentModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DocumentModel {
-  int? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get path => throw _privateConstructorUsedError;
   @DatetimeJsonConverter()
@@ -37,11 +36,7 @@ abstract class $DocumentModelCopyWith<$Res> {
   factory $DocumentModelCopyWith(
           DocumentModel value, $Res Function(DocumentModel) then) =
       _$DocumentModelCopyWithImpl<$Res>;
-  $Res call(
-      {int? id,
-      String name,
-      String path,
-      @DatetimeJsonConverter() DateTime time});
+  $Res call({String name, String path, @DatetimeJsonConverter() DateTime time});
 }
 
 /// @nodoc
@@ -55,16 +50,11 @@ class _$DocumentModelCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
     Object? name = freezed,
     Object? path = freezed,
     Object? time = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -88,11 +78,7 @@ abstract class _$$_DocumentModelCopyWith<$Res>
           _$_DocumentModel value, $Res Function(_$_DocumentModel) then) =
       __$$_DocumentModelCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {int? id,
-      String name,
-      String path,
-      @DatetimeJsonConverter() DateTime time});
+  $Res call({String name, String path, @DatetimeJsonConverter() DateTime time});
 }
 
 /// @nodoc
@@ -108,16 +94,11 @@ class __$$_DocumentModelCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
     Object? name = freezed,
     Object? path = freezed,
     Object? time = freezed,
   }) {
     return _then(_$_DocumentModel(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -138,16 +119,13 @@ class __$$_DocumentModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_DocumentModel implements _DocumentModel {
   const _$_DocumentModel(
-      {this.id,
-      required this.name,
+      {required this.name,
       required this.path,
       @DatetimeJsonConverter() required this.time});
 
   factory _$_DocumentModel.fromJson(Map<String, dynamic> json) =>
       _$$_DocumentModelFromJson(json);
 
-  @override
-  final int? id;
   @override
   final String name;
   @override
@@ -158,7 +136,7 @@ class _$_DocumentModel implements _DocumentModel {
 
   @override
   String toString() {
-    return 'DocumentModel(id: $id, name: $name, path: $path, time: $time)';
+    return 'DocumentModel(name: $name, path: $path, time: $time)';
   }
 
   @override
@@ -166,7 +144,6 @@ class _$_DocumentModel implements _DocumentModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DocumentModel &&
-            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.path, path) &&
             const DeepCollectionEquality().equals(other.time, time));
@@ -176,7 +153,6 @@ class _$_DocumentModel implements _DocumentModel {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(path),
       const DeepCollectionEquality().hash(time));
@@ -196,8 +172,7 @@ class _$_DocumentModel implements _DocumentModel {
 
 abstract class _DocumentModel implements DocumentModel {
   const factory _DocumentModel(
-          {final int? id,
-          required final String name,
+          {required final String name,
           required final String path,
           @DatetimeJsonConverter() required final DateTime time}) =
       _$_DocumentModel;
@@ -205,8 +180,6 @@ abstract class _DocumentModel implements DocumentModel {
   factory _DocumentModel.fromJson(Map<String, dynamic> json) =
       _$_DocumentModel.fromJson;
 
-  @override
-  int? get id;
   @override
   String get name;
   @override

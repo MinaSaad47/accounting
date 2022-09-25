@@ -22,7 +22,6 @@ FunderModel _$FunderModelFromJson(Map<String, dynamic> json) {
 mixin _$FunderModel {
   int? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  @JsonKey(name: 'company_id')
   int get companyId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +35,7 @@ abstract class $FunderModelCopyWith<$Res> {
   factory $FunderModelCopyWith(
           FunderModel value, $Res Function(FunderModel) then) =
       _$FunderModelCopyWithImpl<$Res>;
-  $Res call({int? id, String name, @JsonKey(name: 'company_id') int companyId});
+  $Res call({int? id, String name, int companyId});
 }
 
 /// @nodoc
@@ -77,7 +76,7 @@ abstract class _$$_FunderModelCopyWith<$Res>
           _$_FunderModel value, $Res Function(_$_FunderModel) then) =
       __$$_FunderModelCopyWithImpl<$Res>;
   @override
-  $Res call({int? id, String name, @JsonKey(name: 'company_id') int companyId});
+  $Res call({int? id, String name, int companyId});
 }
 
 /// @nodoc
@@ -116,10 +115,7 @@ class __$$_FunderModelCopyWithImpl<$Res> extends _$FunderModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_FunderModel implements _FunderModel {
-  const _$_FunderModel(
-      {this.id,
-      required this.name,
-      @JsonKey(name: 'company_id') required this.companyId});
+  const _$_FunderModel({this.id, required this.name, required this.companyId});
 
   factory _$_FunderModel.fromJson(Map<String, dynamic> json) =>
       _$$_FunderModelFromJson(json);
@@ -129,7 +125,6 @@ class _$_FunderModel implements _FunderModel {
   @override
   final String name;
   @override
-  @JsonKey(name: 'company_id')
   final int companyId;
 
   @override
@@ -170,10 +165,9 @@ class _$_FunderModel implements _FunderModel {
 
 abstract class _FunderModel implements FunderModel {
   const factory _FunderModel(
-          {final int? id,
-          required final String name,
-          @JsonKey(name: 'company_id') required final int companyId}) =
-      _$_FunderModel;
+      {final int? id,
+      required final String name,
+      required final int companyId}) = _$_FunderModel;
 
   factory _FunderModel.fromJson(Map<String, dynamic> json) =
       _$_FunderModel.fromJson;
@@ -183,7 +177,6 @@ abstract class _FunderModel implements FunderModel {
   @override
   String get name;
   @override
-  @JsonKey(name: 'company_id')
   int get companyId;
   @override
   @JsonKey(ignore: true)

@@ -23,9 +23,9 @@ class DocumentGetRequested extends DocumentEvent {
 }
 
 class DocumentDeleteRequested extends DocumentEvent {
-  final int id;
+  final String path;
 
-  const DocumentDeleteRequested(this.id);
+  const DocumentDeleteRequested(this.path);
 }
 
 class DocumentRetreiveRequested extends DocumentEvent {

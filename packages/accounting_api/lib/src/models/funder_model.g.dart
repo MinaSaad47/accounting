@@ -10,12 +10,12 @@ _$_FunderModel _$$_FunderModelFromJson(Map<String, dynamic> json) =>
     _$_FunderModel(
       id: json['id'] as int?,
       name: json['name'] as String,
-      companyId: json['company_id'] as int,
+      companyId: json['companyId'] as int,
     );
 
 Map<String, dynamic> _$$_FunderModelToJson(_$_FunderModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'company_id': instance.companyId,
+      'companyId': instance.companyId,
     };

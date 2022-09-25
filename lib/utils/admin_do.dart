@@ -22,10 +22,10 @@ void _adminDo(
       textFields: [
         DialogTextField(
           obscureText: true,
-          hintText: AppLocalizations.of(context)!.passport,
+          hintText: AppLocalizations.of(context)!.password,
           validator: FormBuilderValidators.required(
             errorText: AppLocalizations.of(context)!
-                .expect(AppLocalizations.of(context)!.passport),
+                .expect(AppLocalizations.of(context)!.password),
           ),
         ),
       ],
@@ -37,7 +37,7 @@ void _adminDo(
         Utils.toast(
           context,
           message: AppLocalizations.of(context)!
-              .notCorrect(AppLocalizations.of(context)!.passport),
+              .notCorrect(AppLocalizations.of(context)!.password),
           level: ToastLevel.error,
         );
       }

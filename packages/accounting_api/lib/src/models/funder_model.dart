@@ -8,7 +8,7 @@ class FunderModel with _$FunderModel {
   const factory FunderModel({
     int? id,
     required String name,
-    @JsonKey(name: 'company_id') required int companyId,
+    required int companyId,
   }) = _FunderModel;
 
   factory FunderModel.fromJson(Map<String, Object?> json) =>

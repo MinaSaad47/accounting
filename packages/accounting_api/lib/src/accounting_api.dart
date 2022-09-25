@@ -7,7 +7,10 @@ abstract class AccountingApi {
   /* Companies */
   Future<ApiResponse<CompanyModel>> createCompany(CompanyModel companyModel);
   Future<ApiResponse<List<CompanyModel>>> searchCompanies(String query);
-  Future<ApiResponse<CompanyModel>> updateCompany(CompanyModel companyModel);
+  Future<ApiResponse<CompanyModel>> updateCompany({
+    required int id,
+    required CompanyModel company,
+  });
   Future<ApiResponse<void>> deleteCompany({required int id});
 
   /* Expenses */
@@ -56,7 +59,7 @@ abstract class AccountingApi {
     required String path,
     required void Function(double) onProgress,
   });
-  Future<ApiResponse<String>> deleteDocument({required int id});
+  Future<ApiResponse<String>> deleteDocument({required String path});
 
   /* Funders  */
   Future<ApiResponse<List<FunderModel>>> getFunders({

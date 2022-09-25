@@ -23,7 +23,6 @@ mixin _$UserModel {
   int? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
-  @JsonKey(name: 'is_admin')
   bool get isAdmin => throw _privateConstructorUsedError;
   double get value => throw _privateConstructorUsedError;
 
@@ -38,11 +37,7 @@ abstract class $UserModelCopyWith<$Res> {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
       _$UserModelCopyWithImpl<$Res>;
   $Res call(
-      {int? id,
-      String name,
-      String password,
-      @JsonKey(name: 'is_admin') bool isAdmin,
-      double value});
+      {int? id, String name, String password, bool isAdmin, double value});
 }
 
 /// @nodoc
@@ -93,11 +88,7 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       __$$_UserModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int? id,
-      String name,
-      String password,
-      @JsonKey(name: 'is_admin') bool isAdmin,
-      double value});
+      {int? id, String name, String password, bool isAdmin, double value});
 }
 
 /// @nodoc
@@ -150,7 +141,7 @@ class _$_UserModel implements _UserModel {
       {this.id,
       required this.name,
       required this.password,
-      @JsonKey(name: 'is_admin') this.isAdmin = false,
+      this.isAdmin = false,
       required this.value});
 
   factory _$_UserModel.fromJson(Map<String, dynamic> json) =>
@@ -163,7 +154,7 @@ class _$_UserModel implements _UserModel {
   @override
   final String password;
   @override
-  @JsonKey(name: 'is_admin')
+  @JsonKey()
   final bool isAdmin;
   @override
   final double value;
@@ -213,7 +204,7 @@ abstract class _UserModel implements UserModel {
       {final int? id,
       required final String name,
       required final String password,
-      @JsonKey(name: 'is_admin') final bool isAdmin,
+      final bool isAdmin,
       required final double value}) = _$_UserModel;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
@@ -226,7 +217,6 @@ abstract class _UserModel implements UserModel {
   @override
   String get password;
   @override
-  @JsonKey(name: 'is_admin')
   bool get isAdmin;
   @override
   double get value;
