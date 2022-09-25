@@ -1,4 +1,7 @@
+import 'package:accounting/common/common.dart';
+import 'package:accounting/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextLabelWidget extends StatelessWidget {
   final IconData icon;
@@ -16,20 +19,20 @@ class TextLabelWidget extends StatelessWidget {
     return Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            padding: const EdgeInsets.all(5),
             color: Theme.of(context).appBarTheme.backgroundColor,
+            padding: const EdgeInsets.all(8),
             child: Row(
               children: [
                 const SizedBox(width: 5),
                 Icon(
                   icon,
-                  color: Theme.of(context).appBarTheme.iconTheme?.color,
+                  color: Theme.of(context).appBarTheme.foregroundColor,
                 ),
                 const SizedBox(width: 5),
                 Text(
@@ -50,6 +53,21 @@ class TextLabelWidget extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                   ),
             ),
+          ),
+          IconButton(
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: content)).then((value) {
+                Utils.toast(
+                  context,
+                  message: AppLocalizations.of(context)!.clipboard(content),
+                );
+              });
+            },
+            icon: const Icon(
+              Icons.copy_outlined,
+            ),
+            color: Theme.of(context).primaryColor,
+            hoverColor: Theme.of(context).colorScheme.inversePrimary,
           ),
         ],
       ),

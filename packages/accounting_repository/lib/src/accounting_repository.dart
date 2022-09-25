@@ -20,7 +20,10 @@ class AccountingRepository {
   Future<ApiResponse<CompanyModel>> saveCompany(
       CompanyModel companyModel) async {
     try {
-      return await _accountingApi.updateCompany(companyModel);
+      return await _accountingApi.updateCompany(
+        id: companyModel.id!,
+        company: companyModel,
+      );
     } on UserUnauthorizedError catch (_) {}
     throw Error();
   }

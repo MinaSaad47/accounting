@@ -11,7 +11,7 @@ class UserModel with _$UserModel {
     int? id,
     required String name,
     required String password,
-    @JsonKey(name: 'is_admin') @Default(false) bool isAdmin,
+    @Default(false) bool isAdmin,
     required double value,
   }) = _UserModel;
 

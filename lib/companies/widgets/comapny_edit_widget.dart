@@ -33,13 +33,15 @@ class _BuildCompanyEditFormState extends State<CompanyEditWidget> {
                 children: [
                   FormBuilderTextFieldWidget(
                     context,
-                    name: AppLocalizations.of(context)!.commercialFeature,
-                    value: company?.commercialFeature,
+                    name: AppLocalizations.of(context)!.owner,
+                    value: company?.owner,
+                    required: true,
                   ),
                   FormBuilderTextFieldWidget(
                     context,
-                    name: AppLocalizations.of(context)!.legalEntity,
-                    value: company?.legalEntity,
+                    name: AppLocalizations.of(context)!.commercialFeature,
+                    value: company?.commercialFeature,
+                    required: true,
                   ),
                   FormBuilderDropdownWidget(
                     name: AppLocalizations.of(context)!.isWorking,
@@ -51,53 +53,51 @@ class _BuildCompanyEditFormState extends State<CompanyEditWidget> {
                       AppLocalizations.of(context)!.notWorking,
                     ],
                   ),
-                  if (company != null)
-                    FormBuilderTextFieldWidget(
-                      context,
-                      name: AppLocalizations.of(context)!.fileNumber,
-                      value: company?.fileNumber,
-                      required: false,
+                  FormBuilderTextFieldWidget(
+                    context,
+                    name: AppLocalizations.of(context)!.legalEntity,
+                    value: company?.legalEntity,
+                  ),
+                  FormBuilderTextFieldWidget(
+                    context,
+                    name: AppLocalizations.of(context)!.fileNumber,
+                    value: company?.fileNumber,
+                    validator: FormBuilderValidators.numeric(
+                      errorText: AppLocalizations.of(context)!.expect(
+                        AppLocalizations.of(context)!.number,
+                      ),
                     ),
+                  ),
                   FormBuilderTextFieldWidget(
                     context,
                     name: AppLocalizations.of(context)!.registerNumber,
                     value: company?.registerNumber,
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                        errorText: AppLocalizations.of(context)!.expect(
-                            AppLocalizations.of(context)!.registerNumber),
+                    validator: FormBuilderValidators.numeric(
+                      errorText: AppLocalizations.of(context)!.expect(
+                        AppLocalizations.of(context)!.number,
                       ),
-                      FormBuilderValidators.numeric(
-                        errorText: AppLocalizations.of(context)!.expect(
-                          AppLocalizations.of(context)!.number,
-                        ),
-                      ),
-                    ]),
+                    ),
                   ),
                   FormBuilderDateTimePickerWidget(
                     context,
                     name: AppLocalizations.of(context)!.startDate,
                     value: company?.startDate,
                   ),
-                  if (company != null)
-                    FormBuilderDateTimePickerWidget(
-                      context,
-                      name: AppLocalizations.of(context)!.stopDate,
-                      value: company?.stopDate,
-                      required: false,
-                    ),
+                  FormBuilderDateTimePickerWidget(
+                    context,
+                    name: AppLocalizations.of(context)!.stopDate,
+                    value: company?.stopDate,
+                  ),
                   FormBuilderTextFieldWidget(
                     context,
                     name: AppLocalizations.of(context)!.generalTaxMission,
                     value: company?.generalTaxMission,
                   ),
-                  if (company != null)
-                    FormBuilderTextFieldWidget(
-                      context,
-                      name: AppLocalizations.of(context)!.valueTaxMission,
-                      value: company?.valueTaxMission,
-                      required: false,
-                    ),
+                  FormBuilderTextFieldWidget(
+                    context,
+                    name: AppLocalizations.of(context)!.valueTaxMission,
+                    value: company?.valueTaxMission,
+                  ),
                   FormBuilderTextFieldWidget(
                     context,
                     name: AppLocalizations.of(context)!.activityNature,
@@ -110,80 +110,33 @@ class _BuildCompanyEditFormState extends State<CompanyEditWidget> {
                   ),
                   FormBuilderTextFieldWidget(
                     context,
-                    name: AppLocalizations.of(context)!.accounts,
-                    value: company?.accounts,
-                  ),
-                  if (company != null) ...[
-                    FormBuilderDateTimePickerWidget(
-                      context,
-                      name: AppLocalizations.of(context)!.joiningDate,
-                      value: company?.joiningDate,
-                      required: false,
-                    ),
-                    FormBuilderTextFieldWidget(
-                      context,
-                      name: AppLocalizations.of(context)!.naturalId,
-                      required: false,
-                      value: company?.naturalId,
-                    ),
-                    FormBuilderTextFieldWidget(
-                      context,
-                      name: AppLocalizations.of(context)!.recordSide,
-                      value: company?.recordSide?.toString(),
-                      required: false,
-                    ),
-                  ],
-                  FormBuilderTextFieldWidget(
-                    context,
                     name: AppLocalizations.of(context)!.recordNumber,
-                    value: company?.recordNumber.toString(),
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                        errorText: AppLocalizations.of(context)!
-                            .expect(AppLocalizations.of(context)!.recordNumber),
+                    value: company?.recordNumber,
+                    validator: FormBuilderValidators.numeric(
+                      errorText: AppLocalizations.of(context)!.expect(
+                        AppLocalizations.of(context)!.number,
                       ),
-                      FormBuilderValidators.numeric(
-                        errorText: AppLocalizations.of(context)!.expect(
-                          AppLocalizations.of(context)!.number,
-                        ),
-                      ),
-                    ]),
+                    ),
                   ),
                   FormBuilderTextFieldWidget(
                     context,
-                    name: AppLocalizations.of(context)!.userName,
-                    value: company?.userName,
+                    name: AppLocalizations.of(context)!.username,
+                    value: company?.username,
                   ),
-                  if (company != null) ...[
-                    FormBuilderTextFieldWidget(
-                      context,
-                      name: AppLocalizations.of(context)!.passport,
-                      value: company?.passport,
-                      required: false,
-                    ),
-                    FormBuilderTextFieldWidget(
-                      context,
-                      name: AppLocalizations.of(context)!.verificationCode,
-                      value: company?.verificationCode,
-                      required: false,
-                    ),
-                  ],
+                  FormBuilderTextFieldWidget(
+                    context,
+                    name: AppLocalizations.of(context)!.password,
+                    value: company?.password,
+                  ),
                   FormBuilderTextFieldWidget(
                     context,
                     name: AppLocalizations.of(context)!.email,
                     value: company?.email,
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                        errorText: AppLocalizations.of(context)!.expect(
-                          AppLocalizations.of(context)!.email,
-                        ),
+                    validator: FormBuilderValidators.email(
+                      errorText: AppLocalizations.of(context)!.notCorrect(
+                        AppLocalizations.of(context)!.email,
                       ),
-                      FormBuilderValidators.email(
-                        errorText: AppLocalizations.of(context)!.notCorrect(
-                          AppLocalizations.of(context)!.email,
-                        ),
-                      ),
-                    ]),
+                    ),
                   ),
                 ],
               ),
@@ -227,26 +180,20 @@ class _BuildSaveCompanyButton extends StatelessWidget {
           formState.save();
           var savedCompany = CompanyModel(
             id: company?.id,
-            accounts: formState.value[AppLocalizations.of(context)!.accounts],
             isWorking:
                 formState.value[AppLocalizations.of(context)!.isWorking] ==
                     AppLocalizations.of(context)!.working,
-            joiningDate:
-                formState.value[AppLocalizations.of(context)!.joiningDate],
             stopDate: formState.value[AppLocalizations.of(context)!.stopDate],
             startDate: formState.value[AppLocalizations.of(context)!.startDate],
             fileNumber:
                 formState.value[AppLocalizations.of(context)!.fileNumber],
             email: formState.value[AppLocalizations.of(context)!.email],
-            passport: formState.value[AppLocalizations.of(context)!.passport],
-            userName: formState.value[AppLocalizations.of(context)!.userName],
+            password: formState.value[AppLocalizations.of(context)!.password],
+            username: formState.value[AppLocalizations.of(context)!.username],
             recordNumber:
                 formState.value[AppLocalizations.of(context)!.recordNumber],
-            recordSide:
-                formState.value[AppLocalizations.of(context)!.recordSide],
             valueTaxMission:
                 formState.value[AppLocalizations.of(context)!.valueTaxMission],
-            naturalId: formState.value[AppLocalizations.of(context)!.naturalId],
             activityLocation:
                 formState.value[AppLocalizations.of(context)!.activityLocation],
             activityNature:
@@ -259,8 +206,7 @@ class _BuildSaveCompanyButton extends StatelessWidget {
                 formState.value[AppLocalizations.of(context)!.legalEntity],
             commercialFeature: formState
                 .value[AppLocalizations.of(context)!.commercialFeature],
-            verificationCode:
-                formState.value[AppLocalizations.of(context)!.verificationCode],
+            owner: formState.value[AppLocalizations.of(context)!.owner],
           );
           Utils.log.d(savedCompany.toString());
           if (company == null) {

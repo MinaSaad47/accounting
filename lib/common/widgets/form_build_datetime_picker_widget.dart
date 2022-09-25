@@ -11,7 +11,7 @@ class FormBuilderDateTimePickerWidget extends StatelessWidget {
     Key? key,
     required this.name,
     this.value,
-    this.required = true,
+    this.required = false,
   }) : super(key: key);
 
   @override
@@ -31,6 +31,7 @@ class FormBuilderDateTimePickerWidget extends StatelessWidget {
             child: FormBuilderDateTimePicker(
               decoration: InputDecoration(
                 labelText: name,
+                prefixIcon: required ? const Icon(Icons.star) : null,
               ),
               style: Theme.of(context).textTheme.headline6,
               initialValue: value,

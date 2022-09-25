@@ -26,6 +26,7 @@
   "company": "شركة",
   "companies": "شركات",
   "commercialFeature": "السمة التجارية",
+  "owner": "المالك",
   "isWorking": "عامل ؟",
   "working": "عامل",
   "notWorking": "غير عامل",
@@ -38,16 +39,10 @@
   "valueTaxMission": "مأمورية الضرائب القيمة",
   "activityNature": "طبيعة النشاط",
   "activityLocation": "عنوان النشاط",
-  "accounts": "الحسابات",
-  "joiningDate": "تاريخ الالتحاق",
-  "naturalId": "الرقم القومي",
   "expenses": "مصروفات",
   "incomes": "ايرادات",
-  "recordSide": "جهة السجل",
   "recordNumber": "رقم السجل التجاري",
-  "userName": "اسم المستخدم",
-  "passport": "الباسبورد",
-  "verificationCode": "كود التأكيد",
+  "username": "اسم المستخدم",
   "email": "الايميل",
 
   "funderName": "اسم الممول",
@@ -55,7 +50,7 @@
 
   "description": "وصف",
 
-  "password": "رقم المرور",
+  "password": "كلمة المرور",
 
   "employee": "موظف",
   "employees": "موظفون",
@@ -67,5 +62,6 @@
   "dues": "المتسحقات",
   "documents": "مستندات",
   "unauth": "غير مصرح لمستخدم غير مسؤول",
-  "notCorrect": "{input} غير صحيح"
+  "notCorrect": "{input} غير صحيح",
+  "clipboard": "تم نسخ '{input}' الي الحافضة"
 }

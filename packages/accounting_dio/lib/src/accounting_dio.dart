@@ -53,11 +53,13 @@ class AccountingDio extends AccountingApi {
   }
 
   @override
-  Future<ApiResponse<CompanyModel>> updateCompany(
-      CompanyModel companyModel) async {
+  Future<ApiResponse<CompanyModel>> updateCompany({
+    required int id,
+    required CompanyModel company,
+  }) async {
     var response = await _dio.put(
-      'company',
-      data: companyModel.toJson(),
+      'company/$id',
+      data: company.toJson(),
       options: Options(
         validateStatus: (status) => true,
         receiveDataWhenStatusError: true,

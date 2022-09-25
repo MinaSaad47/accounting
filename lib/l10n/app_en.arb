@@ -62,6 +62,7 @@
   "company": "company",
   "companies": "companies",
   "commercialFeature": "commercial feature",
+  "owner": "owner",
   "isWorking": "working ?",
   "working": "working",
   "notWorking": "not working",
@@ -74,16 +75,10 @@
   "valueTaxMission": "value tax mission",
   "activityNature": "activity nature",
   "activityLocation": "activity location",
-  "accounts": "accounts",
-  "joiningDate": "joining date",
-  "naturalId": "natural id",
   "expenses": "expenses",
   "incomes": "incomes",
-  "recordSide": "record side",
   "recordNumber": "record number",
-  "userName": "user name",
-  "passport": "passport",
-  "verificationCode": "verification code",
+  "username": "username",
   "email": "email",
 
   "funderName": "funder name",
@@ -106,6 +101,14 @@
   "unauth": "unauthorized for non admin user",
   "notCorrect": "{input} is not correct",
   "@notCorrect": {
+    "placeholders": {
+      "input": {
+        "type": "String"
+      }
+    }
+  },
+  "clipboard": "'{input}' was sent to the clipboard",
+  "@clipboard": {
     "placeholders": {
       "input": {
         "type": "String"

@@ -9,19 +9,15 @@ class FormBuilderTextFieldWidget extends StatelessWidget {
   final bool required;
   final bool isPassword;
   final String? Function(String?)? validator;
-  FormBuilderTextFieldWidget(
+  const FormBuilderTextFieldWidget(
     BuildContext context, {
     Key? key,
     required this.name,
     this.value,
-    this.required = true,
+    this.required = false,
     this.isPassword = false,
-    String? Function(String?)? validator,
-  })  : validator = validator ??
-            FormBuilderValidators.required(
-              errorText: AppLocalizations.of(context)!.expect(name),
-            ),
-        super(key: key);
+    this.validator,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +41,18 @@ class FormBuilderTextFieldWidget extends StatelessWidget {
               name: name,
               decoration: InputDecoration(
                 labelText: name,
+                prefixIcon: required ? const Icon(Icons.star) : null,
               ),
               style: Theme.of(context).textTheme.headline6,
-              validator: (text) {
-                if (!required) return null;
-                return validator != null ? validator!(text) : null;
-              },
+              validator: FormBuilderValidators.compose(
+                [
+                  if (required)
+                    FormBuilderValidators.required(
+                      errorText: AppLocalizations.of(context)!.expect(name),
+                    ),
+                  if (validator != null) validator!,
+                ],
+              ),
             ),
           ),
         );

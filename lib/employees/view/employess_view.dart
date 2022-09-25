@@ -78,7 +78,7 @@ class _BuildListEmployees extends StatelessWidget {
                   labels: [
                     TextLabelWidget(
                       icon: Icons.person_outline,
-                      title: AppLocalizations.of(context)!.userName,
+                      title: AppLocalizations.of(context)!.username,
                       content: state.list[index].name,
                     ),
                     TextLabelWidget(
@@ -191,7 +191,7 @@ class _BuildEmpolyeeInfo extends StatelessWidget {
                 labels: [
                   TextLabelWidget(
                     icon: Icons.person_outline,
-                    title: AppLocalizations.of(context)!.userName,
+                    title: AppLocalizations.of(context)!.username,
                     content: userModel.name,
                   ),
                   if (!context.read<LoginCubit>().state.user!.isAdmin)
@@ -392,7 +392,7 @@ class _BuildAddEmployeeState extends State<_BuildAddEmployee> {
               children: [
                 FormBuilderTextFieldWidget(
                   context,
-                  name: AppLocalizations.of(context)!.userName,
+                  name: AppLocalizations.of(context)!.username,
                 ),
                 FormBuilderTextFieldWidget(
                   context,
@@ -439,7 +439,7 @@ class _BuildAddEmployeeState extends State<_BuildAddEmployee> {
                         formState.save();
                         var employee = UserModel(
                           name: formState
-                              .value[AppLocalizations.of(context)!.userName],
+                              .value[AppLocalizations.of(context)!.username],
                           password: formState
                               .value[AppLocalizations.of(context)!.password],
                           isAdmin: formState.value[

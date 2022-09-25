@@ -63,7 +63,7 @@ class _LoginViewState extends State<LoginView> {
                             children: [
                               FormBuilderTextFieldWidget(
                                 context,
-                                name: AppLocalizations.of(context)!.userName,
+                                name: AppLocalizations.of(context)!.username,
                               ),
                               FormBuilderTextFieldWidget(
                                 context,
@@ -95,7 +95,7 @@ class _LoginViewState extends State<LoginView> {
                                   formState.save();
                                   var userModel = UserModel(
                                     name: formState.value[
-                                        AppLocalizations.of(context)!.userName],
+                                        AppLocalizations.of(context)!.username],
                                     password: formState.value[
                                         AppLocalizations.of(context)!.password],
                                     value: 0,
