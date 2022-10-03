@@ -20,7 +20,7 @@ CompanyModel _$CompanyModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CompanyModel {
-  int? get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   String get owner => throw _privateConstructorUsedError;
   String get commercialFeature => throw _privateConstructorUsedError;
   bool get isWorking => throw _privateConstructorUsedError;
@@ -52,7 +52,7 @@ abstract class $CompanyModelCopyWith<$Res> {
           CompanyModel value, $Res Function(CompanyModel) then) =
       _$CompanyModelCopyWithImpl<$Res>;
   $Res call(
-      {int? id,
+      {String? id,
       String owner,
       String commercialFeature,
       bool isWorking,
@@ -103,7 +103,7 @@ class _$CompanyModelCopyWithImpl<$Res> implements $CompanyModelCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       owner: owner == freezed
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
@@ -180,7 +180,7 @@ abstract class _$$_CompanyModelCopyWith<$Res>
       __$$_CompanyModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int? id,
+      {String? id,
       String owner,
       String commercialFeature,
       bool isWorking,
@@ -234,7 +234,7 @@ class __$$_CompanyModelCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       owner: owner == freezed
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
@@ -329,7 +329,7 @@ class _$_CompanyModel implements _CompanyModel {
       _$$_CompanyModelFromJson(json);
 
   @override
-  final int? id;
+  final String? id;
   @override
   final String owner;
   @override
@@ -440,7 +440,7 @@ class _$_CompanyModel implements _CompanyModel {
 
 abstract class _CompanyModel implements CompanyModel {
   const factory _CompanyModel(
-      {final int? id,
+      {final String? id,
       required final String owner,
       required final String commercialFeature,
       required final bool isWorking,
@@ -462,7 +462,7 @@ abstract class _CompanyModel implements CompanyModel {
       _$_CompanyModel.fromJson;
 
   @override
-  int? get id;
+  String? get id;
   @override
   String get owner;
   @override

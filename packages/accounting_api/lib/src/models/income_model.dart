@@ -7,7 +7,7 @@ part 'income_model.g.dart';
 @freezed
 class IncomeModel with _$IncomeModel {
   const factory IncomeModel({
-    int? id,
+    String? id,
     required num value,
     required String description,
     @DatetimeJsonConverter() DateTime? time,

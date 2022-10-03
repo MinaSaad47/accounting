@@ -15,6 +15,7 @@ class CompanyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return ListItemWidget(
       title: company.id.toString(),
       onPressed: !detailed
@@ -25,86 +26,84 @@ class CompanyWidget extends StatelessWidget {
       labels: [
         TextLabelWidget(
           icon: Icons.person_pin_outlined,
-          title: AppLocalizations.of(context)!.owner,
+          title: l10n.owner,
           content: company.owner,
         ),
         TextLabelWidget(
           icon: Icons.featured_play_list_outlined,
-          title: AppLocalizations.of(context)!.commercialFeature,
+          title: l10n.commercialFeature,
           content: company.commercialFeature,
         ),
         TextLabelWidget(
           icon: Icons.work_outline,
-          title: AppLocalizations.of(context)!.isWorking,
-          content: company.isWorking
-              ? AppLocalizations.of(context)!.working
-              : AppLocalizations.of(context)!.notWorking,
+          title: l10n.isWorking,
+          content: company.isWorking ? l10n.working : l10n.notWorking,
         ),
         if (detailed) ...[
           if (company.legalEntity != null)
             TextLabelWidget(
               icon: Icons.balance_outlined,
-              title: AppLocalizations.of(context)!.legalEntity,
+              title: l10n.legalEntity,
               content: company.legalEntity!,
             ),
           if (company.fileNumber != null)
             TextLabelWidget(
               icon: Icons.document_scanner_outlined,
-              title: AppLocalizations.of(context)!.fileNumber,
+              title: l10n.fileNumber,
               content: company.fileNumber!,
             ),
           if (company.registerNumber != null)
             TextLabelWidget(
               icon: Icons.app_registration_outlined,
-              title: AppLocalizations.of(context)!.registerNumber,
+              title: l10n.registerNumber,
               content: company.registerNumber!,
             ),
           if (company.startDate != null)
             TextLabelWidget(
               icon: Icons.date_range_outlined,
-              title: AppLocalizations.of(context)!.startDate,
+              title: l10n.startDate,
               content: Utils.formatDate(company.startDate!),
             ),
           if (company.stopDate != null)
             TextLabelWidget(
               icon: Icons.date_range_outlined,
-              title: AppLocalizations.of(context)!.stopDate,
+              title: l10n.stopDate,
               content: Utils.formatDate(company.stopDate!),
             ),
           if (company.generalTaxMission != null)
             TextLabelWidget(
               icon: Icons.generating_tokens_rounded,
-              title: AppLocalizations.of(context)!.generalTaxMission,
+              title: l10n.generalTaxMission,
               content: company.generalTaxMission!,
             ),
           if (company.valueTaxMission != null)
             TextLabelWidget(
               icon: Icons.add_box_outlined,
-              title: AppLocalizations.of(context)!.valueTaxMission,
+              title: l10n.valueTaxMission,
               content: company.valueTaxMission!,
             ),
           if (company.activityNature != null)
             TextLabelWidget(
               icon: Icons.local_activity_outlined,
-              title: AppLocalizations.of(context)!.activityNature,
+              title: l10n.activityNature,
               content: company.activityNature!,
             ),
           if (company.activityLocation != null)
             TextLabelWidget(
               icon: Icons.location_on_outlined,
-              title: AppLocalizations.of(context)!.activityLocation,
+              title: l10n.activityLocation,
               content: company.activityLocation!,
             ),
           if (company.username != null)
             TextLabelWidget(
               icon: Icons.person_outline,
-              title: AppLocalizations.of(context)!.username,
+              title: l10n.username,
               content: company.username!,
             ),
           if (company.email != null)
             TextLabelWidget(
               icon: Icons.email_outlined,
-              title: AppLocalizations.of(context)!.email,
+              title: l10n.email,
               content: company.email!,
             ),
         ],

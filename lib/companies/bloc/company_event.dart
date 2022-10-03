@@ -30,7 +30,7 @@ class CompanyEditRequested extends CompanyEvent {
 }
 
 class CompanyDeleteRequested extends CompanyEvent {
-  final int id;
+  final String id;
 
   CompanyDeleteRequested(this.id);
 

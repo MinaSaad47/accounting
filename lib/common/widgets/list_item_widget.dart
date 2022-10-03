@@ -14,6 +14,7 @@ class ListItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -42,7 +43,7 @@ class ListItemWidget extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.displayMore,
+                        l10n.displayMore,
                         style: TextStyle(color: Theme.of(context).primaryColor),
                       ),
                       const SizedBox(width: 5),

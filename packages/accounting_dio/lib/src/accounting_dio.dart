@@ -54,7 +54,7 @@ class AccountingDio extends AccountingApi {
 
   @override
   Future<ApiResponse<CompanyModel>> updateCompany({
-    required int id,
+    required String id,
     required CompanyModel company,
   }) async {
     var response = await _dio.put(
@@ -98,8 +98,8 @@ class AccountingDio extends AccountingApi {
 
   @override
   Future<ApiResponse<List<ExpenseModel>>> getExpenses({
-    int? userId,
-    int? companyId,
+    String? userId,
+    String? companyId,
   }) async {
     var response = await _dio.get('expenses', queryParameters: {
       'user.id': userId,
@@ -117,7 +117,7 @@ class AccountingDio extends AccountingApi {
 
   @override
   Future<ApiResponse<ExpenseModel>> createExpense({
-    required int companyId,
+    required String companyId,
     required ExpenseModel expenseModel,
   }) async {
     var response = await _dio.post(
@@ -129,7 +129,7 @@ class AccountingDio extends AccountingApi {
   }
 
   @override
-  Future<ApiResponse<void>> deleteExpense({required int id}) async {
+  Future<ApiResponse<void>> deleteExpense({required String id}) async {
     var response = await _dio.delete('expenses/$id');
     return ApiResponse<void>.fromJson(response.data, (p0) => dynamic);
   }
@@ -150,7 +150,7 @@ class AccountingDio extends AccountingApi {
 
   @override
   Future<ApiResponse<UserModel>> payUser({
-    required int id,
+    required String id,
     required double value,
   }) async {
     var response = await _dio.patch('users/$id', data: {'value': value});
@@ -159,21 +159,21 @@ class AccountingDio extends AccountingApi {
   }
 
   @override
-  Future<ApiResponse<void>> deleteCompany({required int id}) async {
+  Future<ApiResponse<void>> deleteCompany({required String id}) async {
     var response = await _dio.delete('company/$id');
     return ApiResponse<void>.fromJson(response.data, (p0) => dynamic);
   }
 
   @override
-  Future<ApiResponse<void>> deleteUser({required int id}) async {
+  Future<ApiResponse<void>> deleteUser({required String id}) async {
     var response = await _dio.delete('users/$id');
     return ApiResponse<void>.fromJson(response.data, (p0) => dynamic);
   }
 
   @override
   Future<ApiResponse<List<IncomeModel>>> getIncomes({
-    int? adminId,
-    int? companyId,
+    String? adminId,
+    String? companyId,
   }) async {
     var response = await _dio.get('incomes', queryParameters: {
       'admin.id': adminId,
@@ -191,7 +191,7 @@ class AccountingDio extends AccountingApi {
 
   @override
   Future<ApiResponse<IncomeModel>> createIncome({
-    required int companyId,
+    required String companyId,
     required IncomeModel incomeModel,
   }) async {
     var response = await _dio.post(
@@ -203,14 +203,14 @@ class AccountingDio extends AccountingApi {
   }
 
   @override
-  Future<ApiResponse<void>> deleteIncome({required int id}) async {
+  Future<ApiResponse<void>> deleteIncome({required String id}) async {
     var response = await _dio.delete('incomes/$id');
     return ApiResponse<void>.fromJson(response.data, (p0) => dynamic);
   }
 
   @override
   Future<ApiResponse<DocumentModel>> createDocument({
-    required int companyId,
+    required String companyId,
     required File document,
     required void Function(double) onProgress,
   }) async {
@@ -227,7 +227,7 @@ class AccountingDio extends AccountingApi {
 
   @override
   Future<ApiResponse<List<DocumentModel>>> getDocuments({
-    required int companyId,
+    required String companyId,
   }) async {
     var response = await _dio.get('company/$companyId/documents');
     return ApiResponse<List<DocumentModel>>.fromJson(response.data, (p0) {
@@ -264,7 +264,7 @@ class AccountingDio extends AccountingApi {
 
   @override
   Future<ApiResponse<FunderModel>> createFunder({
-    required int companyId,
+    required String companyId,
     required FunderModel funder,
   }) async {
     var response = await _dio.post(
@@ -277,7 +277,7 @@ class AccountingDio extends AccountingApi {
   }
 
   @override
-  Future<ApiResponse<String>> deleteFunder({required int id}) async {
+  Future<ApiResponse<String>> deleteFunder({required String id}) async {
     var response = await _dio.delete('funders/$id');
 
     return ApiResponse<String>.fromJson(response.data, (p0) => p0 as String);
@@ -285,7 +285,7 @@ class AccountingDio extends AccountingApi {
 
   @override
   Future<ApiResponse<List<FunderModel>>> getFunders({
-    required int companyId,
+    required String companyId,
   }) async {
     var response = await _dio.get('company/$companyId/funders');
     return ApiResponse<List<FunderModel>>.fromJson(response.data, (p0) {

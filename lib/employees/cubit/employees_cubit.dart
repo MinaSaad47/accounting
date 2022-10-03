@@ -56,7 +56,7 @@ class EmployeesCubit extends Cubit<EmployeesState> {
     }
   }
 
-  Future payEmployee({required int id, required double value}) async {
+  Future payEmployee({required String id, required double value}) async {
     emit(state.copyWith(
       action: EmployeeAction.pay,
       status: EmployeeStatus.loading,
@@ -80,7 +80,7 @@ class EmployeesCubit extends Cubit<EmployeesState> {
     }
   }
 
-  Future deleteEmployee({required int id}) async {
+  Future deleteEmployee({required String id}) async {
     emit(state.copyWith(
       action: EmployeeAction.delete,
       status: EmployeeStatus.loading,

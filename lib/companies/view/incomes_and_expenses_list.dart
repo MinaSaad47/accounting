@@ -22,6 +22,7 @@ class _IncomesAndExpensesListState extends State<IncomesAndExpensesList> {
   final List<bool> _isOpen = List.filled(2, false);
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return LayoutBuilder(
       builder: (context, constraints) => SingleChildScrollView(
         child: Padding(
@@ -84,7 +85,7 @@ class _IncomesAndExpensesListState extends State<IncomesAndExpensesList> {
                     headerBuilder: (context, isExpanded) => ListTile(
                       leading: const Icon(Icons.move_to_inbox_outlined),
                       title: Text(
-                        AppLocalizations.of(context)!.incomes,
+                        l10n.incomes,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                       trailing: Row(
@@ -142,7 +143,7 @@ class _IncomesAndExpensesListState extends State<IncomesAndExpensesList> {
                     headerBuilder: (context, isExpanded) => ListTile(
                       leading: const Icon(Icons.outbox_outlined),
                       title: Text(
-                        AppLocalizations.of(context)!.expenses,
+                        l10n.expenses,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                       trailing: Row(
@@ -298,6 +299,7 @@ class _BuildDuoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     var total = expensesTotal - incomesTotal;
     return Card(
       elevation: 10,
@@ -318,7 +320,7 @@ class _BuildDuoItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      AppLocalizations.of(context)!.dues,
+                      l10n.dues,
                       style: Theme.of(context).textTheme.displaySmall,
                     ),
                     Text(

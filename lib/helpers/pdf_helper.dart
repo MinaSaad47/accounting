@@ -195,6 +195,7 @@ class PdfHelper {
     BuildContext context,
     CompanyModel company,
   ) {
+    final l10n = AppLocalizations.of(context)!;
     List<List<dynamic>> data = [
       [
         company.id,
@@ -202,82 +203,80 @@ class PdfHelper {
       ],
       [
         company.owner,
-        AppLocalizations.of(context)!.owner,
+        l10n.owner,
       ],
       [
         company.commercialFeature,
-        AppLocalizations.of(context)!.commercialFeature,
+        l10n.commercialFeature,
       ],
       [
-        company.isWorking
-            ? AppLocalizations.of(context)!.working
-            : AppLocalizations.of(context)!.notWorking,
-        AppLocalizations.of(context)!.isWorking,
+        company.isWorking ? l10n.working : l10n.notWorking,
+        l10n.isWorking,
       ],
       if (company.recordNumber != null)
         [
           company.recordNumber,
-          AppLocalizations.of(context)!.registerNumber,
+          l10n.registerNumber,
         ],
       if (company.legalEntity != null)
         [
           company.legalEntity,
-          AppLocalizations.of(context)!.legalEntity,
+          l10n.legalEntity,
         ],
       if (company.fileNumber != null)
         [
           company.fileNumber,
-          AppLocalizations.of(context)!.fileNumber,
+          l10n.fileNumber,
         ],
       if (company.registerNumber != null)
         [
           company.registerNumber,
-          AppLocalizations.of(context)!.registerNumber,
+          l10n.registerNumber,
         ],
       if (company.startDate != null)
         [
           Utils.formatDate(company.startDate!),
-          AppLocalizations.of(context)!.startDate,
+          l10n.startDate,
         ],
       if (company.stopDate != null)
         [
           Utils.formatDate(company.stopDate!),
-          AppLocalizations.of(context)!.stopDate,
+          l10n.stopDate,
         ],
       if (company.generalTaxMission != null)
         [
           company.generalTaxMission,
-          AppLocalizations.of(context)!.generalTaxMission,
+          l10n.generalTaxMission,
         ],
       if (company.valueTaxMission != null)
         [
           company.valueTaxMission,
-          AppLocalizations.of(context)!.valueTaxMission,
+          l10n.valueTaxMission,
         ],
       if (company.activityNature != null)
         [
           company.activityNature,
-          AppLocalizations.of(context)!.activityNature,
+          l10n.activityNature,
         ],
       if (company.activityLocation != null)
         [
           company.activityLocation,
-          AppLocalizations.of(context)!.activityLocation,
+          l10n.activityLocation,
         ],
       if (company.recordNumber != null)
         [
           company.recordNumber,
-          AppLocalizations.of(context)!.recordNumber,
+          l10n.recordNumber,
         ],
       if (company.username != null)
         [
           company.username,
-          AppLocalizations.of(context)!.username,
+          l10n.username,
         ],
       if (company.email != null)
         [
           company.email,
-          AppLocalizations.of(context)!.email,
+          l10n.email,
         ],
     ];
 

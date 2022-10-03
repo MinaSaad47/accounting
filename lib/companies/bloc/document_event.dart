@@ -8,7 +8,7 @@ abstract class DocumentEvent extends Equatable {
 }
 
 class DocumentCreateRequested extends DocumentEvent {
-  final int companyId;
+  final String companyId;
   final void Function(double) onProgress;
 
   const DocumentCreateRequested(this.companyId, this.onProgress);
@@ -17,7 +17,7 @@ class DocumentCreateRequested extends DocumentEvent {
 }
 
 class DocumentGetRequested extends DocumentEvent {
-  final int companyId;
+  final String companyId;
 
   const DocumentGetRequested(this.companyId);
 }

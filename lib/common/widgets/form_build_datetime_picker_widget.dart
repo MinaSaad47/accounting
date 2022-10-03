@@ -16,6 +16,7 @@ class FormBuilderDateTimePickerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return LayoutBuilder(
       builder: (context, constraints) {
         double width = double.infinity;
@@ -38,7 +39,7 @@ class FormBuilderDateTimePickerWidget extends StatelessWidget {
               name: name,
               validator: (date) {
                 if (!required || date != null) return null;
-                return AppLocalizations.of(context)!.expect(name);
+                return l10n.expect(name);
               },
             ),
           ),

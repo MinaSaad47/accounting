@@ -17,13 +17,13 @@ class ExpenseCreateRequested extends ExpenseEvent {
 }
 
 class ExpenseGetRequested extends ExpenseEvent {
-  final int? empolyeeId, companyId;
+  final String? empolyeeId, companyId;
 
   const ExpenseGetRequested({this.empolyeeId, this.companyId});
 }
 
 class ExpenseDeleteRequested extends ExpenseEvent {
-  final int id;
+  final String id;
 
   const ExpenseDeleteRequested(this.id);
 }

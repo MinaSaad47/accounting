@@ -86,6 +86,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isEn = context.read<CachedRepository>().locale?.languageCode == 'en';
     return MultiBlocListener(
       listeners: [
@@ -204,13 +205,12 @@ class _CompanyInfoState extends State<CompanyInfo> {
       ],
       child: Scaffold(
         appBar: AppBar(
-          title:
-              Text(AppLocalizations.of(context)!.edit(company.id!.toString())),
+          title: Text(l10n.edit(company.id!.toString())),
           actions: [
             if (context.read<LoginCubit>().state.user!.isAdmin)
               IconButton(
                 color: Colors.red.shade900,
-                tooltip: AppLocalizations.of(context)!.delete,
+                tooltip: l10n.delete,
                 iconSize: 40,
                 onPressed: () => Utils.adminDo(context, fn: () {
                   context
@@ -240,7 +240,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(AppLocalizations.of(context)!.edit('')),
+                        Text(l10n.edit('')),
                         const Icon(Icons.edit_outlined),
                       ],
                     ),
@@ -255,7 +255,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(AppLocalizations.of(context)!.funders),
+                        Text(l10n.funders),
                         const Icon(Icons.people_outline),
                       ],
                     ),
@@ -270,7 +270,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(AppLocalizations.of(context)!.documents),
+                        Text(l10n.documents),
                         const Icon(Icons.document_scanner_outlined),
                       ],
                     ),
@@ -286,8 +286,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         FittedBox(
-                          child: Text(
-                              '${AppLocalizations.of(context)!.incomes} / ${AppLocalizations.of(context)!.expenses}'),
+                          child: Text(l10n.expenses),
                         ),
                         const Icon(Icons.currency_exchange_outlined),
                       ],
@@ -307,21 +306,21 @@ class _CompanyInfoState extends State<CompanyInfo> {
               onTap: () {
                 showTextInputDialog(
                   context: context,
-                  title: AppLocalizations.of(context)!.expenses,
+                  title: l10n.expenses,
                   textFields: [
                     DialogTextField(
-                      hintText: AppLocalizations.of(context)!.expenses,
+                      hintText: l10n.expenses,
                       keyboardType: TextInputType.number,
                       validator: FormBuilderValidators.compose(
                         [
                           FormBuilderValidators.required(
-                            errorText: AppLocalizations.of(context)!.expect(
-                              AppLocalizations.of(context)!.expenses,
+                            errorText: l10n.expect(
+                              l10n.expenses,
                             ),
                           ),
                           FormBuilderValidators.numeric(
-                            errorText: AppLocalizations.of(context)!.expect(
-                              AppLocalizations.of(context)!.number,
+                            errorText: l10n.expect(
+                              l10n.number,
                             ),
                           ),
                         ],
@@ -330,10 +329,9 @@ class _CompanyInfoState extends State<CompanyInfo> {
                     DialogTextField(
                       autocorrect: true,
                       maxLines: 4,
-                      hintText: AppLocalizations.of(context)!.description,
+                      hintText: l10n.description,
                       validator: FormBuilderValidators.required(
-                        errorText: AppLocalizations.of(context)!
-                            .expect(AppLocalizations.of(context)!.description),
+                        errorText: l10n.expect(l10n.description),
                       ),
                     )
                   ],
@@ -353,28 +351,27 @@ class _CompanyInfoState extends State<CompanyInfo> {
                 );
               },
               child: const Icon(Icons.outbox_outlined),
-              label: AppLocalizations.of(context)!
-                  .add(AppLocalizations.of(context)!.expenses),
+              label: l10n.add(l10n.expenses),
             ),
             SpeedDialChild(
               onTap: () => Utils.adminDo(context, password: false, fn: () {
                 showTextInputDialog(
                   context: context,
-                  title: AppLocalizations.of(context)!.incomes,
+                  title: l10n.incomes,
                   textFields: [
                     DialogTextField(
-                      hintText: AppLocalizations.of(context)!.incomes,
+                      hintText: l10n.incomes,
                       keyboardType: TextInputType.number,
                       validator: FormBuilderValidators.compose(
                         [
                           FormBuilderValidators.required(
-                            errorText: AppLocalizations.of(context)!.expect(
-                              AppLocalizations.of(context)!.incomes,
+                            errorText: l10n.expect(
+                              l10n.incomes,
                             ),
                           ),
                           FormBuilderValidators.numeric(
-                            errorText: AppLocalizations.of(context)!.expect(
-                              AppLocalizations.of(context)!.number,
+                            errorText: l10n.expect(
+                              l10n.number,
                             ),
                           ),
                         ],
@@ -383,10 +380,9 @@ class _CompanyInfoState extends State<CompanyInfo> {
                     DialogTextField(
                       autocorrect: true,
                       maxLines: 4,
-                      hintText: AppLocalizations.of(context)!.description,
+                      hintText: l10n.description,
                       validator: FormBuilderValidators.required(
-                        errorText: AppLocalizations.of(context)!
-                            .expect(AppLocalizations.of(context)!.description),
+                        errorText: l10n.expect(l10n.description),
                       ),
                     )
                   ],
@@ -406,8 +402,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
                 );
               }),
               child: const Icon(Icons.move_to_inbox_outlined),
-              label: AppLocalizations.of(context)!
-                  .add(AppLocalizations.of(context)!.incomes),
+              label: l10n.add(l10n.incomes),
             ),
             SpeedDialChild(
               onTap: () => Utils.adminDo(context, password: false, fn: () {
@@ -415,17 +410,16 @@ class _CompanyInfoState extends State<CompanyInfo> {
                   context: context,
                   textFields: [
                     DialogTextField(
-                      hintText: AppLocalizations.of(context)!.funderName,
+                      hintText: l10n.funderName,
                       validator: FormBuilderValidators.required(
-                        errorText: AppLocalizations.of(context)!
-                            .expect(AppLocalizations.of(context)!.funderName),
+                        errorText: l10n.expect(l10n.funderName),
                       ),
                     )
                   ],
                 ).then((inputs) {
                   var name = inputs?[0];
                   if (name != null) {
-                    var funder = FunderModel(name: name, companyId: -1);
+                    var funder = FunderModel(name: name);
                     var company = context.read<CompanyModel>();
                     context
                         .read<FunderBloc>()
@@ -434,8 +428,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
                 });
               }),
               child: const Icon(Icons.person_outline),
-              label: AppLocalizations.of(context)!
-                  .add(AppLocalizations.of(context)!.funders),
+              label: l10n.add(l10n.funders),
             ),
             SpeedDialChild(
               onTap: () => Utils.adminDo(context, password: false, fn: () {
@@ -444,8 +437,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
                     .add(DocumentCreateRequested(company.id!, (perc) {}));
               }),
               child: const Icon(Icons.document_scanner_rounded),
-              label: AppLocalizations.of(context)!
-                  .add(AppLocalizations.of(context)!.documents),
+              label: l10n.add(l10n.documents),
             ),
           ],
         ),

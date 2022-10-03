@@ -40,8 +40,8 @@ class AccountingRepository {
       await _accountingApi.createUser(user);
 
   Future<ApiResponse<List<ExpenseModel>>> getExpenses({
-    int? userId,
-    int? companyId,
+    String? userId,
+    String? companyId,
   }) async =>
       await _accountingApi.getExpenses(
         userId: userId,
@@ -49,7 +49,7 @@ class AccountingRepository {
       );
 
   Future<ApiResponse<ExpenseModel>> createExpense({
-    required int companyId,
+    required String companyId,
     required ExpenseModel expenseModel,
   }) async =>
       await _accountingApi.createExpense(
@@ -57,12 +57,12 @@ class AccountingRepository {
         expenseModel: expenseModel,
       );
 
-  Future<ApiResponse<void>> deleteExpense({required int id}) async =>
+  Future<ApiResponse<void>> deleteExpense({required String id}) async =>
       await _accountingApi.deleteExpense(id: id);
 
   Future<ApiResponse<List<IncomeModel>>> getIncomes({
-    int? adminId,
-    int? companyId,
+    String? adminId,
+    String? companyId,
   }) async =>
       await _accountingApi.getIncomes(
         adminId: adminId,
@@ -70,7 +70,7 @@ class AccountingRepository {
       );
 
   Future<ApiResponse<IncomeModel>> createIncome({
-    required int companyId,
+    required String companyId,
     required IncomeModel incomeModel,
   }) async =>
       await _accountingApi.createIncome(
@@ -78,26 +78,26 @@ class AccountingRepository {
         incomeModel: incomeModel,
       );
 
-  Future<ApiResponse<void>> deleteIncome({required int id}) async =>
+  Future<ApiResponse<void>> deleteIncome({required String id}) async =>
       await _accountingApi.deleteIncome(id: id);
 
   Future<ApiResponse<UserModel>> getCurrentUser() async =>
       await _accountingApi.getCurrentUser();
 
   Future<ApiResponse<UserModel>> payUser({
-    required int id,
+    required String id,
     required double value,
   }) async =>
       _accountingApi.payUser(id: id, value: value);
 
-  Future<ApiResponse<void>> deleteCompany({required int id}) async =>
+  Future<ApiResponse<void>> deleteCompany({required String id}) async =>
       await _accountingApi.deleteCompany(id: id);
 
-  Future<ApiResponse<void>> deleteUser({required int id}) async =>
+  Future<ApiResponse<void>> deleteUser({required String id}) async =>
       await _accountingApi.deleteUser(id: id);
 
   Future<ApiResponse<DocumentModel>> createDocument({
-    required int companyId,
+    required String companyId,
     required File document,
     required void Function(double) onProgress,
   }) async =>
@@ -108,7 +108,7 @@ class AccountingRepository {
       );
 
   Future<ApiResponse<List<DocumentModel>>> getDocuments({
-    required int companyId,
+    required String companyId,
   }) async =>
       _accountingApi.getDocuments(companyId: companyId);
 
@@ -122,16 +122,16 @@ class AccountingRepository {
       await _accountingApi.deleteDocument(path: path);
 
   Future<ApiResponse<FunderModel>> createFunder({
-    required int companyId,
+    required String companyId,
     required FunderModel funder,
   }) async =>
       _accountingApi.createFunder(companyId: companyId, funder: funder);
 
-  Future<ApiResponse<String>> deleteFunder({required int id}) async =>
+  Future<ApiResponse<String>> deleteFunder({required String id}) async =>
       _accountingApi.deleteFunder(id: id);
 
   Future<ApiResponse<List<FunderModel>>> getFunders({
-    required int companyId,
+    required String companyId,
   }) async =>
       _accountingApi.getFunders(companyId: companyId);
 }

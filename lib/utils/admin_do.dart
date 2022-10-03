@@ -5,12 +5,13 @@ void _adminDo(
   bool requirePassword = true,
   required void Function() fn,
 }) {
+  final l10n = AppLocalizations.of(context)!;
   var user = context.read<LoginCubit>().state.user!;
 
   if (!user.isAdmin) {
     Utils.toast(
       context,
-      message: AppLocalizations.of(context)!.unauth,
+      message: l10n.unauth,
       level: ToastLevel.warning,
     );
     return;
@@ -22,10 +23,9 @@ void _adminDo(
       textFields: [
         DialogTextField(
           obscureText: true,
-          hintText: AppLocalizations.of(context)!.password,
+          hintText: l10n.password,
           validator: FormBuilderValidators.required(
-            errorText: AppLocalizations.of(context)!
-                .expect(AppLocalizations.of(context)!.password),
+            errorText: l10n.expect(l10n.password),
           ),
         ),
       ],
@@ -36,8 +36,7 @@ void _adminDo(
       } else {
         Utils.toast(
           context,
-          message: AppLocalizations.of(context)!
-              .notCorrect(AppLocalizations.of(context)!.password),
+          message: l10n.notCorrect(l10n.password),
           level: ToastLevel.error,
         );
       }

@@ -8,7 +8,7 @@ part of 'expense_model.dart';
 
 _$_ExpenseModel _$$_ExpenseModelFromJson(Map<String, dynamic> json) =>
     _$_ExpenseModel(
-      id: json['id'] as int?,
+      id: json['id'] as String?,
       value: json['value'] as num,
       description: json['description'] as String,
       time: _$JsonConverterFromJson<String, DateTime>(

@@ -14,6 +14,7 @@ class DrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Drawer(
       child: Material(
         child: Padding(
@@ -69,12 +70,12 @@ class DrawerWidget extends StatelessWidget {
                 shrinkWrap: true,
                 children: [
                   DrawerItem(
-                    text: AppLocalizations.of(context)!.companies,
+                    text: l10n.companies,
                     icon: Icons.account_balance_outlined,
                     route: CompaniesPage.route(),
                   ),
                   DrawerItem(
-                    text: AppLocalizations.of(context)!.employees,
+                    text: l10n.employees,
                     icon: Icons.people_outline,
                     route: EmployessPage.route(),
                   ),
@@ -89,17 +90,17 @@ class DrawerWidget extends StatelessWidget {
                 ),
               ),
               DrawerItem(
-                text: AppLocalizations.of(context)!.settings,
+                text: l10n.settings,
                 icon: Icons.settings_outlined,
                 route: SettingsPage.route(),
               ),
               ListTile(
-                title: Text(AppLocalizations.of(context)!.about),
+                title: Text(l10n.about),
                 leading: const Icon(Icons.info_outline),
                 onTap: () {
                   showAboutDialog(
                     context: context,
-                    applicationName: AppLocalizations.of(context)!.appName,
+                    applicationName: l10n.appName,
                     applicationIcon: SvgPicture.asset(
                       'assets/images/logo.svg',
                       color: Theme.of(context).primaryColor,

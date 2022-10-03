@@ -11,6 +11,7 @@ class CompaniesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     var user = context.read<LoginCubit>().state.user!;
     return BlocListener<CompaniesBloc, CompanyState>(
       listener: (context, state) {
@@ -42,18 +43,16 @@ class CompaniesView extends StatelessWidget {
         length: user.isAdmin ? 2 : 1,
         child: Scaffold(
           appBar: AppBarWidget(
-            title: AppLocalizations.of(context)!.companies,
+            title: l10n.companies,
             tabBar: TabBar(
               tabs: [
                 Tab(
-                  child: Text(AppLocalizations.of(context)!
-                      .search(AppLocalizations.of(context)!.company)),
+                  child: Text(l10n.search(l10n.company)),
                 ),
                 if (user.isAdmin)
                   Tab(
                     child: Text(
-                      AppLocalizations.of(context)!
-                          .add(AppLocalizations.of(context)!.company),
+                      l10n.add(l10n.company),
                     ),
                   ),
               ],
@@ -77,13 +76,13 @@ class _BuildSearchCompany extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
           SearchWidget(
-            hintText: AppLocalizations.of(context)!
-                .search(AppLocalizations.of(context)!.company),
+            hintText: l10n.search(l10n.company),
             onChanged: (query) {
               if (query.isNotEmpty) {
                 context

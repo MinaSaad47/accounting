@@ -20,7 +20,7 @@ ExpenseModel _$ExpenseModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ExpenseModel {
-  int? get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   num get value => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   @DatetimeJsonConverter()
@@ -42,7 +42,7 @@ abstract class $ExpenseModelCopyWith<$Res> {
           ExpenseModel value, $Res Function(ExpenseModel) then) =
       _$ExpenseModelCopyWithImpl<$Res>;
   $Res call(
-      {int? id,
+      {String? id,
       num value,
       String description,
       @DatetimeJsonConverter() DateTime? time,
@@ -71,7 +71,7 @@ class _$ExpenseModelCopyWithImpl<$Res> implements $ExpenseModelCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       value: value == freezed
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -104,7 +104,7 @@ abstract class _$$_ExpenseModelCopyWith<$Res>
       __$$_ExpenseModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int? id,
+      {String? id,
       num value,
       String description,
       @DatetimeJsonConverter() DateTime? time,
@@ -136,7 +136,7 @@ class __$$_ExpenseModelCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       value: value == freezed
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -176,7 +176,7 @@ class _$_ExpenseModel implements _ExpenseModel {
       _$$_ExpenseModelFromJson(json);
 
   @override
-  final int? id;
+  final String? id;
   @override
   final num value;
   @override
@@ -237,7 +237,7 @@ class _$_ExpenseModel implements _ExpenseModel {
 
 abstract class _ExpenseModel implements ExpenseModel {
   const factory _ExpenseModel(
-      {final int? id,
+      {final String? id,
       required final num value,
       required final String description,
       @DatetimeJsonConverter() final DateTime? time,
@@ -248,7 +248,7 @@ abstract class _ExpenseModel implements ExpenseModel {
       _$_ExpenseModel.fromJson;
 
   @override
-  int? get id;
+  String? get id;
   @override
   num get value;
   @override

@@ -21,6 +21,7 @@ class FormBuilderTextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return LayoutBuilder(
       builder: (context, constraints) {
         double width = double.infinity;
@@ -48,7 +49,7 @@ class FormBuilderTextFieldWidget extends StatelessWidget {
                 [
                   if (required)
                     FormBuilderValidators.required(
-                      errorText: AppLocalizations.of(context)!.expect(name),
+                      errorText: l10n.expect(name),
                     ),
                   if (validator != null) validator!,
                 ],

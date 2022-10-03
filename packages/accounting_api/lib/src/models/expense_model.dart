@@ -7,7 +7,7 @@ part 'expense_model.g.dart';
 @freezed
 class ExpenseModel with _$ExpenseModel {
   const factory ExpenseModel({
-    int? id,
+    String? id,
     required num value,
     required String description,
     @DatetimeJsonConverter() DateTime? time,

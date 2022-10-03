@@ -8,7 +8,7 @@ part of 'company_model.dart';
 
 _$_CompanyModel _$$_CompanyModelFromJson(Map<String, dynamic> json) =>
     _$_CompanyModel(
-      id: json['id'] as int?,
+      id: json['id'] as String?,
       owner: json['owner'] as String,
       commercialFeature: json['commercialFeature'] as String,
       isWorking: json['isWorking'] as bool,

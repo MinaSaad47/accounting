@@ -21,6 +21,7 @@ class _BuildCompanyEditFormState extends State<CompanyEditWidget> {
   late var company = widget.company;
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: FormBuilder(
@@ -33,109 +34,101 @@ class _BuildCompanyEditFormState extends State<CompanyEditWidget> {
                 children: [
                   FormBuilderTextFieldWidget(
                     context,
-                    name: AppLocalizations.of(context)!.owner,
+                    name: l10n.owner,
                     value: company?.owner,
                     required: true,
                   ),
                   FormBuilderTextFieldWidget(
                     context,
-                    name: AppLocalizations.of(context)!.commercialFeature,
+                    name: l10n.commercialFeature,
                     value: company?.commercialFeature,
                     required: true,
                   ),
                   FormBuilderDropdownWidget(
-                    name: AppLocalizations.of(context)!.isWorking,
+                    name: l10n.isWorking,
                     initialValue: company != null && company!.isWorking
-                        ? AppLocalizations.of(context)!.working
-                        : AppLocalizations.of(context)!.notWorking,
+                        ? l10n.working
+                        : l10n.notWorking,
                     items: [
-                      AppLocalizations.of(context)!.working,
-                      AppLocalizations.of(context)!.notWorking,
+                      l10n.working,
+                      l10n.notWorking,
                     ],
                   ),
                   FormBuilderTextFieldWidget(
                     context,
-                    name: AppLocalizations.of(context)!.legalEntity,
+                    name: l10n.legalEntity,
                     value: company?.legalEntity,
                   ),
                   FormBuilderTextFieldWidget(
                     context,
-                    name: AppLocalizations.of(context)!.fileNumber,
+                    name: l10n.fileNumber,
                     value: company?.fileNumber,
                     validator: FormBuilderValidators.numeric(
-                      errorText: AppLocalizations.of(context)!.expect(
-                        AppLocalizations.of(context)!.number,
-                      ),
+                      errorText: l10n.expect(l10n.number),
                     ),
                   ),
                   FormBuilderTextFieldWidget(
                     context,
-                    name: AppLocalizations.of(context)!.registerNumber,
+                    name: l10n.registerNumber,
                     value: company?.registerNumber,
                     validator: FormBuilderValidators.numeric(
-                      errorText: AppLocalizations.of(context)!.expect(
-                        AppLocalizations.of(context)!.number,
-                      ),
+                      errorText: l10n.expect(l10n.number),
                     ),
                   ),
                   FormBuilderDateTimePickerWidget(
                     context,
-                    name: AppLocalizations.of(context)!.startDate,
+                    name: l10n.startDate,
                     value: company?.startDate,
                   ),
                   FormBuilderDateTimePickerWidget(
                     context,
-                    name: AppLocalizations.of(context)!.stopDate,
+                    name: l10n.stopDate,
                     value: company?.stopDate,
                   ),
                   FormBuilderTextFieldWidget(
                     context,
-                    name: AppLocalizations.of(context)!.generalTaxMission,
+                    name: l10n.generalTaxMission,
                     value: company?.generalTaxMission,
                   ),
                   FormBuilderTextFieldWidget(
                     context,
-                    name: AppLocalizations.of(context)!.valueTaxMission,
+                    name: l10n.valueTaxMission,
                     value: company?.valueTaxMission,
                   ),
                   FormBuilderTextFieldWidget(
                     context,
-                    name: AppLocalizations.of(context)!.activityNature,
+                    name: l10n.activityNature,
                     value: company?.activityNature,
                   ),
                   FormBuilderTextFieldWidget(
                     context,
-                    name: AppLocalizations.of(context)!.activityLocation,
+                    name: l10n.activityLocation,
                     value: company?.activityLocation,
                   ),
                   FormBuilderTextFieldWidget(
                     context,
-                    name: AppLocalizations.of(context)!.recordNumber,
+                    name: l10n.recordNumber,
                     value: company?.recordNumber,
                     validator: FormBuilderValidators.numeric(
-                      errorText: AppLocalizations.of(context)!.expect(
-                        AppLocalizations.of(context)!.number,
-                      ),
+                      errorText: l10n.expect(l10n.number),
                     ),
                   ),
                   FormBuilderTextFieldWidget(
                     context,
-                    name: AppLocalizations.of(context)!.username,
+                    name: l10n.username,
                     value: company?.username,
                   ),
                   FormBuilderTextFieldWidget(
                     context,
-                    name: AppLocalizations.of(context)!.password,
+                    name: l10n.password,
                     value: company?.password,
                   ),
                   FormBuilderTextFieldWidget(
                     context,
-                    name: AppLocalizations.of(context)!.email,
+                    name: l10n.email,
                     value: company?.email,
                     validator: FormBuilderValidators.email(
-                      errorText: AppLocalizations.of(context)!.notCorrect(
-                        AppLocalizations.of(context)!.email,
-                      ),
+                      errorText: l10n.notCorrect(l10n.email),
                     ),
                   ),
                 ],
@@ -172,58 +165,50 @@ class _BuildSaveCompanyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return ElevatedButton(
       onPressed: () =>
           Utils.adminDo(context, password: company != null, fn: () {
         var formState = formKey.currentState!;
         if (formState.validate()) {
           formState.save();
-          var savedCompany = CompanyModel(
-            id: company?.id,
-            isWorking:
-                formState.value[AppLocalizations.of(context)!.isWorking] ==
-                    AppLocalizations.of(context)!.working,
-            stopDate: formState.value[AppLocalizations.of(context)!.stopDate],
-            startDate: formState.value[AppLocalizations.of(context)!.startDate],
-            fileNumber:
-                formState.value[AppLocalizations.of(context)!.fileNumber],
-            email: formState.value[AppLocalizations.of(context)!.email],
-            password: formState.value[AppLocalizations.of(context)!.password],
-            username: formState.value[AppLocalizations.of(context)!.username],
-            recordNumber:
-                formState.value[AppLocalizations.of(context)!.recordNumber],
-            valueTaxMission:
-                formState.value[AppLocalizations.of(context)!.valueTaxMission],
-            activityLocation:
-                formState.value[AppLocalizations.of(context)!.activityLocation],
-            activityNature:
-                formState.value[AppLocalizations.of(context)!.activityNature],
-            generalTaxMission: formState
-                .value[AppLocalizations.of(context)!.generalTaxMission],
-            registerNumber:
-                formState.value[AppLocalizations.of(context)!.registerNumber],
-            legalEntity:
-                formState.value[AppLocalizations.of(context)!.legalEntity],
-            commercialFeature: formState
-                .value[AppLocalizations.of(context)!.commercialFeature],
-            owner: formState.value[AppLocalizations.of(context)!.owner],
-          );
-          Utils.log.d(savedCompany.toString());
-          if (company == null) {
-            context
-                .read<CompaniesBloc>()
-                .add(CompanyCreateRequested(savedCompany));
-          } else {
-            context
-                .read<CompaniesBloc>()
-                .add(CompanyEditRequested(savedCompany));
-          }
+          _save(context, company?.id, formState.value);
         }
       }),
       child: Text(
-        AppLocalizations.of(context)!
-            .save(AppLocalizations.of(context)!.company),
+        l10n.save(l10n.company),
       ),
     );
+  }
+
+  void _save(BuildContext context, String? id, Map<String, dynamic> value) {
+    final l10n = AppLocalizations.of(context)!;
+    var savedCompany = CompanyModel(
+      id: id,
+      isWorking: value[l10n.isWorking] == l10n.working,
+      stopDate: value[l10n.stopDate],
+      startDate: value[l10n.startDate],
+      fileNumber: value[l10n.fileNumber] != '' ? value[l10n.fileNumber] : null,
+      email: value[l10n.email]?.trim(),
+      password: value[l10n.password],
+      username: value[l10n.username]?.trim(),
+      recordNumber:
+          value[l10n.recordNumber] != '' ? value[l10n.recordNumber] : null,
+      valueTaxMission: value[l10n.valueTaxMission]?.trim(),
+      activityLocation: value[l10n.activityLocation]?.trim(),
+      activityNature: value[l10n.activityNature]?.trim(),
+      generalTaxMission: value[l10n.generalTaxMission]?.trim(),
+      registerNumber:
+          value[l10n.registerNumber] != '' ? value[l10n.registerNumber] : null,
+      legalEntity: value[l10n.legalEntity]?.trim(),
+      commercialFeature: value[l10n.commercialFeature].trim(),
+      owner: value[l10n.owner].trim(),
+    );
+    Utils.log.d(savedCompany.toString());
+    if (company == null) {
+      context.read<CompaniesBloc>().add(CompanyCreateRequested(savedCompany));
+    } else {
+      context.read<CompaniesBloc>().add(CompanyEditRequested(savedCompany));
+    }
   }
 }

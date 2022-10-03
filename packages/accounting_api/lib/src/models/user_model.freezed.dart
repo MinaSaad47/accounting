@@ -20,7 +20,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserModel {
-  int? get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
   bool get isAdmin => throw _privateConstructorUsedError;
@@ -37,7 +37,7 @@ abstract class $UserModelCopyWith<$Res> {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
       _$UserModelCopyWithImpl<$Res>;
   $Res call(
-      {int? id, String name, String password, bool isAdmin, double value});
+      {String? id, String name, String password, bool isAdmin, double value});
 }
 
 /// @nodoc
@@ -60,7 +60,7 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -88,7 +88,7 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       __$$_UserModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int? id, String name, String password, bool isAdmin, double value});
+      {String? id, String name, String password, bool isAdmin, double value});
 }
 
 /// @nodoc
@@ -113,7 +113,7 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -148,7 +148,7 @@ class _$_UserModel implements _UserModel {
       _$$_UserModelFromJson(json);
 
   @override
-  final int? id;
+  final String? id;
   @override
   final String name;
   @override
@@ -201,7 +201,7 @@ class _$_UserModel implements _UserModel {
 
 abstract class _UserModel implements UserModel {
   const factory _UserModel(
-      {final int? id,
+      {final String? id,
       required final String name,
       required final String password,
       final bool isAdmin,
@@ -211,7 +211,7 @@ abstract class _UserModel implements UserModel {
       _$_UserModel.fromJson;
 
   @override
-  int? get id;
+  String? get id;
   @override
   String get name;
   @override

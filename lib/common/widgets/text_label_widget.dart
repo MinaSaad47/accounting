@@ -16,6 +16,7 @@ class TextLabelWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: BoxDecoration(
@@ -59,7 +60,7 @@ class TextLabelWidget extends StatelessWidget {
               Clipboard.setData(ClipboardData(text: content)).then((value) {
                 Utils.toast(
                   context,
-                  message: AppLocalizations.of(context)!.clipboard(content),
+                  message: l10n.clipboard(content),
                 );
               });
             },

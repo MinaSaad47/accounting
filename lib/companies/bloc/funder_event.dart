@@ -17,13 +17,13 @@ class FunderCreateRequested extends FunderEvent {
 }
 
 class FunderGetRequested extends FunderEvent {
-  final int companyId;
+  final String companyId;
 
   const FunderGetRequested(this.companyId);
 }
 
 class FunderDeleteRequested extends FunderEvent {
-  final int id;
+  final String id;
 
   const FunderDeleteRequested(this.id);
 }

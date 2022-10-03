@@ -16,6 +16,7 @@ class _CompanyEditState extends State<CompanyEdit> {
   final List<bool> _isOpen = List.filled(1, false);
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     var company = context.read<CompanyModel>();
     return SingleChildScrollView(
       child: Padding(
@@ -42,8 +43,7 @@ class _CompanyEditState extends State<CompanyEdit> {
                   headerBuilder: (context, isExpanded) => ListTile(
                     leading: const Icon(Icons.edit_outlined),
                     title: Text(
-                      AppLocalizations.of(context)!
-                          .edit(AppLocalizations.of(context)!.company),
+                      l10n.edit(l10n.company),
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),

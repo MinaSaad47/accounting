@@ -15,22 +15,22 @@ class EmployessView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     var user = context.read<LoginCubit>().state.user!;
     return DefaultTabController(
       length: user.isAdmin ? 2 : 1,
       child: Scaffold(
         appBar: AppBarWidget(
-          title: AppLocalizations.of(context)!.employees,
+          title: l10n.employees,
           tabBar: TabBar(
             tabs: [
               Tab(
-                child: Text(AppLocalizations.of(context)!.employees),
+                child: Text(l10n.employees),
               ),
               if (user.isAdmin)
                 Tab(
                   child: Text(
-                    AppLocalizations.of(context)!
-                        .add(AppLocalizations.of(context)!.employee),
+                    l10n.add(l10n.employee),
                   ),
                 ),
             ],
@@ -55,6 +55,7 @@ class _BuildListEmployees extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return BlocConsumer<EmployeesCubit, EmployeesState>(
       listener: (context, state) {
         if (state.action == EmployeeAction.get &&
@@ -78,12 +79,12 @@ class _BuildListEmployees extends StatelessWidget {
                   labels: [
                     TextLabelWidget(
                       icon: Icons.person_outline,
-                      title: AppLocalizations.of(context)!.username,
+                      title: l10n.username,
                       content: state.list[index].name,
                     ),
                     TextLabelWidget(
                       icon: Icons.money_outlined,
-                      title: AppLocalizations.of(context)!.expenses,
+                      title: l10n.expenses,
                       content: '${state.list[index].value}',
                     )
                   ],
@@ -130,6 +131,7 @@ class _BuildEmpolyeeInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return BlocListener<EmployeesCubit, EmployeesState>(
       listener: (context, state) {
         if (state.action == EmployeeAction.pay) {
@@ -163,13 +165,13 @@ class _BuildEmpolyeeInfo extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.employee),
+          title: Text(l10n.employee),
           actions: [
             if (context.read<LoginCubit>().state.user!.isAdmin &&
                 !userModel.isAdmin)
               IconButton(
                 color: Colors.red.shade900,
-                tooltip: AppLocalizations.of(context)!.delete,
+                tooltip: l10n.delete,
                 iconSize: 40,
                 onPressed: () => Utils.adminDo(context, fn: () {
                   context
@@ -191,13 +193,13 @@ class _BuildEmpolyeeInfo extends StatelessWidget {
                 labels: [
                   TextLabelWidget(
                     icon: Icons.person_outline,
-                    title: AppLocalizations.of(context)!.username,
+                    title: l10n.username,
                     content: userModel.name,
                   ),
                   if (!context.read<LoginCubit>().state.user!.isAdmin)
                     TextLabelWidget(
                       icon: Icons.attach_money_outlined,
-                      title: AppLocalizations.of(context)!.expenses,
+                      title: l10n.expenses,
                       content: '${userModel.value}',
                     ),
                 ],
@@ -215,7 +217,7 @@ class _BuildEmpolyeeInfo extends StatelessWidget {
                 ),
               const SizedBox(height: 30),
               Text(
-                AppLocalizations.of(context)!.companies,
+                l10n.companies,
                 style: Theme.of(context).textTheme.headline2,
               ),
               Expanded(
@@ -256,6 +258,7 @@ class _BuildEmployeeValueState extends State<_BuildEmployeeValue> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return FormBuilder(
       key: formKey,
       child: Row(
@@ -268,16 +271,16 @@ class _BuildEmployeeValueState extends State<_BuildEmployeeValue> {
           Expanded(
             child: FormBuilderTextFieldWidget(
               context,
-              name: AppLocalizations.of(context)!.expenses,
+              name: l10n.expenses,
               value: '${widget.initial}',
               validator: FormBuilderValidators.compose(
                 [
                   FormBuilderValidators.required(
-                    errorText: AppLocalizations.of(context)!.expenses,
+                    errorText: l10n.expenses,
                   ),
                   FormBuilderValidators.numeric(
-                    errorText: AppLocalizations.of(context)!.expect(
-                      AppLocalizations.of(context)!.number,
+                    errorText: l10n.expect(
+                      l10n.number,
                     ),
                   ),
                 ],
@@ -291,13 +294,13 @@ class _BuildEmployeeValueState extends State<_BuildEmployeeValue> {
               if (formState.saveAndValidate()) {
                 widget.onSave(
                   double.parse(
-                    formState.value[AppLocalizations.of(context)!.expenses],
+                    formState.value[l10n.expenses],
                   ),
                 );
               }
             }),
             child: Text(
-              AppLocalizations.of(context)!.save(''),
+              l10n.save(''),
             ),
           )
         ],
@@ -382,6 +385,7 @@ class _BuildAddEmployeeState extends State<_BuildAddEmployee> {
   var formKey = GlobalKey<FormBuilderState>();
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: FormBuilder(
@@ -392,19 +396,16 @@ class _BuildAddEmployeeState extends State<_BuildAddEmployee> {
               children: [
                 FormBuilderTextFieldWidget(
                   context,
-                  name: AppLocalizations.of(context)!.username,
+                  name: l10n.username,
                 ),
                 FormBuilderTextFieldWidget(
                   context,
-                  name: AppLocalizations.of(context)!.password,
+                  name: l10n.password,
                 ),
                 FormBuilderDropdownWidget(
-                  name: AppLocalizations.of(context)!.permissions,
-                  initialValue: AppLocalizations.of(context)!.user,
-                  items: [
-                    AppLocalizations.of(context)!.user,
-                    AppLocalizations.of(context)!.admin,
-                  ],
+                  name: l10n.permissions,
+                  initialValue: l10n.user,
+                  items: [l10n.user, l10n.admin],
                 )
               ],
             ),
@@ -430,21 +431,17 @@ class _BuildAddEmployeeState extends State<_BuildAddEmployee> {
                 } else {
                   return ElevatedButton(
                     child: Text(
-                      AppLocalizations.of(context)!
-                          .save(AppLocalizations.of(context)!.employee),
+                      l10n.save(l10n.employee),
                     ),
                     onPressed: () {
                       var formState = formKey.currentState!;
                       if (formState.validate()) {
                         formState.save();
                         var employee = UserModel(
-                          name: formState
-                              .value[AppLocalizations.of(context)!.username],
-                          password: formState
-                              .value[AppLocalizations.of(context)!.password],
-                          isAdmin: formState.value[
-                                  AppLocalizations.of(context)!.permissions] ==
-                              AppLocalizations.of(context)!.admin,
+                          name: formState.value[l10n.username],
+                          password: formState.value[l10n.password],
+                          isAdmin:
+                              formState.value[l10n.permissions] == l10n.admin,
                           value: 0,
                         );
                         context.read<EmployeesCubit>().createEmployee(employee);

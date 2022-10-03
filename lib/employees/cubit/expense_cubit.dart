@@ -8,7 +8,7 @@ class MoneyCapitalCubit extends Cubit<ExpenseState> {
   final AccountingRepository _accountingRepository;
   MoneyCapitalCubit(this._accountingRepository) : super(const ExpenseState());
 
-  Future getMoneyCapital({required int employeeId}) async {
+  Future getMoneyCapital({required String employeeId}) async {
     emit(state.copyWith(
       action: ExpenseAction.get,
       status: ExpenseStatus.loading,

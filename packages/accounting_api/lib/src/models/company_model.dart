@@ -9,7 +9,7 @@ part 'company_model.g.dart';
 @freezed
 class CompanyModel with _$CompanyModel {
   const factory CompanyModel({
-    int? id,
+    String? id,
     required String owner,
     required String commercialFeature,
     required bool isWorking,

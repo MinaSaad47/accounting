@@ -8,7 +8,7 @@ part of 'income_model.dart';
 
 _$_IncomeModel _$$_IncomeModelFromJson(Map<String, dynamic> json) =>
     _$_IncomeModel(
-      id: json['id'] as int?,
+      id: json['id'] as String?,
       value: json['value'] as num,
       description: json['description'] as String,
       time: _$JsonConverterFromJson<String, DateTime>(

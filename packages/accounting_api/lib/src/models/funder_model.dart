@@ -6,9 +6,8 @@ part 'funder_model.g.dart';
 @freezed
 class FunderModel with _$FunderModel {
   const factory FunderModel({
-    int? id,
+    String? id,
     required String name,
-    required int companyId,
   }) = _FunderModel;
 
   factory FunderModel.fromJson(Map<String, Object?> json) =>

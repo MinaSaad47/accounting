@@ -18,6 +18,7 @@ class _LoginViewState extends State<LoginView> {
   var formKey = GlobalKey<FormBuilderState>();
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       body: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
@@ -63,11 +64,11 @@ class _LoginViewState extends State<LoginView> {
                             children: [
                               FormBuilderTextFieldWidget(
                                 context,
-                                name: AppLocalizations.of(context)!.username,
+                                name: l10n.username,
                               ),
                               FormBuilderTextFieldWidget(
                                 context,
-                                name: AppLocalizations.of(context)!.password,
+                                name: l10n.password,
                                 isPassword: true,
                               ),
                             ],
@@ -94,10 +95,8 @@ class _LoginViewState extends State<LoginView> {
                                 if (formState != null && formState.validate()) {
                                   formState.save();
                                   var userModel = UserModel(
-                                    name: formState.value[
-                                        AppLocalizations.of(context)!.username],
-                                    password: formState.value[
-                                        AppLocalizations.of(context)!.password],
+                                    name: formState.value[l10n.username],
+                                    password: formState.value[l10n.password],
                                     value: 0,
                                   );
                                   context
@@ -110,7 +109,7 @@ class _LoginViewState extends State<LoginView> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    AppLocalizations.of(context)!.login,
+                                    l10n.login,
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline4!

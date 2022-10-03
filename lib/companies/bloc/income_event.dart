@@ -17,13 +17,13 @@ class IncomeCreateRequested extends IncomeEvent {
 }
 
 class IncomeGetRequested extends IncomeEvent {
-  final int? empolyeeId, companyId;
+  final String? empolyeeId, companyId;
 
   const IncomeGetRequested({this.empolyeeId, this.companyId});
 }
 
 class IncomeDeleteRequested extends IncomeEvent {
-  final int id;
+  final String id;
 
   const IncomeDeleteRequested(this.id);
 }

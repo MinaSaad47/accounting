@@ -17,6 +17,7 @@ class IncomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     var user = context.read<LoginCubit>().state.user;
     return ExpansionTile(
       title: Row(
@@ -93,7 +94,7 @@ class IncomeWidget extends StatelessWidget {
                   const Icon(Icons.delete_outline),
                   const SizedBox(width: 2),
                   Text(
-                    AppLocalizations.of(context)!.delete,
+                    l10n.delete,
                   ),
                 ],
               ),
@@ -129,6 +130,7 @@ class ExpenseWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     var user = context.read<LoginCubit>().state.user;
     return ExpansionTile(
       title: Row(
@@ -205,7 +207,7 @@ class ExpenseWidget extends StatelessWidget {
                   const Icon(Icons.delete_outline),
                   const SizedBox(width: 2),
                   Text(
-                    AppLocalizations.of(context)!.delete,
+                    l10n.delete,
                   ),
                 ],
               ),
