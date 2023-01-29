@@ -1,0 +1,3 @@
+[submodule "accounting-backend"]
+	path = accounting-backend
+	url = git@github.com:MinaSaad47/accounting-backend.git
